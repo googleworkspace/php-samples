@@ -1,0 +1,11 @@
+.DS_Store
+
+**/vendor/**
+.env
+composer
+composer.lock
+composer.phar
+.php_cs.cache
+client_secret.json
+credentials.json
+application_credentials.json

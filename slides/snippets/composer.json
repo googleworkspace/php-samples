@@ -1,0 +1,10 @@
+{
+    "require": {
+        "google/apiclient": "^2.2",
+        "google/auth": "v1.2.1",
+        "monolog/monolog": "1.17"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8"
+    }
+}
