@@ -185,7 +185,7 @@ class DriveSnippets
             array_push($files, $response->files);
             // [END_EXCLUDE]
 
-            $pageToken = $repsonse->pageToken;
+            $pageToken = $response->pageToken;
         } while ($pageToken != null);
         // [END searchFiles]
         return $files;
