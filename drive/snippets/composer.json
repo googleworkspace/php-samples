@@ -1,7 +1,6 @@
 {
     "require": {
-        "google/apiclient": "^2.0",
-        "ramsey/uuid": "^3.5"
+        "google/apiclient": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8",

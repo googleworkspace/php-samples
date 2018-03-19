@@ -37,7 +37,8 @@ script:
   # Find every directory with a phpunit.xml file and run phpunit in that directory
   - find . -name 'phpunit.xml*' -not -path '*vendor/*' -exec dirname {} \; | while read DIR
     do
-      pushd ${DIR}
-      composer install
-      vendor/bin/phpunit
+      pushd ${DIR};
+      composer install;
+      vendor/bin/phpunit;
+      popd;
     done
