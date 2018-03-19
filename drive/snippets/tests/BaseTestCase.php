@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 
 class BaseTestCase extends PHPUnit_Framework_TestCase
 {
