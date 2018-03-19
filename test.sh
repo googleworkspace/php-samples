@@ -12,26 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-branches:
-  only:
-    - master
+set -ex
 
-language: php
-dist: trusty
-
-php:
-  - 5.6
-  - 7.0
-  - 7.1
-  - 7.2
-
-env:
-  global:
-    - GOOGLE_APPLICATION_CREDENTIALS=$TRAVIS_BUILD_DIR/credentials.json
-
-before_install:
-  # set Google service account credentials using environemnt variables
-  - echo "$GOOGLE_CREDENTIALS_BASE64" | base64 --decode > "$GOOGLE_APPLICATION_CREDENTIALS"
-
-script:
-  - bash test.sh
+# Find every directory with a phpunit.xml file and run phpunit in that directory
+find . -name 'phpunit.xml*' -not -path '*vendor/*' -exec dirname {} \; | while read DIR
+do
+    pushd ${DIR}
+    composer install
+    vendor/bin/phpunit
+    popd;
+done
