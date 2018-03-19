@@ -216,7 +216,7 @@ class SpreadsheetSnippets {
              [
               'pivotTable' => [
                 'source' => [
-                  'sheetId' => $source_sheet_id,
+                  'sheetId' => $sourceSheetId,
                   'startRowIndex' => 0,
                   'startColumnIndex' => 0,
                   'endRowIndex' => 101,
@@ -248,7 +248,7 @@ class SpreadsheetSnippets {
           ]
         ],
         'start' => [
-          'sheetId' => $target_sheet_id,
+          'sheetId' => $targetSheetId,
           'rowIndex' => 0,
           'columnIndex' => 0
         ],

@@ -473,7 +473,6 @@ class SlidesSnippets
         $requests = array();
         $requests[] = new Google_Service_Slides_Request(array(
             'createSheetsChart' => array(
-                'objectId' => $shapeId,
                 'spreadsheetId' => $spreadsheetId,
                 'chartId' => $sheetChartId,
                 'linkingMode' => 'LINKED',
@@ -499,7 +498,7 @@ class SlidesSnippets
             'requests' => $requests
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
-        printf("Added a linked Sheets chart with ID: %s", $shapeId);
+        printf("Added a linked Sheets chart with ID: %s\n", $response->getPresentationId());
         // [END createSheetsChart]
         return $response;
     }
@@ -521,7 +520,7 @@ class SlidesSnippets
             'requests' => $requests
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
-        printf("Refreshed a linked Sheets chart with ID: %s", $shapeId);
+        printf("Refreshed a linked Sheets chart with ID: %s\n", $response->getPresentationId());
         // [END refreshSheetsChart]
         return $response;
     }
