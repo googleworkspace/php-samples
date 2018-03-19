@@ -25,11 +25,6 @@ class DriveSnippetsTest extends BaseTestCase
         $this->snippets = new DriveSnippets(parent::$service);
     }
 
-    protected function tearDown()
-    {
-        parent::tearDown();
-    }
-
     public function testUploadBasic()
     {
         $id = $this->snippets->uploadBasic();
@@ -149,6 +144,7 @@ class DriveSnippetsTest extends BaseTestCase
     {
         $startToken = $this->snippets->fetchStartPageToken();
         $id = $this->createTestBlob();
+        usleep(500000);
         $token = $this->snippets->fetchChanges($startToken);
         $this->assertNotNull($token, 'Token not returned.');
         $this->assertNotEquals($startToken, $token);
