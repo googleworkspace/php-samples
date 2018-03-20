@@ -1,4 +1,6 @@
-# G Suite PHP Samples
+# G Suite PHP Samples 
+
++[![Build Status](https://travis-ci.org/gsuitedevs/php-samples.svg?branch=master)](https://travis-ci.org/gsuitedevs/php-samples)
 
 A collection of samples that demonstrate how to call G Suite APIs from PHP.
 
