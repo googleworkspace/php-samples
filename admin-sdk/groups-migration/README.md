@@ -1,6 +1,6 @@
-# Google Apps Script API Quickstart
+# Admin SDK - Groups Migration Quickstart
 
-Complete the steps described in the [Apps Script API Quickstart](https://developers.google.com/apps-script/api/quickstart/php), and in about five minutes you'll have a simple PHP command-line application that makes requests to the Apps Script API.
+Complete the steps described in the [Admin SDK - Groups Migration Quickstart](https://developers.google.com/admin-sdk/groups-migration/v1/quickstart/php), and in about five minutes you'll have a simple PHP command-line application that makes requests to the Admin SDK.
 
 ## Set up
 

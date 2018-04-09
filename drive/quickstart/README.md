@@ -1,6 +1,6 @@
 # Google Drive API Quickstart
 
-Complete the steps described in the [Google Drive PHP Quickstart](https://developers.google.com/drive/v3/web/quickstart/php), and in about five minutes you'll have a simple PHP command-line application that makes requests to the Google Drive API.
+Complete the steps described in the [Google Drive API Quickstart](https://developers.google.com/drive/v3/web/quickstart/php), and in about five minutes you'll have a simple PHP command-line application that makes requests to the Google Drive V3 API.
 
 ## Set up
 

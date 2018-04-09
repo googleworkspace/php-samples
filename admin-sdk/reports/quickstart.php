@@ -22,8 +22,8 @@
 function getClient()
 {
     $client = new Google_Client();
-    $client->setApplicationName('Google Calendar API PHP Quickstart');
-    $client->setScopes(Google_Service_Calendar::CALENDAR_READONLY);
+    $client->setApplicationName('Reports API PHP Quickstart');
+    $client->setScopes(Google_Service_Reports::ADMIN_REPORTS_AUDIT_READONLY);
     $client->setAuthConfig('client_secret.json');
     $client->setAccessType('offline');
 
@@ -74,27 +74,24 @@ function expandHomeDirectory($path)
 
 // Get the API client and construct the service object.
 $client = getClient();
-$service = new Google_Service_Calendar($client);
+$service = new Google_Service_Reports($client);
 
-// Print the next 10 events on the user's calendar.
-$calendarId = 'primary';
+// Print the last 10 login events.
+$userKey = 'all';
+$applicationName = 'login';
 $optParams = array(
   'maxResults' => 10,
-  'orderBy' => 'startTime',
-  'singleEvents' => true,
-  'timeMin' => date('c'),
 );
-$results = $service->events->listEvents($calendarId, $optParams);
+$results = $service->activities->listActivities(
+    $userKey, $applicationName, $optParams);
 
-if (empty($results->getItems())) {
-    print "No upcoming events found.\n";
+if (count($results->getItems()) == 0) {
+  print "No logins found.\n";
 } else {
-    print "Upcoming events:\n";
-    foreach ($results->getItems() as $event) {
-        $start = $event->start->dateTime;
-        if (empty($start)) {
-            $start = $event->start->date;
-        }
-        printf("%s (%s)\n", $event->getSummary(), $start);
-    }
+  print "Logins:\n";
+  foreach ($results->getItems() as $activity) {
+    printf("%s: %s (%s)\n", $activity->getId()->getTime(),
+        $activity->getActor()->getEmail(),
+        $activity->getEvents()[0]->getName());
+  }
 }

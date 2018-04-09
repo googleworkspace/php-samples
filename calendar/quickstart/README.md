@@ -1,6 +1,6 @@
-# Google Calendar PHP Quickstart
+# Google Calendar API Quickstart
 
-Complete the steps described in the [Google Calendar PHP Quickstart](https://developers.google.com/calendar/quickstart/php), and in about five minutes you'll have a simple PHP command-line application that makes requests to the Google Calendar API.
+Complete the steps described in the [Google Calendar API Quickstart](https://developers.google.com/calendar/quickstart/php), and in about five minutes you'll have a simple PHP command-line application that makes requests to the Google Calendar API.
 
 ## Set up
 

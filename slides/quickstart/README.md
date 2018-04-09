@@ -1,6 +1,6 @@
-# Google Slides PHP Quickstart
+# Google Slides API Quickstart
 
-Complete the steps described in the [Google Slides PHP Quickstart](https://developers.google.com/slides/quickstart/php), and in about five minutes you'll have a simple PHP command-line application that makes requests to the Google Slides API.
+Complete the steps described in the [Google Slides API Quickstart](https://developers.google.com/slides/quickstart/php), and in about five minutes you'll have a simple PHP command-line application that makes requests to the Google Slides API.
 
 ## Set up
 

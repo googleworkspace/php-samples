@@ -22,8 +22,8 @@
 function getClient()
 {
     $client = new Google_Client();
-    $client->setApplicationName('Google Calendar API PHP Quickstart');
-    $client->setScopes(Google_Service_Calendar::CALENDAR_READONLY);
+    $client->setApplicationName('Google Enterprise License Manager API PHP Quickstart');
+    $client->setScopes(Google_Service_Licensing::APPS_LICENSING);
     $client->setAuthConfig('client_secret.json');
     $client->setAccessType('offline');
 
@@ -74,27 +74,25 @@ function expandHomeDirectory($path)
 
 // Get the API client and construct the service object.
 $client = getClient();
-$service = new Google_Service_Calendar($client);
+$service = new Google_Service_Licensing($client);
 
-// Print the next 10 events on the user's calendar.
-$calendarId = 'primary';
+print 'Enter the domain name of your G Suite domain: ';
+$customerId = trim(fgets(STDIN));
+
+// Print the first 10 license assignments for G Suite seats.
+$productId = 'Google-Apps';
 $optParams = array(
   'maxResults' => 10,
-  'orderBy' => 'startTime',
-  'singleEvents' => true,
-  'timeMin' => date('c'),
 );
-$results = $service->events->listEvents($calendarId, $optParams);
+$results = $service->licenseAssignments->listForProduct(
+    $productId, $customerId, $optParams);
 
-if (empty($results->getItems())) {
-    print "No upcoming events found.\n";
+if (count($results->getItems()) == 0) {
+  print "No license assignments found.\n";
 } else {
-    print "Upcoming events:\n";
-    foreach ($results->getItems() as $event) {
-        $start = $event->start->dateTime;
-        if (empty($start)) {
-            $start = $event->start->date;
-        }
-        printf("%s (%s)\n", $event->getSummary(), $start);
-    }
+  print "License assignments:\n";
+  foreach ($results->getItems() as $licenseAssignment) {
+    printf("%s (%s)\n", $licenseAssignment->getuserId(),
+        $licenseAssignment->getSkuId());
+  }
 }

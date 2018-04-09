@@ -22,8 +22,8 @@
 function getClient()
 {
     $client = new Google_Client();
-    $client->setApplicationName('Google Calendar API PHP Quickstart');
-    $client->setScopes(Google_Service_Calendar::CALENDAR_READONLY);
+    $client->setApplicationName('Google Classroom API PHP Quickstart');
+    $client->setScopes(Google_Service_Classroom::CLASSROOM_COURSES_READONLY);
     $client->setAuthConfig('client_secret.json');
     $client->setAccessType('offline');
 
@@ -74,27 +74,19 @@ function expandHomeDirectory($path)
 
 // Get the API client and construct the service object.
 $client = getClient();
-$service = new Google_Service_Calendar($client);
+$service = new Google_Service_Classroom($client);
 
-// Print the next 10 events on the user's calendar.
-$calendarId = 'primary';
+// Print the first 10 courses the user has access to.
 $optParams = array(
-  'maxResults' => 10,
-  'orderBy' => 'startTime',
-  'singleEvents' => true,
-  'timeMin' => date('c'),
+  'pageSize' => 10
 );
-$results = $service->events->listEvents($calendarId, $optParams);
+$results = $service->courses->listCourses($optParams);
 
-if (empty($results->getItems())) {
-    print "No upcoming events found.\n";
+if (count($results->getCourses()) == 0) {
+  print "No courses found.\n";
 } else {
-    print "Upcoming events:\n";
-    foreach ($results->getItems() as $event) {
-        $start = $event->start->dateTime;
-        if (empty($start)) {
-            $start = $event->start->date;
-        }
-        printf("%s (%s)\n", $event->getSummary(), $start);
-    }
+  print "Courses:\n";
+  foreach ($results->getCourses() as $course) {
+    printf("%s (%s)\n", $course->getName(), $course->getId());
+  }
 }

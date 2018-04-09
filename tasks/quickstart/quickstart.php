@@ -22,8 +22,8 @@
 function getClient()
 {
     $client = new Google_Client();
-    $client->setApplicationName('Google Calendar API PHP Quickstart');
-    $client->setScopes(Google_Service_Calendar::CALENDAR_READONLY);
+    $client->setApplicationName('Google Slides API PHP Quickstart');
+    $client->setScopes(Google_Service_Tasks::TASKS_READONLY);
     $client->setAuthConfig('client_secret.json');
     $client->setAccessType('offline');
 
@@ -74,27 +74,19 @@ function expandHomeDirectory($path)
 
 // Get the API client and construct the service object.
 $client = getClient();
-$service = new Google_Service_Calendar($client);
+$service = new Google_Service_Tasks($client);
 
-// Print the next 10 events on the user's calendar.
-$calendarId = 'primary';
+// Print the first 10 task lists.
 $optParams = array(
   'maxResults' => 10,
-  'orderBy' => 'startTime',
-  'singleEvents' => true,
-  'timeMin' => date('c'),
 );
-$results = $service->events->listEvents($calendarId, $optParams);
+$results = $service->tasklists->listTasklists($optParams);
 
-if (empty($results->getItems())) {
-    print "No upcoming events found.\n";
+if (count($results->getItems()) == 0) {
+  print "No task lists found.\n";
 } else {
-    print "Upcoming events:\n";
-    foreach ($results->getItems() as $event) {
-        $start = $event->start->dateTime;
-        if (empty($start)) {
-            $start = $event->start->date;
-        }
-        printf("%s (%s)\n", $event->getSummary(), $start);
-    }
+  print "Task lists:\n";
+  foreach ($results->getItems() as $tasklist) {
+    printf("%s (%s)\n", $tasklist->getTitle(), $tasklist->getId());
+  }
 }

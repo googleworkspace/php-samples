@@ -22,8 +22,8 @@
 function getClient()
 {
     $client = new Google_Client();
-    $client->setApplicationName('Google Calendar API PHP Quickstart');
-    $client->setScopes(Google_Service_Calendar::CALENDAR_READONLY);
+    $client->setApplicationName('Groups Settings API PHP Quickstart');
+    $client->setScopes(Google_Service_Groupssettings::APPS_GROUPS_SETTINGS);
     $client->setAuthConfig('client_secret.json');
     $client->setAccessType('offline');
 
@@ -74,27 +74,23 @@ function expandHomeDirectory($path)
 
 // Get the API client and construct the service object.
 $client = getClient();
-$service = new Google_Service_Calendar($client);
+$service = new Google_Service_Groupssettings($client);
 
-// Print the next 10 events on the user's calendar.
-$calendarId = 'primary';
+print 'Enter the email address of a Google Group in your domain:';
+$groupEmail = trim(fgets(STDIN));
+
+// Prints the group's settings.
 $optParams = array(
-  'maxResults' => 10,
-  'orderBy' => 'startTime',
-  'singleEvents' => true,
-  'timeMin' => date('c'),
+  'alt' => 'json'
 );
-$results = $service->events->listEvents($calendarId, $optParams);
-
-if (empty($results->getItems())) {
-    print "No upcoming events found.\n";
-} else {
-    print "Upcoming events:\n";
-    foreach ($results->getItems() as $event) {
-        $start = $event->start->dateTime;
-        if (empty($start)) {
-            $start = $event->start->date;
-        }
-        printf("%s (%s)\n", $event->getSummary(), $start);
-    }
+try {
+  $group = $service->groups->get($groupEmail, $optParams);
+} catch (Google_Service_Exception $e) {
+  if ($e->getCode() == 404) {
+    printf('Group not found: %s', $groupEmail);
+    exit();
+  } else {
+    throw $e;
+  }
 }
+print_r($group->toSimpleObject());

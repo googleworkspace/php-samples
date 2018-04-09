@@ -22,8 +22,8 @@
 function getClient()
 {
     $client = new Google_Client();
-    $client->setApplicationName('Google Calendar API PHP Quickstart');
-    $client->setScopes(Google_Service_Calendar::CALENDAR_READONLY);
+    $client->setApplicationName('G Suite Groups Migration API PHP Quickstart');
+    $client->setScopes(Google_Service_GroupsMigration::APPS_GROUPS_MIGRATION);
     $client->setAuthConfig('client_secret.json');
     $client->setAccessType('offline');
 
@@ -74,27 +74,29 @@ function expandHomeDirectory($path)
 
 // Get the API client and construct the service object.
 $client = getClient();
-$service = new Google_Service_Calendar($client);
+$service = new Google_Service_GroupsMigration($client);
 
-// Print the next 10 events on the user's calendar.
-$calendarId = 'primary';
+print "Warning: A test email will be inserted into the group entered below.\n";
+print 'Enter the email address of a Google Group in your domain: ';
+$groupId = trim(fgets(STDIN));
+
+// Insert a test email into the group.
+$messageId = rand() . '@' . $groupId;
+$date = date(DateTime::RFC822);
+$message = <<<EOT
+Message-ID: <$messageId>
+Date: $date
+To: $groupId
+From: "Alice Smith" <alice@example.com>
+Subject: Groups Migration API Test
+
+This is a test.
+EOT;
+
 $optParams = array(
-  'maxResults' => 10,
-  'orderBy' => 'startTime',
-  'singleEvents' => true,
-  'timeMin' => date('c'),
+  'data' => $message,
+  'mimeType' => 'message/rfc822',
+  'uploadType' => 'media',
 );
-$results = $service->events->listEvents($calendarId, $optParams);
-
-if (empty($results->getItems())) {
-    print "No upcoming events found.\n";
-} else {
-    print "Upcoming events:\n";
-    foreach ($results->getItems() as $event) {
-        $start = $event->start->dateTime;
-        if (empty($start)) {
-            $start = $event->start->date;
-        }
-        printf("%s (%s)\n", $event->getSummary(), $start);
-    }
-}
+$result = $service->archive->insert($groupId, $optParams);
+printf("Result: %s\n", $result->getResponseCode());
