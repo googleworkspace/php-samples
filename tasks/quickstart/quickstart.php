@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [END tasks_quickstart]
+// [START tasks_quickstart]
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
