@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START admin_sdk_groups_migration_quickstart]
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
@@ -100,3 +100,4 @@ $optParams = array(
 );
 $result = $service->archive->insert($groupId, $optParams);
 printf("Result: %s\n", $result->getResponseCode());
+// [END admin_sdk_groups_migration_quickstart]

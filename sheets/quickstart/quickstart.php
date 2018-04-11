@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START sheets_quickstart]
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
@@ -92,3 +92,4 @@ if (empty($values)) {
         printf("%s, %s\n", $row[0], $row[4]);
     }
 }
+// [END sheets_quickstart]

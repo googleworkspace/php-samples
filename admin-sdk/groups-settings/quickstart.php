@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START admin_sdk_groups_settings_quickstart]
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
@@ -94,3 +94,4 @@ try {
   }
 }
 print_r($group->toSimpleObject());
+// [END admin_sdk_groups_settings_quickstart]

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START admin_sdk_reports_quickstart]
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
@@ -95,3 +95,4 @@ if (count($results->getItems()) == 0) {
         $activity->getEvents()[0]->getName());
   }
 }
+// [END admin_sdk_reports_quickstart]

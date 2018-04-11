@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START drive_quickstart]
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
@@ -91,3 +91,4 @@ if (count($results->getFiles()) == 0) {
         printf("%s (%s)\n", $file->getName(), $file->getId());
     }
 }
+// [END drive_quickstart]

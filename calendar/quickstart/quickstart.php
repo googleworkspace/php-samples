@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START calendar_quickstart]
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
@@ -98,3 +98,4 @@ if (empty($results->getItems())) {
         printf("%s (%s)\n", $event->getSummary(), $start);
     }
 }
+// [END calendar_quickstart]

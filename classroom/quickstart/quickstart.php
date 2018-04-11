@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START classroom_quickstart]
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
@@ -90,3 +90,4 @@ if (count($results->getCourses()) == 0) {
     printf("%s (%s)\n", $course->getName(), $course->getId());
   }
 }
+// [END classroom_quickstart]

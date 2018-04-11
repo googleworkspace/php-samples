@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START gmail_quickstart]
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
@@ -88,3 +88,4 @@ if (count($results->getLabels()) == 0) {
     printf("- %s\n", $label->getName());
   }
 }
+// [END gmail_quickstart]

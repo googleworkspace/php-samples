@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START admin_sdk_licensing_quickstart]
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
@@ -96,3 +96,4 @@ if (count($results->getItems()) == 0) {
         $licenseAssignment->getSkuId());
   }
 }
+// [END admin_sdk_licensing_quickstart]

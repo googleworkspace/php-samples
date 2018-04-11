@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START apps_script_quickstart]
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
@@ -106,3 +106,4 @@ $request->setFiles([$file1, $file2]);
 
 $response = $service->projects->updateContent($scriptId, $request);
 echo 'https://script.google.com/d/' . $response->getScriptId() . '/edit';
+// [END apps_script_quickstart]

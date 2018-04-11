@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+// [START slides_quickstart]
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
@@ -88,3 +88,4 @@ foreach ($slides as $i => $slide) {
     printf("- Slide #%s contains %s elements.\n", $i + 1,
       count($slide->getPageElements()));
 }
+// [END slides_quickstart]
