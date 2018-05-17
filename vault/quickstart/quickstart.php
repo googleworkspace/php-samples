@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START tasks_quickstart]
+// [START vault_quickstart]
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
@@ -22,8 +22,8 @@
 function getClient()
 {
     $client = new Google_Client();
-    $client->setApplicationName('Google Tasks API PHP Quickstart');
-    $client->setScopes(Google_Service_Tasks::TASKS_READONLY);
+    $client->setApplicationName('Google Vault API PHP Quickstart');
+    $client->setScopes(Google_Service_Vault::EDISCOVERY_READONLY);
     $client->setAuthConfig('client_secret.json');
     $client->setAccessType('offline');
 
@@ -74,20 +74,20 @@ function expandHomeDirectory($path)
 
 // Get the API client and construct the service object.
 $client = getClient();
-$service = new Google_Service_Tasks($client);
+$service = new Google_Service_Vault($client);
 
-// Print the first 10 task lists.
+// Print the first 10 matters.
 $optParams = array(
-  'maxResults' => 10,
+  'pageSize' => 10
 );
-$results = $service->tasklists->listTasklists($optParams);
+$results = $service->matters->listMatters($optParams);
 
-if (count($results->getItems()) == 0) {
-  print "No task lists found.\n";
+if (count($results->getMatters()) == 0) {
+  print "No matters found.\n";
 } else {
-  print "Task lists:\n";
-  foreach ($results->getItems() as $tasklist) {
-    printf("%s (%s)\n", $tasklist->getTitle(), $tasklist->getId());
+  print "Matters:\n";
+  foreach ($results->getMatters() as $matter) {
+    printf("%s (%s)\n", $matter->getName(), $matter->getMatterId());
   }
 }
-// [END tasks_quickstart]
+// [END vault_quickstart]
