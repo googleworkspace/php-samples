@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 // [START drive_quickstart]
-
 require __DIR__ . '/vendor/autoload.php';
 
 /**

@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 // [START sheets_quickstart]
+require __DIR__ . '/vendor/autoload.php';
+
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object

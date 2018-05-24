@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 // [START apps_script_execute]
+require __DIR__ . '/vendor/autoload.php';
+
 // Get the API client and construct the service object.
 $client = getClient();
 $service = new Google_Service_Script($client);
