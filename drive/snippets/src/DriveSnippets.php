@@ -25,7 +25,7 @@ class DriveSnippets
     public function uploadBasic()
     {
         $driveService = $this->service;
-        // [START uploadBasic]
+        // [START drive_upload_basic]
         $fileMetadata = new Google_Service_Drive_DriveFile(array(
             'name' => 'photo.jpg'));
         $content = file_get_contents('files/photo.jpg');
@@ -35,14 +35,14 @@ class DriveSnippets
             'uploadType' => 'multipart',
             'fields' => 'id'));
         printf("File ID: %s\n", $file->id);
-        // [END uploadBasic]
+        // [END drive_upload_basic]
         return $file->id;
     }
 
     public function uploadToFolder($realFolderId)
     {
         $driveService = $this->service;
-        // [START uploadToFolder]
+        // [START drive_upload_to_folder]
         $folderId = '0BwwA4oUTeiV1TGRPeTVjaWRDY1E';
         // [START_EXCLUDE silent]
         $folderId = $realFolderId;
@@ -58,14 +58,14 @@ class DriveSnippets
             'uploadType' => 'multipart',
             'fields' => 'id'));
         printf("File ID: %s\n", $file->id);
-        // [END uploadToFolder]
+        // [END drive_upload_to_folder]
         return $file->id;
     }
 
     public function uploadWithConversion()
     {
         $driveService = $this->service;
-        // [START uploadWithConversion]
+        // [START drive_upload_with_conversion]
         $fileMetadata = new Google_Service_Drive_DriveFile(array(
             'name' => 'My Report',
             'mimeType' => 'application/vnd.google-apps.spreadsheet'));
@@ -76,7 +76,7 @@ class DriveSnippets
             'uploadType' => 'multipart',
             'fields' => 'id'));
         printf("File ID: %s\n", $file->id);
-        // [END uploadWithConversion]
+        // [END drive_upload_with_conversion]
         return $file->id;
     }
 
@@ -84,7 +84,7 @@ class DriveSnippets
     public function exportPdf($realFileId)
     {
         $driveService = $this->service;
-        // [START exportPdf]
+        // [START drive_export_pdf]
         $fileId = '1ZdR3L3qP4Bkq8noWLJHSr_iBau0DNT4Kli4SxNc2YEo';
         // [START_EXCLUDE silent]
         $fileId = $realFileId;
@@ -92,14 +92,14 @@ class DriveSnippets
         $response = $driveService->files->export($fileId, 'application/pdf', array(
             'alt' => 'media'));
         $content = $response->getBody()->getContents();
-        // [END exportPdf]
+        // [END drive_export_pdf]
         return $content;
     }
 
     public function downloadFile($realFileId)
     {
         $driveService = $this->service;
-        // [START downloadFile]
+        // [START drive_download_file]
         $fileId = '0BwwA4oUTeiV1UVNwOHItT0xfa2M';
         // [START_EXCLUDE silent]
         $fileId = $realFileId;
@@ -107,28 +107,28 @@ class DriveSnippets
         $response = $driveService->files->get($fileId, array(
             'alt' => 'media'));
         $content = $response->getBody()->getContents();
-        // [END downloadFile]
+        // [END drive_download_file]
         return $content;
     }
 
     public function createShortcut()
     {
         $driveService = $this->service;
-        // [START createShortcut]
+        // [START drive_create_shortcut]
         $fileMetadata = new Google_Service_Drive_DriveFile(array(
             'name' => 'Project plan',
             'mimeType' => 'application/vnd.google-apps.drive-sdk'));
         $file = $driveService->files->create($fileMetadata, array(
             'fields' => 'id'));
         printf("File ID: %s\n", $file->id);
-        // [END createShortcut]
+        // [END drive_create_shortcut]
         return $file->id;
     }
 
     public function touchFile($realFileId, $realModifiedTime)
     {
         $driveService = $this->service;
-        // [START touchFile]
+        // [START drive_touch_file]
         $fileId = '1sTWaJ_j7PkjzaBWtNc3IzovK5hQf21FbOw9yLeeLPNQ';
         $fileMetadata = new Google_Service_Drive_DriveFile(array(
             'modifiedTime' => date('Y-m-d\TH:i:s.uP')));
@@ -139,28 +139,28 @@ class DriveSnippets
         $file = $driveService->files->update($fileId, $fileMetadata, array(
             'fields' => 'id, modifiedTime'));
         printf("Modified time: %s\n", $file->modifiedTime);
-        // [END touchFile]
+        // [END drive_touch_file]
         return $file->modifiedTime;
     }
 
     public function createFolder()
     {
         $driveService = $this->service;
-        // [START createFolder]
+        // [START drive_create_folder]
         $fileMetadata = new Google_Service_Drive_DriveFile(array(
             'name' => 'Invoices',
             'mimeType' => 'application/vnd.google-apps.folder'));
         $file = $driveService->files->create($fileMetadata, array(
             'fields' => 'id'));
         printf("Folder ID: %s\n", $file->id);
-        // [END createFolder]
+        // [END drive_create_folder]
         return $file->id;
     }
 
     public function moveFileToFolder($realFileId, $realFolderId)
     {
         $driveService = $this->service;
-        // [START moveFileToFolder]
+        // [START drive_move_file_to_folder]
         $fileId = '1sTWaJ_j7PkjzaBWtNc3IzovK5hQf21FbOw9yLeeLPNQ';
         $folderId = '0BwwA4oUTeiV1TGRPeTVjaWRDY1E';
         $emptyFileMetadata = new Google_Service_Drive_DriveFile();
@@ -176,7 +176,7 @@ class DriveSnippets
             'addParents' => $folderId,
             'removeParents' => $previousParents,
             'fields' => 'id, parents'));
-        // [END moveFileToFolder]
+        // [END drive_move_file_to_folder]
         return $file->parents;
     }
 
@@ -184,7 +184,7 @@ class DriveSnippets
     {
         $driveService = $this->service;
         $files = array();
-        // [START searchFiles]
+        // [START drive_search_files]
         $pageToken = null;
         do {
             $response = $driveService->files->listFiles(array(
@@ -202,7 +202,7 @@ class DriveSnippets
 
             $pageToken = $response->pageToken;
         } while ($pageToken != null);
-        // [END searchFiles]
+        // [END drive_search_files]
         return $files;
     }
 
@@ -210,7 +210,7 @@ class DriveSnippets
     {
         $driveService = $this->service;
         $ids = array();
-        // [START shareFile]
+        // [START drive_share_file]
         $fileId = '1sTWaJ_j7PkjzaBWtNc3IzovK5hQf21FbOw9yLeeLPNQ';
         // [START_EXCLUDE silent]
         $fileId = $realFileId;
@@ -257,14 +257,14 @@ class DriveSnippets
         } finally {
             $driveService->getClient()->setUseBatch(false);
         }
-        // [END shareFile]
+        // [END drive_share_file]
         return $ids;
     }
 
     public function uploadAppData()
     {
         $driveService = $this->service;
-        // [START uploadAppData]
+        // [START drive_upload_app_data]
         $fileMetadata = new Google_Service_Drive_DriveFile(array(
             'name' => 'config.json',
             'parents' => array('appDataFolder')
@@ -276,14 +276,14 @@ class DriveSnippets
             'uploadType' => 'multipart',
             'fields' => 'id'));
         printf("File ID: %s\n", $file->id);
-        // [END uploadAppData]
+        // [END drive_upload_app_data]
         return $file->id;
     }
 
     public function listAppData()
     {
         $driveService = $this->service;
-        // [START listAppData]
+        // [START drive_list_app_data]
         $response = $driveService->files->listFiles(array(
             'spaces' => 'appDataFolder',
             'fields' => 'nextPageToken, files(id, name)',
@@ -292,19 +292,19 @@ class DriveSnippets
         foreach ($response->files as $file) {
             printf("Found file: %s (%s)", $file->name, $file->id);
         }
-        // [END listAppData]
+        // [END drive_list_app_data]
         return $response->files;
     }
 
     public function fetchAppDataFolder()
     {
         $driveService = $this->service;
-        // [START fetchAppDataFolder]
+        // [START drive_fetch_app_data_folder]
         $file = $driveService->files->get('appDataFolder', array(
             'fields' => 'id'
         ));
         printf("Folder ID: %s\n", $file->id);
-        // [END fetchAppDataFolder]
+        // [END drive_fetch_app_data_folder]
         return $file->id;
     }
 
@@ -312,17 +312,17 @@ class DriveSnippets
     public function fetchStartPageToken()
     {
         $driveService = $this->service;
-        # [START fetchStartPageToken]
+        # [START drive_fetch_start_page_token]
         $response = $driveService->changes->getStartPageToken();
         printf("Start token: %s\n", $response->startPageToken);
-        # [END fetchStartPageToken]
+        # [END drive_fetch_start_page_token]
         return $response->startPageToken;
     }
 
     public function fetchChanges($savedStartPageToken)
     {
         $driveService = $this->service;
-        // [START fetchChanges]
+        // [START drive_fetch_changes]
         # Begin with our last saved start token for this user or the
         # current token from getStartPageToken()
         $pageToken = $savedStartPageToken;
@@ -340,7 +340,7 @@ class DriveSnippets
             }
             $pageToken = $response->nextPageToken;
         }
-        // [END fetchChanges]
+        // [END drive_fetch_changes]
         return $savedStartPageToken;
     }
 }

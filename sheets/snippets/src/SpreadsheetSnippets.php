@@ -24,7 +24,7 @@ class SpreadsheetSnippets
     public function create($title)
     {
         $service = $this->service;
-        // [START create]
+        // [START sheets_create]
         $spreadsheet = new Google_Service_Sheets_Spreadsheet([
             'properties' => [
                 'title' => $title
@@ -34,14 +34,14 @@ class SpreadsheetSnippets
             'fields' => 'spreadsheetId'
         ]);
         printf("Spreadsheet ID: %s\n", $spreadsheet->spreadsheetId);
-        // [START end]
+        // [END sheets_create]
         return $spreadsheet->spreadsheetId;
     }
 
     public function batchUpdate($spreadsheetId, $title, $find, $replacement)
     {
         $service = $this->service;
-        // [START batchUpdate]
+        // [START sheets_batch_update]
         $requests = [
           // Change the spreadsheet's title.
           new Google_Service_Sheets_Request([
@@ -71,7 +71,7 @@ class SpreadsheetSnippets
         $findReplaceResponse = $response->getReplies()[1]->getFindReplace();
         printf("%s replacements made.\n",
         $findReplaceResponse->getOccurrencesChanged());
-        // [END batchUpdate]
+        // [END sheets_batch_update]
         return $response;
     }
 
@@ -79,18 +79,18 @@ class SpreadsheetSnippets
     public function getValues($spreadsheetId, $range)
     {
         $service = $this->service;
-        // [START getValues]
+        // [START sheets_get_alues]
         $result = $service->spreadsheets_values->get($spreadsheetId, $range);
         $numRows = $result->getValues() != null ? count($result->getValues()) : 0;
         printf("%d rows retrieved.", $numRows);
-        // [END getValues]
+        // [END sheets_get_alues]
         return $result;
     }
 
     public function batchGetValues($spreadsheetId, $_ranges)
     {
         $service = $this->service;
-        // [START batchGetValues].
+        // [START sheets_batch_get_values]
         $ranges = [
             // Range names ...
         ];
@@ -102,7 +102,7 @@ class SpreadsheetSnippets
         );
         $result = $service->spreadsheets_values->batchGet($spreadsheetId, $params);
         printf("%d ranges retrieved.", count($result->getValueRanges()));
-        // [END batchGetValues]
+        // [END sheets_batch_get_values]
         return $result;
     }
 
@@ -110,7 +110,7 @@ class SpreadsheetSnippets
       $_values)
     {
         $service = $this->service;
-        // [START updateValues]
+        // [START sheets_update_values]
         $values = [
             [
                 // Cell values ...
@@ -129,7 +129,7 @@ class SpreadsheetSnippets
         $result = $service->spreadsheets_values->update($spreadsheetId, $range,
         $body, $params);
         printf("%d cells updated.", $result->getUpdatedCells());
-        // [END updateValues]
+        // [END sheets_update_values]
         return $result;
     }
 
@@ -137,7 +137,7 @@ class SpreadsheetSnippets
       $_values)
     {
         $service = $this->service;
-        // [START batchUpdateValues]
+        // [START sheets_batch_update_values]
         $values = [
             [
                 // Cell values ...
@@ -159,7 +159,7 @@ class SpreadsheetSnippets
         ]);
         $result = $service->spreadsheets_values->batchUpdate($spreadsheetId, $body);
         printf("%d cells updated.", $result->getTotalUpdatedCells());
-        // [END batchUpdateValues]
+        // [END sheets_batch_update_values]
         return $result;
     }
 
@@ -167,7 +167,7 @@ class SpreadsheetSnippets
       $_values)
     {
         $service = $this->service;
-        // [START appendValues]
+        // [START sheets_append_values]
         $values = [
             [
                 // Cell values ...
@@ -185,7 +185,7 @@ class SpreadsheetSnippets
         ];
         $result = $service->spreadsheets_values->append($spreadsheetId, $range, $body, $params);
         printf("%d cells appended.", $result->getUpdates()->getUpdatedCells());
-        // [END appendValues]
+        // [END sheets_append_values]
         return $result;
     }
 
@@ -215,7 +215,7 @@ class SpreadsheetSnippets
         $batchUpdateResponse = $service->spreadsheets->batchUpdate($spreadsheetId, $batchUpdateRequest);
         $sourceSheetId = $batchUpdateResponse->replies[0]->addSheet->properties->sheetId;
         $targetSheetId = $batchUpdateResponse->replies[1]->addSheet->properties->sheetId;
-        // [START pivotTables]
+        // [START sheets_pivot_tables]
         $requests = [
             'updateCells' => [
                 'rows' => [
@@ -263,13 +263,13 @@ class SpreadsheetSnippets
             ]
         ];
         return $batchUpdateResponse;
-        // [END pivotTables]
+        // [END sheets_pivot_tables]
     }
 
     public function conditionalFormatting($spreadsheetId)
     {
         $service = $this->service;
-        // [START conditionalFormatting]
+        // [START sheets_conditional_formatting]
         $myRange = [
             'sheetId' => 0,
             'startRowIndex' => 1,
@@ -321,6 +321,6 @@ class SpreadsheetSnippets
         $response = $service->spreadsheets->batchUpdate($spreadsheetId, $batchUpdateRequest);
         printf("%d cells updated.", count($response->getReplies()));
         return $response;
-        // [END conditionalFormatting]
+        // [END sheets_conditional_formatting]
     }
 }

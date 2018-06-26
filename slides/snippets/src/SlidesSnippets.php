@@ -26,34 +26,34 @@ class SlidesSnippets
     public function createPresentation($title)
     {
         $slidesService = $this->service;
-        // [START createPresentation]
+        // [START slides_create_presentation]
         $presentation = new Google_Service_Slides_Presentation(array(
             'title' => $title
         ));
 
         $presentation = $slidesService->presentations->create($presentation);
         printf("Created presentation with ID: %s\n", $presentation->presentationId);
-        // [END createPresentation]
+        // [END slides_create_presentation]
         return $presentation;
     }
 
     public function copyPresentation($presentationId, $copyTitle)
     {
         $driveService = $this->driveService;
-        // [START copyPresentation]
+        // [START slides_copy_presentation]
         $copy = new Google_Service_Drive_DriveFile(array(
             'name' => $copyTitle
         ));
         $driveResponse = $driveService->files->copy($presentationId, $copy);
         $presentationCopyId = $driveResponse->id;
-        // [END copyPresentation]
+        // [END slides_copy_presentation]
         return $presentationCopyId;
     }
 
     public function createSlide($presentationId, $pageId)
     {
         $slidesService = $this->service;
-        // [START createSlide]
+        // [START slides_create_slide]
         // Add a slide at index 1 using the predefined 'TITLE_AND_TWO_COLUMNS' layout and
         // the ID page_id.
         $requests = array();
@@ -77,14 +77,14 @@ class SlidesSnippets
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
         $createSlideResponse = $response->getReplies()[0]->getCreateSlide();
         printf("Created slide with ID: %s\n", $createSlideResponse->getObjectId());
-        // [END createSlide]
+        // [END slides_create_slide]
         return $response;
     }
 
     public function createTextboxWithText($presentationId, $pageId)
     {
         $slidesService = $this->service;
-        // [START createTextboxWithText]
+        // [START slides_create_textbox_with_text]
         // Create a new square textbox, using the supplied element ID.
         $elementId = 'MyTextBox_01';
         $pt350 = array('magnitude' => 350, 'unit' => 'PT');
@@ -126,7 +126,7 @@ class SlidesSnippets
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
         $createShapeResponse = $response->getReplies()[0]->getCreateShape();
         printf("Created textbox with ID: %s\n", $createShapeResponse->getObjectId());
-        // [END createTextboxWithText]
+        // [END slides_create_textbox_with_text]
         return $response;
     }
 
@@ -134,7 +134,7 @@ class SlidesSnippets
     {
         $slidesService = $this->service;
         $driveService = $this->driveService;
-        // [START createImage]
+        // [START slides_create_image]
         // Temporarily upload a local image file to Drive, in order to obtain a URL
         // for the image. Alternatively, you can provide the Slides servcie a URL of
         // an already hosted image.
@@ -189,7 +189,7 @@ class SlidesSnippets
 
         // Remove the temporary image file from Drive.
         $driveService->files->delete($fileId);
-        // [END createImage]
+        // [END slides_create_image]
         return $response;
     }
 
@@ -200,7 +200,7 @@ class SlidesSnippets
         $sheetsService = $this->sheetsService;
 
         $responses = array();
-        // [START textMerging]
+        // [START slides_text_merging]
         // Use the Sheets API to load data, one record per row.
         $dataRangeNotation = 'Customers!A2:M6';
         $sheetsResponse =
@@ -267,7 +267,7 @@ class SlidesSnippets
             printf("Created presentation for %s with ID: %s\n", $customerName, $presentationCopyId);
             printf("Replaced %d text instances.\n", $numReplacements);
         }
-        // [END textMerging]
+        // [END slides_text_merging]
         return $responses;
     }
 
@@ -277,7 +277,7 @@ class SlidesSnippets
         $driveService = $this->driveService;
         $logoUrl = $imageUrl;
         $customerGraphicUrl = $imageUrl;
-        // [START imageMerging]
+        // [START slides_image_merging]
         // Duplicate the template presentation using the Drive API.
         $copy = new Google_Service_Drive_DriveFile(array(
             'name' => $customerName . ' presentation'
@@ -322,14 +322,14 @@ class SlidesSnippets
         }
         printf("Created presentation for %s with ID: %s\n", $customerName, $presentationCopyId);
         printf("Replaced %d shapes with images.\n", $numReplacements);
-        // [END imageMerging]
+        // [END slides_image_merging]
         return $response;
     }
 
     public function simpleTextReplace($presentationId, $shapeId, $replacementText)
     {
         $slidesService = $this->service;
-        // [START simpleTextReplace]
+        // [START slides_simple_text_replace]
         // Remove existing text in the shape, then insert new text.
         $requests = array();
         $requests[] = new Google_Service_Slides_Request(array(
@@ -354,14 +354,14 @@ class SlidesSnippets
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
         printf("Replaced text in shape with ID: %s", $shapeId);
-        // [END simpleTextReplace]
+        // [END slides_simple_text_replace]
         return $response;
     }
 
     public function textStyleUpdate($presentationId, $shapeId)
     {
         $slidesService = $this->service;
-        // [START textStyleUpdate]
+        // [START slides_text_style_update]
         // Update the text style so that the first 5 characters are bolded
         // and italicized, the next 5 are displayed in blue 14 pt Times
         // New Roman font, and the next 5 are hyperlinked.
@@ -431,14 +431,14 @@ class SlidesSnippets
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
         printf("Updated the text style for shape with ID: %s", $shapeId);
-        // [END textStyleUpdate]
+        // [END slides_text_style_update]
         return $response;
     }
 
     public function createBulletedText($presentationId, $shapeId)
     {
         $slidesService = $this->service;
-        // [START createBulletedText]
+        // [START create_bulleted_text]
         // Add arrow-diamond-disc bullets to all text in the shape.
         $requests = array();
         $requests[] = new Google_Service_Slides_Request(array(
@@ -457,14 +457,14 @@ class SlidesSnippets
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
         printf("Added bullets to text in shape with ID: %s", $shapeId);
-        // [END createBulletedText]
+        // [END create_bulleted_text]
         return $response;
     }
 
     public function createSheetsChart($presentationId, $pageId, $spreadsheetId, $sheetChartId)
     {
         $slidesService = $this->service;
-        // [START createSheetsChart]
+        // [START slides_create_sheets_chart]
         // Embed a Sheets chart (indicated by the spreadsheet_id and sheet_chart_id) onto
         // a page in the presentation. Setting the linking mode as "LINKED" allows the
         // chart to be refreshed if the Sheets version is updated.
@@ -499,14 +499,14 @@ class SlidesSnippets
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
         printf("Added a linked Sheets chart with ID: %s\n", $response->getPresentationId());
-        // [END createSheetsChart]
+        // [END slides_create_sheets_chart]
         return $response;
     }
 
     public function refreshSheetsChart($presentationId, $presentationChartId)
     {
         $slidesService = $this->service;
-        // [START refreshSheetsChart]
+        // [START slides_refresh_sheets_chart]
         // Refresh an existing linked Sheets chart embedded in a presentation.
         $requests = array();
         $requests[] = new Google_Service_Slides_Request(array(
@@ -521,7 +521,7 @@ class SlidesSnippets
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
         printf("Refreshed a linked Sheets chart with ID: %s\n", $response->getPresentationId());
-        // [END refreshSheetsChart]
+        // [END slides_refresh_sheets_chart]
         return $response;
     }
 }
