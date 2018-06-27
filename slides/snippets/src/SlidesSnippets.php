@@ -438,7 +438,7 @@ class SlidesSnippets
     public function createBulletedText($presentationId, $shapeId)
     {
         $slidesService = $this->service;
-        // [START create_bulleted_text]
+        // [START slides_create_bulleted_text]
         // Add arrow-diamond-disc bullets to all text in the shape.
         $requests = array();
         $requests[] = new Google_Service_Slides_Request(array(
@@ -457,7 +457,7 @@ class SlidesSnippets
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
         printf("Added bullets to text in shape with ID: %s", $shapeId);
-        // [END create_bulleted_text]
+        // [END slides_create_bulleted_text]
         return $response;
     }
 
