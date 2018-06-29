@@ -79,11 +79,11 @@ class SpreadsheetSnippets
     public function getValues($spreadsheetId, $range)
     {
         $service = $this->service;
-        // [START sheets_get_alues]
+        // [START sheets_get_values]
         $result = $service->spreadsheets_values->get($spreadsheetId, $range);
         $numRows = $result->getValues() != null ? count($result->getValues()) : 0;
         printf("%d rows retrieved.", $numRows);
-        // [END sheets_get_alues]
+        // [END sheets_get_values]
         return $result;
     }
 
