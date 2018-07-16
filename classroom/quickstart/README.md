@@ -12,11 +12,11 @@ Before running this quickstart, be sure you have [Composer installed globally](h
 composer install
 ```
 
-### Download Service Account Credentials
+### Download Developer Credentials
 
-- Go to [APIs and Services](https://pantheon.corp.google.com/apis/credentials) and click "Create Credentials".
-  Select "Service Account Key" using the JSON key type, and select "Create".
-  Once downloaded, rename the credentials file to `~/credentials.json`
+- Follow the steps in the quickstart instructions to download your developer
+  credentials and save them in a file called `credentails.json` in this
+  directory.
 
 ## Run
 

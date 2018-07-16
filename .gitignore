@@ -8,4 +8,5 @@ composer.phar
 .php_cs.cache
 client_secret.json
 credentials.json
+token.json
 application_credentials.json

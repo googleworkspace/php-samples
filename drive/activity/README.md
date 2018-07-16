@@ -1,6 +1,6 @@
-# Google Apps Script API Quickstart
+# Google Drive Activity API Quickstart
 
-Complete the steps described in the [Apps Script API Quickstart](https://developers.google.com/apps-script/api/quickstart/php), and in about five minutes you'll have a simple PHP command-line application that makes requests to the Apps Script API.
+Complete the steps described in the [Google Drive Activity API Quickstart](https://developers.google.com/drive/activity/v1/quickstart/php), and in about five minutes you'll have a simple PHP command-line application that makes requests to the Google Drive Activity API.
 
 ## Set up
 
