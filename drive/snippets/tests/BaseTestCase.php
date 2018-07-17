@@ -32,8 +32,12 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
 
     protected function tearDown()
     {
-        foreach ($this->filesToDelete as $fileId) {
-            self::$service->files->delete($fileId);
+        if (sizeof($this->filesToDelete) > 0) {
+            // Sleep for a second, to prevent file not found failures.
+            sleep(1);
+            foreach ($this->filesToDelete as $fileId) {
+                self::$service->files->delete($fileId);
+            }
         }
     }
 
