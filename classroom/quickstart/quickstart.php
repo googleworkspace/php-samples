@@ -17,6 +17,10 @@
 // [START classroom_quickstart]
 require __DIR__ . '/vendor/autoload.php';
 
+if (php_sapi_name() != 'cli') {
+    throw new Exception('This application must be run on the command line.');
+}
+
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
@@ -26,11 +30,11 @@ function getClient()
     $client = new Google_Client();
     $client->setApplicationName('Google Classroom API PHP Quickstart');
     $client->setScopes(Google_Service_Classroom::CLASSROOM_COURSES_READONLY);
-    $client->setAuthConfig('client_secret.json');
+    $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
 
     // Load previously authorized credentials from a file.
-    $credentialsPath = expandHomeDirectory('credentials.json');
+    $credentialsPath = 'token.json';
     if (file_exists($credentialsPath)) {
         $accessToken = json_decode(file_get_contents($credentialsPath), true);
     } else {
@@ -60,19 +64,6 @@ function getClient()
     return $client;
 }
 
-/**
- * Expands the home directory alias '~' to the full path.
- * @param string $path the path to expand.
- * @return string the expanded path.
- */
-function expandHomeDirectory($path)
-{
-    $homeDirectory = getenv('HOME');
-    if (empty($homeDirectory)) {
-        $homeDirectory = getenv('HOMEDRIVE') . getenv('HOMEPATH');
-    }
-    return str_replace('~', realpath($homeDirectory), $path);
-}
 
 // Get the API client and construct the service object.
 $client = getClient();

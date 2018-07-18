@@ -17,6 +17,10 @@
 // [START admin_sdk_reseller_quickstart]
 require __DIR__ . '/vendor/autoload.php';
 
+if (php_sapi_name() != 'cli') {
+    throw new Exception('This application must be run on the command line.');
+}
+
 /**
  * Returns an authorized API client.
  * @return Google_Client the authorized client object
@@ -26,11 +30,11 @@ function getClient()
     $client = new Google_Client();
     $client->setApplicationName('G Suite Reseller API PHP Quickstart');
     $client->setScopes(Google_Service_Reseller::APPS_ORDER);
-    $client->setAuthConfig('client_secret.json');
+    $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
 
     // Load previously authorized credentials from a file.
-    $credentialsPath = expandHomeDirectory('credentials.json');
+    $credentialsPath = 'token.json';
     if (file_exists($credentialsPath)) {
         $accessToken = json_decode(file_get_contents($credentialsPath), true);
     } else {
