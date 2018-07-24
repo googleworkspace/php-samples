@@ -78,12 +78,13 @@ $optParams = array(
   'timeMin' => date('c'),
 );
 $results = $service->events->listEvents($calendarId, $optParams);
+$events = $results->getItems();
 
-if (empty($results->getItems())) {
+if (empty($events)) {
     print "No upcoming events found.\n";
 } else {
     print "Upcoming events:\n";
-    foreach ($results->getItems() as $event) {
+    foreach ($events as $event) {
         $start = $event->start->dateTime;
         if (empty($start)) {
             $start = $event->start->date;
