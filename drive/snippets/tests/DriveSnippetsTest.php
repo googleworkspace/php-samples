@@ -147,6 +147,6 @@ class DriveSnippetsTest extends BaseTestCase
         usleep(500000);
         $token = $this->snippets->fetchChanges($startToken);
         $this->assertNotNull($token, 'Token not returned.');
-        $this->assertNotEquals($startToken, $token);
+        $this->assertNotEquals((string)$startToken, $token);
     }
 }
