@@ -50,6 +50,11 @@ function getClient()
         // Exchange authorization code for an access token.
         $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
 
+        // Check to see if there was an error.
+        if (array_key_exists('error', $accessToken)) {
+            throw new Exception(join(', ', $accessToken));
+        }
+
         // Store the credentials to disk.
         if (!file_exists(dirname($credentialsPath))) {
             mkdir(dirname($credentialsPath), 0700, true);
