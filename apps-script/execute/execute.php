@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START apps_script_execute]
+// [START apps_script_api_execute]
 require __DIR__ . '/vendor/autoload.php';
 
 // Get the API client and construct the service object.
@@ -68,4 +68,4 @@ try {
   // The API encountered a problem before the script started executing.
   echo 'Caught exception: ', $e->getMessage(), "\n";
 }
-// [END apps_script_execute]
+// [END apps_script_api_execute]
