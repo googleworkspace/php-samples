@@ -226,19 +226,19 @@ class SpreadsheetSnippets
                                     'sheetId' => $sourceSheetId,
                                     'startRowIndex' => 0,
                                     'startColumnIndex' => 0,
-                                    'endRowIndex' => 101,
-                                    'endColumnIndex' => 8
+                                    'endRowIndex' => 20,
+                                    'endColumnIndex' => 7
                                 ],
                                 'rows' => [
                                     [
-                                        'sourceColumnOffset' => 6,
+                                        'sourceColumnOffset' => 1,
                                         'showTotals' => true,
                                         'sortOrder' => 'ASCENDING',
                                     ],
                                 ],
                                 'columns' => [
                                     [
-                                        'sourceColumnOffset' => 3,
+                                        'sourceColumnOffset' => 4,
                                         'sortOrder' => 'ASCENDING',
                                         'showTotals' => true,
                                     ]
@@ -246,7 +246,7 @@ class SpreadsheetSnippets
                                 'values' => [
                                     [
                                         'summarizeFunction' => 'COUNTA',
-                                        'sourceColumnOffset' => 3
+                                        'sourceColumnOffset' => 4
                                     ]
                                 ],
                                 'valueLayout' => 'HORIZONTAL'
