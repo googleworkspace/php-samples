@@ -33,7 +33,7 @@ class snippetsTest extends TestCase
     {
         $output = $this->runSnippet('extract_text', [self::$documentId]);
         $this->assertNotContains('Docs API Quickstart', $output);
-        $this->assertContains('SampHellole doc', $output);
+        $this->assertContains('Sample doc', $output);
     }
 
     public function testOutputAsJson()
