@@ -157,8 +157,8 @@ function getTargetInfo($target)
     if ($target->getDriveItem() != null) {
         return sprintf('driveItem:"%s"', $target->getDriveItem()->getTitle());
     }
-    if ($target->getTeamDrive() != null) {
-        return sprintf('teamDrive:"%s"', $target->getTeamDrive()->getTitle());
+    if ($target->getDrive() != null) {
+        return sprintf('drive:"%s"', $target->getDrive()->getTitle());
     }
     if ($target->getFileComment() != null) {
         $parent = $target->getFileComment()->getParent();
