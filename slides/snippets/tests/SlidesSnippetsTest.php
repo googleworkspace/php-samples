@@ -21,7 +21,6 @@ class SlidesSnippetsTest extends BaseTestCase
 {
     const IMAGE_URL =
         'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png';
-    const IMAGE_MIMETYPE = 'image/png';
     const TEMPLATE_PRESENTATION_ID = '1MmTR712m7U_kgeweE57POWwkEyWAV17AVAWjpmltmIg';
     const DATA_SPREADSHEET_ID = '14KaZMq2aCAGt5acV77zaA_Ps8aDt04G7T0ei4KiXLX8';
     const CHART_ID = 1107320627;
@@ -76,12 +75,7 @@ class SlidesSnippetsTest extends BaseTestCase
     {
         $presentationId = $this->createTestPresentation();
         $pageId = $this->createTestSlide($presentationId);
-        $response = $this->snippets->createImage(
-            $presentationId,
-            $pageId,
-            self::IMAGE_URL,
-            self::IMAGE_MIMETYPE
-        );
+        $response = $this->snippets->createImage($presentationId, $pageId);
         $this->assertEquals(1, sizeof($response->getReplies()), 'Unexpected number of replies.');
         $imageId = $response->getReplies()[0]->getCreateImage()->getObjectId();
         $this->assertNotNull($imageId, 'Missing image ID.');
