@@ -130,31 +130,16 @@ class SlidesSnippets
         return $response;
     }
 
-    public function createImage($presentationId, $pageId, $imageFilePath, $imageMimeType)
+    public function createImage($presentationId, $pageId)
     {
         $slidesService = $this->service;
-        $driveService = $this->driveService;
+
+        $imageUrl = 'https://www.google.com/images/branding/'
+            . 'googlelogo/2x/googlelogo_color_272x92dp.png';
         // [START slides_create_image]
-        // Temporarily upload a local image file to Drive, in order to obtain a URL
-        // for the image. Alternatively, you can provide the Slides servcie a URL of
-        // an already hosted image.
-        $file = new Google_Service_Drive_DriveFile(array(
-            'name' => 'My Image File',
-            'mimeType' => $imageMimeType
-        ));
-        $params = array(
-            'data' => file_get_contents($imageFilePath),
-            'uploadType' => 'media',
-        );
-        $upload = $driveService->files->create($file, $params);
-        $fileId = $upload->id;
-
-        // Obtain a URL for the image.
-        $token = $driveService->getClient()->fetchAccessTokenWithAssertion()['access_token'];
-        $endPoint = 'https://www.googleapis.com/drive/v3/files';
-        $imageUrl = sprintf('%s/%s?alt=media&access_token=%s', $endPoint, $fileId, $token);
-
-        // Create a new image, using the supplied object ID, with content downloaded from image_url.
+        // Provide the Slides service a URL in variable imageUrl of an already hosted image.
+        //
+        // Create a new image, using the supplied object ID, with content downloaded from imageUrl.
         $imageId = 'MyImage_01';
         $emu4M = array('magnitude' => 4000000, 'unit' => 'EMU');
         $requests = array();
@@ -187,8 +172,6 @@ class SlidesSnippets
         $createImageResponse = $response->getReplies()[0]->getCreateImage();
         printf("Created image with ID: %s\n", $createImageResponse->getObjectId());
 
-        // Remove the temporary image file from Drive.
-        $driveService->files->delete($fileId);
         // [END slides_create_image]
         return $response;
     }
