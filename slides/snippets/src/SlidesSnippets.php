@@ -137,8 +137,6 @@ class SlidesSnippets
         $imageUrl = 'https://www.google.com/images/branding/'
             . 'googlelogo/2x/googlelogo_color_272x92dp.png';
         // [START slides_create_image]
-        // Provide the Slides service a URL in variable imageUrl of an already hosted image.
-        //
         // Create a new image, using the supplied object ID, with content downloaded from imageUrl.
         $imageId = 'MyImage_01';
         $emu4M = array('magnitude' => 4000000, 'unit' => 'EMU');
