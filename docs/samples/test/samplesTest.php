@@ -17,7 +17,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-class snippetsTest extends TestCase
+class samplesTest extends TestCase
 {
     // Document ID for testing
     private static $documentId = '195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE';

@@ -13,18 +13,12 @@ composer install
 ### Download Developer Credentials
 
 - Follow the steps in the quickstart instructions to download your developer
-  credentials and save them in a file called `credentails.json` in this
+  credentials and save them in a file called `credentials.json` in this
   directory.
 
 ## Run
 
-Run the quickstart by executing `quickstart.php` with no arguments:
-
-```sh
-php quickstart.php
-```
-
-Run the other samples by executing `extract_text.php` or `output_as_json.php` and providing
+Run the samples by executing `extract_text.php` or `output_as_json.php` and providing
 your [Document ID](https://developers.google.com/docs/api/how-tos/overview#document_id) as
 the first argument.
 

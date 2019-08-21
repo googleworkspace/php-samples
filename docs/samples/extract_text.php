@@ -30,7 +30,7 @@ if (count($argv) != 2) {
 list($_, $documentId) = $argv;
 
 # [START docs_extract_text]
-// $documentId = 'Google Docs document ID (ex: 195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE)';
+// $documentId = 'YOUR_DOCUMENT_ID';
 
 /**
  * Create an authorized API client.
