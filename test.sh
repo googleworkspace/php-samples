@@ -17,8 +17,9 @@ set -ex
 # Find every directory with a phpunit.xml file and run phpunit in that directory
 find . -name 'phpunit.xml*' -not -path '*vendor/*' -exec dirname {} \; | while read DIR
 do
+    ln -s $GOOGLE_APPLICATION_CREDENTIALS $DIR
     pushd ${DIR}
     composer install
-    vendor/bin/phpunit
+    vendor/bin/phpunit -v
     popd;
 done
