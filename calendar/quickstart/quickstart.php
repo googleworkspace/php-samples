@@ -31,6 +31,7 @@ function getClient()
     $client->setApplicationName('Google Calendar API PHP Quickstart');
     $client->setScopes(Google_Service_Calendar::CALENDAR_READONLY);
     $client->setAuthConfig('credentials.json');
+    $client->setRedirectUri('YOUR_REDIRECT_URL'); // Where script will return after validation.
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
 
