@@ -41,7 +41,8 @@ function getClient()
     $tokenPath = 'token.json';
     if (file_exists($tokenPath)) {
         $accessToken = json_decode(file_get_contents($tokenPath), true);
-        $client->setAccessToken($accessToken);
+        //$client->setAccessToken($accessToken);
+        $client->setAccessToken($accessToken['access_token']);
     }
 
     // If there is no previous token or it's expired.
@@ -67,9 +68,10 @@ function getClient()
         }
         // Save the token to a file.
         if (!file_exists(dirname($tokenPath))) {
-            mkdir(dirname($tokenPath), 0700, true);
+            //mkdir(dirname($tokenPath), 0700, true);
+             file_put_contents($tokenPath, json_encode($client->getAccessToken()));
         }
-        file_put_contents($tokenPath, json_encode($client->getAccessToken()));
+        //file_put_contents($tokenPath, json_encode($client->getAccessToken()));
     }
     return $client;
 }
