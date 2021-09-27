@@ -15,7 +15,7 @@ composer install
 ### Download Developer Credentials
 
 - Follow the steps in the quickstart instructions to download your developer
-  credentials and save them in a file called `credentails.json` in this
+  credentials and save them in a file called `credentials.json` in this
   directory.
 
 ## Run
