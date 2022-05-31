@@ -93,5 +93,5 @@ function textStyleUpdate($presentationId, $shapeId)
     return $response;
 }
 // [END slides_text_style_update]
-    textStyleUpdate('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'MyTextBox_01');
+textStyleUpdate('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'MyTextBox_01');
 ?>

@@ -49,5 +49,5 @@ function createSlide($presentationId, $pageId)
     }
 }
 // [END slides_create_slide]
-    createSlide('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'abcd1234');
+createSlide('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'abcd1234');
 ?>

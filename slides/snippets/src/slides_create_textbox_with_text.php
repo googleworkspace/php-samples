@@ -73,5 +73,5 @@ function createTextboxWithText($presentationId, $pageId)
     }
 }
 // [END slides_create_textbox_with_text]
-    createTextboxWithText('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'abcd1234');
+createTextboxWithText('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'abcd1234');
 ?>

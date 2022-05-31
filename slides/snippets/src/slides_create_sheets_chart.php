@@ -60,11 +60,11 @@ function createSheetsChart($presentationId, $pageId, $spreadsheetId, $sheetChart
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
         printf("Added a linked Sheets chart with ID: %s\n", $response->getPresentationId());
-        // [END slides_create_sheets_chart]
         return $response;
     } catch (Exception $e) {
         echo 'Message: ' . $e->getMessage();
     }
 }
-    createSheetsChart('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms','abcd1234', '1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8', 122);
+// [END slides_create_sheets_chart]
+createSheetsChart('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms','abcd1234', '1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8', 122);
 ?>

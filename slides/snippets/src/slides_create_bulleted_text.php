@@ -45,5 +45,5 @@ function createBulletedText($presentationId, $shapeId)
     return $response;
 }
 // [END slides_create_bulleted_text]
-    createBulletedText('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'MyTextBox_01');
+createBulletedText('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'MyTextBox_01');
 ?>

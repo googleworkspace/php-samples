@@ -17,7 +17,7 @@
 
     require __DIR__ . '/vendor/autoload.php';
 
-// [START slides_refresh_sheets_chart]
+    // [START slides_refresh_sheets_chart]
 function refreshSheetsChart($presentationId, $presentationChartId)
 {
     $client = new Google\Client();
@@ -45,5 +45,5 @@ function refreshSheetsChart($presentationId, $presentationChartId)
     }
 }
 // [END slides_refresh_sheets_chart]
-    refreshSheetsChart('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'chartId');
+refreshSheetsChart('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'chartId');
 ?>

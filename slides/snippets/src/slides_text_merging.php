@@ -102,5 +102,5 @@ function textMerging($templatePresentationId, $dataSpreadsheetId)
     }
 }
 // [END slides_text_merging]
-     textMerging('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', '1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8');
+textMerging('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', '1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8');
 ?>

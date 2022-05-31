@@ -19,37 +19,37 @@ require __DIR__ . '/vendor/autoload.php';
 
 // [START slides_simple_text_replace]
 function simpleTextReplace($presentationId, $shapeId, $replacementText)
-    {
-        $client = new Google\Client();
-        $client->useApplicationDefaultCredentials();
-        $client->addScope(Google\Service\Drive::DRIVE);
-        $slidesService = new Google_Service_Slides($client);
-        // Remove existing text in the shape, then insert new text.
-        $requests = array();
-        $requests[] = new Google_Service_Slides_Request(array(
-            'deleteText' => array(
-                'objectId' => $shapeId,
-                'textRange' => array(
-                    'type' => 'ALL'
-                )
+{
+    $client = new Google\Client();
+    $client->useApplicationDefaultCredentials();
+    $client->addScope(Google\Service\Drive::DRIVE);
+    $slidesService = new Google_Service_Slides($client);
+    // Remove existing text in the shape, then insert new text.
+    $requests = array();
+    $requests[] = new Google_Service_Slides_Request(array(
+        'deleteText' => array(
+            'objectId' => $shapeId,
+            'textRange' => array(
+                'type' => 'ALL'
             )
-        ));
-        $requests[] = new Google_Service_Slides_Request(array(
-            'insertText' => array(
-                'objectId' => $shapeId,
-                'insertionIndex' => 0,
-                'text' => $replacementText
-            )
-        ));
+        )
+    ));
+    $requests[] = new Google_Service_Slides_Request(array(
+        'insertText' => array(
+            'objectId' => $shapeId,
+            'insertionIndex' => 0,
+            'text' => $replacementText
+        )
+    ));
 
-        // Execute the requests.
-        $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
-            'requests' => $requests
-        ));
-        $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
-        printf("Replaced text in shape with ID: %s", $shapeId);
-        return $response;
-    }
+    // Execute the requests.
+    $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
+        'requests' => $requests
+    ));
+    $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
+    printf("Replaced text in shape with ID: %s", $shapeId);
+    return $response;
+}
 // [END slides_simple_text_replace]
-        simpleTextReplace('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', '', '');
+simpleTextReplace('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', '', '');
 ?>

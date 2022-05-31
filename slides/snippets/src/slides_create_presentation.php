@@ -38,5 +38,5 @@ function createPresentation($title)
     }
 }
 // [END slides_create_presentation]
-        createPresentation("sample presentation");
+createPresentation("sample presentation");
 ?>

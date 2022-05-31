@@ -62,12 +62,11 @@ function createImage($presentationId, $pageId)
         $createImageResponse = $response->getReplies()[0]->getCreateImage();
         printf("Created image with ID: %s\n", $createImageResponse->getObjectId());
 
-        // [END slides_create_image]
         return $response;
-    }
-    catch(Exception $e) {
-        echo 'Message: ' .$e->getMessage();
+    } catch (Exception $e) {
+        echo 'Message: ' . $e->getMessage();
     }
 }
-    createImage('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'abcd1234');
+// [END slides_create_image]
+createImage('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'abcd1234');
 ?>
