@@ -15,7 +15,7 @@ composer install
 ### Download Developer Credentials
 
 - Follow [the steps in the quickstart instructions](https://github.com/googleapis/google-api-php-client/blob/master/docs/oauth-web.md#create-authorization-credentials) to download your developer
-  credentials and save them in a file called `credentails.json` in this
+  credentials and save them in a file called `credentials.json` in this
   directory. Please make sure you are using "Desktop" application type.
 
 ## Run
