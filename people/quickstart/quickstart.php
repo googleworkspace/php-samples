@@ -82,7 +82,7 @@ $service = new Google_Service_PeopleService($client);
 // Print the names for up to 10 connections.
 $optParams = array(
   'pageSize' => 10,
-  'personFields' => 'names,emailAddresses',
+  'requestMask.includeField' => 'person.names',
 );
 $results = $service->people_connections->listPeopleConnections('people/me', $optParams);
 
