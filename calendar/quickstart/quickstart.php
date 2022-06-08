@@ -29,7 +29,7 @@ function getClient()
 {
     $client = new Google_Client();
     $client->setApplicationName('Google Calendar API PHP Quickstart');
-    $client->setScopes(Google_Service_Calendar::CALENDAR_READONLY);
+    $client->setScopes('https://www.googleapis.com/auth/calendar.events.readonly');
     $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
@@ -80,26 +80,33 @@ $client = getClient();
 $service = new Google_Service_Calendar($client);
 
 // Print the next 10 events on the user's calendar.
-$calendarId = 'primary';
-$optParams = array(
-  'maxResults' => 10,
-  'orderBy' => 'startTime',
-  'singleEvents' => true,
-  'timeMin' => date('c'),
-);
-$results = $service->events->listEvents($calendarId, $optParams);
-$events = $results->getItems();
+try{
 
-if (empty($events)) {
-    print "No upcoming events found.\n";
-} else {
-    print "Upcoming events:\n";
-    foreach ($events as $event) {
-        $start = $event->start->dateTime;
-        if (empty($start)) {
-            $start = $event->start->date;
+    $calendarId = 'primary';
+    $optParams = array(
+        'maxResults' => 10,
+        'orderBy' => 'startTime',
+        'singleEvents' => true,
+        'timeMin' => date('c'),
+    );
+    $results = $service->events->listEvents($calendarId, $optParams);
+    $events = $results->getItems();
+
+    if (empty($events)) {
+        print "No upcoming events found.\n";
+    } else {
+        print "Upcoming events:\n";
+        foreach ($events as $event) {
+            $start = $event->start->dateTime;
+            if (empty($start)) {
+                $start = $event->start->date;
+            }
+            printf("%s (%s)\n", $event->getSummary(), $start);
         }
-        printf("%s (%s)\n", $event->getSummary(), $start);
     }
+}
+catch(Exception $e) {
+    // TODO(developer) - handle error appropriately
+    echo 'Message: ' .$e->getMessage();
 }
 // [END calendar_quickstart]

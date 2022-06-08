@@ -29,7 +29,7 @@ function getClient()
 {
     $client = new Google_Client();
     $client->setApplicationName('Reports API PHP Quickstart');
-    $client->setScopes(Google_Service_Reports::ADMIN_REPORTS_AUDIT_READONLY);
+    $client->setScopes('https://www.googleapis.com/auth/admin.reports.audit.readonly');
     $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
@@ -83,19 +83,19 @@ $service = new Google_Service_Reports($client);
 $userKey = 'all';
 $applicationName = 'login';
 $optParams = array(
-  'maxResults' => 10,
+    'maxResults' => 10,
 );
 $results = $service->activities->listActivities(
     $userKey, $applicationName, $optParams);
 
 if (count($results->getItems()) == 0) {
-  print "No logins found.\n";
+    print "No logins found.\n";
 } else {
-  print "Logins:\n";
-  foreach ($results->getItems() as $activity) {
-    printf("%s: %s (%s)\n", $activity->getId()->getTime(),
-        $activity->getActor()->getEmail(),
-        $activity->getEvents()[0]->getName());
-  }
+    print "Logins:\n";
+    foreach ($results->getItems() as $activity) {
+        printf("%s: %s (%s)\n", $activity->getId()->getTime(),
+            $activity->getActor()->getEmail(),
+            $activity->getEvents()[0]->getName());
+    }
 }
 // [END admin_sdk_reports_quickstart]

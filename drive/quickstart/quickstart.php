@@ -29,7 +29,7 @@ function getClient()
 {
     $client = new Google_Client();
     $client->setApplicationName('Google Drive API PHP Quickstart');
-    $client->setScopes(Google_Service_Drive::DRIVE_METADATA_READONLY);
+    $client->setScopes('https://www.googleapis.com/auth/drive.metadata.readonly');
     $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
@@ -45,31 +45,39 @@ function getClient()
     }
 
     // If there is no previous token or it's expired.
-    if ($client->isAccessTokenExpired()) {
-        // Refresh the token if possible, else fetch a new one.
-        if ($client->getRefreshToken()) {
-            $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-        } else {
-            // Request authorization from the user.
-            $authUrl = $client->createAuthUrl();
-            printf("Open the following link in your browser:\n%s\n", $authUrl);
-            print 'Enter verification code: ';
-            $authCode = trim(fgets(STDIN));
+    try{
 
-            // Exchange authorization code for an access token.
-            $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
-            $client->setAccessToken($accessToken);
 
-            // Check to see if there was an error.
-            if (array_key_exists('error', $accessToken)) {
-                throw new Exception(join(', ', $accessToken));
+        if ($client->isAccessTokenExpired()) {
+            // Refresh the token if possible, else fetch a new one.
+            if ($client->getRefreshToken()) {
+                $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+            } else {
+                // Request authorization from the user.
+                $authUrl = $client->createAuthUrl();
+                printf("Open the following link in your browser:\n%s\n", $authUrl);
+                print 'Enter verification code: ';
+                $authCode = trim(fgets(STDIN));
+
+                // Exchange authorization code for an access token.
+                $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
+                $client->setAccessToken($accessToken);
+
+                // Check to see if there was an error.
+                if (array_key_exists('error', $accessToken)) {
+                    throw new Exception(join(', ', $accessToken));
+                }
             }
+            // Save the token to a file.
+            if (!file_exists(dirname($tokenPath))) {
+                mkdir(dirname($tokenPath), 0700, true);
+            }
+            file_put_contents($tokenPath, json_encode($client->getAccessToken()));
         }
-        // Save the token to a file.
-        if (!file_exists(dirname($tokenPath))) {
-            mkdir(dirname($tokenPath), 0700, true);
-        }
-        file_put_contents($tokenPath, json_encode($client->getAccessToken()));
+    }
+    catch(Exception $e) {
+        // TODO(developer) - handle error appropriately
+        echo 'Some error occured: '.$e->getMessage();
     }
     return $client;
 }
@@ -81,8 +89,8 @@ $service = new Google_Service_Drive($client);
 
 // Print the names and IDs for up to 10 files.
 $optParams = array(
-  'pageSize' => 10,
-  'fields' => 'nextPageToken, files(id, name)'
+    'pageSize' => 10,
+    'fields' => 'nextPageToken, files(id, name)'
 );
 $results = $service->files->listFiles($optParams);
 
