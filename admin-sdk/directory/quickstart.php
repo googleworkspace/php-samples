@@ -29,7 +29,7 @@ function getClient()
 {
     $client = new Google_Client();
     $client->setApplicationName('G Suite Directory API PHP Quickstart');
-    $client->setScopes(Google_Service_Directory::ADMIN_DIRECTORY_USER_READONLY);
+    $client->setScopes('https://www.googleapis.com/auth/admin.directory.user.readonly');
     $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
@@ -80,20 +80,27 @@ $client = getClient();
 $service = new Google_Service_Directory($client);
 
 // Print the first 10 users in the domain.
-$optParams = array(
-  'customer' => 'my_customer',
-  'maxResults' => 10,
-  'orderBy' => 'email',
-);
-$results = $service->users->listUsers($optParams);
+try{
 
-if (count($results->getUsers()) == 0) {
-  print "No users found.\n";
-} else {
-  print "Users:\n";
-  foreach ($results->getUsers() as $user) {
-    printf("%s (%s)\n", $user->getPrimaryEmail(),
-        $user->getName()->getFullName());
-  }
+    $optParams = array(
+        'customer' => 'my_customer',
+        'maxResults' => 10,
+        'orderBy' => 'email',
+    );
+    $results = $service->users->listUsers($optParams);
+
+    if (count($results->getUsers()) == 0) {
+        print "No users found.\n";
+    } else {
+        print "Users:\n";
+        foreach ($results->getUsers() as $user) {
+            printf("%s (%s)\n", $user->getPrimaryEmail(),
+                $user->getName()->getFullName());
+        }
+    }
+}
+catch(Exception $e) {
+// TODO(developer) - handle error appropriately
+    echo 'Message: ' .$e->getMessage();
 }
 // [END admin_sdk_directory_quickstart]
