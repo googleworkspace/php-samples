@@ -29,7 +29,7 @@ function getClient()
 {
     $client = new Google_Client();
     $client->setApplicationName('Google Drive Activity API Quickstart');
-    $client->setScopes(Google_Service_DriveActivity::DRIVE_ACTIVITY_READONLY);
+    $client->setScopes('https://www.googleapis.com/auth/drive.activity.readonly');
     $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
@@ -157,8 +157,8 @@ function getTargetInfo($target)
     if ($target->getDriveItem() != null) {
         return sprintf('driveItem:"%s"', $target->getDriveItem()->getTitle());
     }
-    if ($target->getTeamDrive() != null) {
-        return sprintf('teamDrive:"%s"', $target->getTeamDrive()->getTitle());
+    if ($target->getDrive() != null) {
+        return sprintf('drive:"%s"', $target->getDrive()->getTitle());
     }
     if ($target->getFileComment() != null) {
         $parent = $target->getFileComment()->getParent();

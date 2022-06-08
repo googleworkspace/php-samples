@@ -29,7 +29,7 @@ function getClient()
 {
     $client = new Google_Client();
     $client->setApplicationName('Google Vault API PHP Quickstart');
-    $client->setScopes(Google_Service_Vault::EDISCOVERY_READONLY);
+    $client->setScopes('https://www.googleapis.com/auth/ediscovery.readonly');
     $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
@@ -80,17 +80,25 @@ $client = getClient();
 $service = new Google_Service_Vault($client);
 
 // Print the first 10 matters.
-$optParams = array(
-  'pageSize' => 10
-);
-$results = $service->matters->listMatters($optParams);
+try{
 
-if (count($results->getMatters()) == 0) {
-  print "No matters found.\n";
-} else {
-  print "Matters:\n";
-  foreach ($results->getMatters() as $matter) {
-    printf("%s (%s)\n", $matter->getName(), $matter->getMatterId());
-  }
+    $optParams = array(
+        'pageSize' => 10
+    );
+    $results = $service->matters->listMatters($optParams);
+
+    if (count($results->getMatters()) == 0) {
+        print "No matters found.\n";
+    } else {
+        print "Matters:\n";
+        foreach ($results->getMatters() as $matter) {
+            printf("%s (%s)\n", $matter->getName(), $matter->getMatterId());
+        }
+    }
+
+}
+catch(Exception $e) {
+    // TODO(developer) - handle error appropriately
+    echo 'Message: ' .$e->getMessage();
 }
 // [END vault_quickstart]
