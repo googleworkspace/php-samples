@@ -1,0 +1,10 @@
+{
+    "require": {
+        "google/apiclient": "^2.2",
+        "duncan3dc/cache": "~0.4"
+    },
+    "require-dev": {
+        "google/cloud-tools": "^0.8",
+        "phpunit/phpunit": "9.5.20"
+    }
+}
