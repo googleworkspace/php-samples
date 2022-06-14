@@ -21,13 +21,16 @@ if (php_sapi_name() != 'cli') {
     throw new Exception('This application must be run on the command line.');
 }
 
+use Google\Client;
+use Google\Service\Reports;
+
 /**
  * Returns an authorized API client.
- * @return Google_Client the authorized client object
+ * @return Client the authorized client object
  */
 function getClient()
 {
-    $client = new Google_Client();
+    $client = new Client();
     $client->setApplicationName('Reports API PHP Quickstart');
     $client->setScopes('https://www.googleapis.com/auth/admin.reports.audit.readonly');
     $client->setAuthConfig('credentials.json');
@@ -77,7 +80,7 @@ function getClient()
 
 // Get the API client and construct the service object.
 $client = getClient();
-$service = new Google_Service_Reports($client);
+$service = new Reports($client);
 
 // Print the last 10 login events.
 $userKey = 'all';

@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 
+use Google\Service\Drive;
+
 class DriveSnippets
 {
     public function __construct($service)
@@ -26,7 +28,7 @@ class DriveSnippets
     {
         $driveService = $this->service;
         // [START drive_upload_basic]
-        $fileMetadata = new Google_Service_Drive_DriveFile(array(
+        $fileMetadata = new Drive\DriveFile(array(
             'name' => 'photo.jpg'));
         $content = file_get_contents('files/photo.jpg');
         $file = $driveService->files->create($fileMetadata, array(
@@ -47,7 +49,7 @@ class DriveSnippets
         // [START_EXCLUDE silent]
         $folderId = $realFolderId;
         // [END_EXCLUDE]
-        $fileMetadata = new Google_Service_Drive_DriveFile(array(
+        $fileMetadata = new Drive\DriveFile(array(
             'name' => 'photo.jpg',
             'parents' => array($folderId)
         ));
@@ -66,7 +68,7 @@ class DriveSnippets
     {
         $driveService = $this->service;
         // [START drive_upload_with_conversion]
-        $fileMetadata = new Google_Service_Drive_DriveFile(array(
+        $fileMetadata = new Drive\DriveFile(array(
             'name' => 'My Report',
             'mimeType' => 'application/vnd.google-apps.spreadsheet'));
         $content = file_get_contents('files/report.csv');
@@ -115,7 +117,7 @@ class DriveSnippets
     {
         $driveService = $this->service;
         // [START drive_create_shortcut]
-        $fileMetadata = new Google_Service_Drive_DriveFile(array(
+        $fileMetadata = new Drive\DriveFile(array(
             'name' => 'Project plan',
             'mimeType' => 'application/vnd.google-apps.drive-sdk'));
         $file = $driveService->files->create($fileMetadata, array(
@@ -130,7 +132,7 @@ class DriveSnippets
         $driveService = $this->service;
         // [START drive_touch_file]
         $fileId = '1sTWaJ_j7PkjzaBWtNc3IzovK5hQf21FbOw9yLeeLPNQ';
-        $fileMetadata = new Google_Service_Drive_DriveFile(array(
+        $fileMetadata = new Drive\DriveFile(array(
             'modifiedTime' => date('Y-m-d\TH:i:s.uP')));
         // [START_EXCLUDE silent]
         $fileId = $realFileId;
@@ -147,7 +149,7 @@ class DriveSnippets
     {
         $driveService = $this->service;
         // [START drive_create_folder]
-        $fileMetadata = new Google_Service_Drive_DriveFile(array(
+        $fileMetadata = new Drive\DriveFile(array(
             'name' => 'Invoices',
             'mimeType' => 'application/vnd.google-apps.folder'));
         $file = $driveService->files->create($fileMetadata, array(
@@ -163,7 +165,7 @@ class DriveSnippets
         // [START drive_move_file_to_folder]
         $fileId = '1sTWaJ_j7PkjzaBWtNc3IzovK5hQf21FbOw9yLeeLPNQ';
         $folderId = '0BwwA4oUTeiV1TGRPeTVjaWRDY1E';
-        $emptyFileMetadata = new Google_Service_Drive_DriveFile();
+        $emptyFileMetadata = new Drive\DriveFile();
         // [START_EXCLUDE silent]
         $fileId = $realFileId;
         $folderId = $realFolderId;
@@ -219,7 +221,7 @@ class DriveSnippets
         try {
             $batch = $driveService->createBatch();
 
-            $userPermission = new Google_Service_Drive_Permission(array(
+            $userPermission = new Drive\Permission(array(
                 'type' => 'user',
                 'role' => 'writer',
                 'emailAddress' => 'user@example.com'
@@ -230,7 +232,7 @@ class DriveSnippets
             $request = $driveService->permissions->create(
                 $fileId, $userPermission, array('fields' => 'id'));
             $batch->add($request, 'user');
-            $domainPermission = new Google_Service_Drive_Permission(array(
+            $domainPermission = new Drive\Permission(array(
                 'type' => 'domain',
                 'role' => 'reader',
                 'domain' => 'example.com'
@@ -244,7 +246,7 @@ class DriveSnippets
             $results = $batch->execute();
 
             foreach ($results as $result) {
-                if ($result instanceof Google_Service_Exception) {
+                if ($result instanceof Exception) {
                     // Handle error
                     printf($result);
                 } else {
@@ -265,7 +267,7 @@ class DriveSnippets
     {
         $driveService = $this->service;
         // [START drive_upload_app_data]
-        $fileMetadata = new Google_Service_Drive_DriveFile(array(
+        $fileMetadata = new Drive\DriveFile(array(
             'name' => 'config.json',
             'parents' => array('appDataFolder')
         ));

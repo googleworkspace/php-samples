@@ -15,6 +15,8 @@
  * limitations under the License.
  */
 use Monolog\Logger;
+use Google\Client;
+use Google\Service\Docs;
 
 class BaseTestCase extends PHPUnit_Framework_TestCase
 {
@@ -45,13 +47,13 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
     {
         // create a log channel
         $log = new Logger('debug');
-        $client = new Google_Client();
+        $client = new Client();
         $client->setApplicationName('Google Drive API Snippet Tests');
         $client->useApplicationDefaultCredentials();
         $client->addScope('https://www.googleapis.com/auth/drive');
         $client->addScope('https://www.googleapis.com/auth/drive.appdata');
         $client->setLogger($log);
-        return new Google_Service_Drive($client);
+        return new Drive($client);
     }
 
     protected function deleteFileOnCleanup($id)
@@ -61,7 +63,7 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
 
     protected function createTestDocument()
     {
-        $fileMetadata = new Google_Service_Drive_DriveFile(array(
+        $fileMetadata = new Drive\DriveFile(array(
             'name' => 'Test document',
             'mimeType' => 'application/vnd.google-apps.document'));
         $content = file_get_contents('files/document.txt');
@@ -76,7 +78,7 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
 
     protected function createTestBlob()
     {
-        $fileMetadata = new Google_Service_Drive_DriveFile(array(
+        $fileMetadata = new Drive\DriveFile(array(
             'name' => 'photo.jpg'));
         $content = file_get_contents('files/photo.jpg');
         $file = self::$service->files->create($fileMetadata, array(

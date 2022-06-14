@@ -21,15 +21,18 @@ if (php_sapi_name() != 'cli') {
     throw new Exception('This application must be run on the command line.');
 }
 
+use Google\Client;
+use Google\Service\Appsactivity;
+
 /**
  * Returns an authorized API client.
- * @return Google_Client the authorized client object
+ * @return Client the authorized client object
  */
 function getClient()
 {
-    $client = new Google_Client();
+    $client = new Client();
     $client->setApplicationName('Google Drive Activity API Quickstart');
-    $client->setScopes(Google_Service_Appsactivity::ACTIVITY);
+    $client->setScopes(Appsactivity::ACTIVITY);
     $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
@@ -76,7 +79,7 @@ function getClient()
 
 // Get the API client and construct the service object.
 $client = getClient();
-$service = new Google_Service_Appsactivity($client);
+$service = new Appsactivity($client);
 
 // Print the recent activity in your Google Drive.
 $optParams = array(

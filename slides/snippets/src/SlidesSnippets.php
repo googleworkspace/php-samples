@@ -14,6 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+use Google\Service\Drive;
+use Google\Service\Slides;
+
 class SlidesSnippets
 {
     public function __construct($service, $driveService, $sheetsService)
@@ -27,7 +31,7 @@ class SlidesSnippets
     {
         $slidesService = $this->service;
         // [START slides_create_presentation]
-        $presentation = new Google_Service_Slides_Presentation(array(
+        $presentation = new Slides\Presentation(array(
             'title' => $title
         ));
 
@@ -41,7 +45,7 @@ class SlidesSnippets
     {
         $driveService = $this->driveService;
         // [START slides_copy_presentation]
-        $copy = new Google_Service_Drive_DriveFile(array(
+        $copy = new Drive\DriveFile(array(
             'name' => $copyTitle
         ));
         $driveResponse = $driveService->files->copy($presentationId, $copy);
@@ -57,7 +61,7 @@ class SlidesSnippets
         // Add a slide at index 1 using the predefined 'TITLE_AND_TWO_COLUMNS' layout and
         // the ID page_id.
         $requests = array();
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'createSlide' => array(
                 'objectId' => $pageId,
                 'insertionIndex' => 1,
@@ -71,7 +75,7 @@ class SlidesSnippets
         // using the page_id.
 
         // Execute the request.
-        $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
+        $batchUpdateRequest = new Slides\BatchUpdatePresentationRequest(array(
             'requests' => $requests
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
@@ -89,7 +93,7 @@ class SlidesSnippets
         $elementId = 'MyTextBox_01';
         $pt350 = array('magnitude' => 350, 'unit' => 'PT');
         $requests = array();
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'createShape' => array(
                 'objectId' => $elementId,
                 'shapeType' => 'TEXT_BOX',
@@ -111,7 +115,7 @@ class SlidesSnippets
         ));
 
         // Insert text into the box, using the supplied element ID.
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'insertText' => array(
                 'objectId' => $elementId,
                 'insertionIndex' => 0,
@@ -120,7 +124,7 @@ class SlidesSnippets
         ));
 
         // Execute the requests.
-        $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
+        $batchUpdateRequest = new Slides\BatchUpdatePresentationRequest(array(
             'requests' => $requests
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
@@ -141,7 +145,7 @@ class SlidesSnippets
         $imageId = 'MyImage_01';
         $emu4M = array('magnitude' => 4000000, 'unit' => 'EMU');
         $requests = array();
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'createImage' => array(
                 'objectId' => $imageId,
                 'url' => $imageUrl,
@@ -163,7 +167,7 @@ class SlidesSnippets
         ));
 
         // Execute the request.
-        $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
+        $batchUpdateRequest = new Slides\BatchUpdatePresentationRequest(array(
             'requests' => $requests
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
@@ -195,7 +199,7 @@ class SlidesSnippets
             $totalPortfolio = $row[11];  // total portfolio in column 12
 
             // Duplicate the template presentation using the Drive API.
-            $copy = new Google_Service_Drive_DriveFile(array(
+            $copy = new Drive\DriveFile(array(
                 'name' => $customerName . ' presentation'
             ));
             $driveResponse = $driveService->files->copy($templatePresentationId, $copy);
@@ -203,7 +207,7 @@ class SlidesSnippets
 
             // Create the text merge (replaceAllText) requests for this presentation.
             $requests = array();
-            $requests[] = new Google_Service_Slides_Request(array(
+            $requests[] = new Slides\Request(array(
                 'replaceAllText' => array(
                     'containsText' => array(
                         'text' => '{{customer-name}}',
@@ -212,7 +216,7 @@ class SlidesSnippets
                     'replaceText' => $customerName
                 )
             ));
-            $requests[] = new Google_Service_Slides_Request(array(
+            $requests[] = new Slides\Request(array(
                 'replaceAllText' => array(
                     'containsText' => array(
                         'text' => '{{case-description}}',
@@ -221,7 +225,7 @@ class SlidesSnippets
                     'replaceText' => $caseDescription
                 )
             ));
-            $requests[] = new Google_Service_Slides_Request(array(
+            $requests[] = new Slides\Request(array(
                 'replaceAllText' => array(
                     'containsText' => array(
                         'text' => '{{total-portfolio}}',
@@ -232,7 +236,7 @@ class SlidesSnippets
             ));
 
             // Execute the requests for this presentation.
-            $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
+            $batchUpdateRequest = new Slides\BatchUpdatePresentationRequest(array(
                 'requests' => $requests
             ));
             $response =
@@ -260,7 +264,7 @@ class SlidesSnippets
         $customerGraphicUrl = $imageUrl;
         // [START slides_image_merging]
         // Duplicate the template presentation using the Drive API.
-        $copy = new Google_Service_Drive_DriveFile(array(
+        $copy = new Drive\DriveFile(array(
             'name' => $customerName . ' presentation'
         ));
         $driveResponse = $driveService->files->copy($templatePresentationId, $copy);
@@ -268,7 +272,7 @@ class SlidesSnippets
 
         // Create the image merge (replaceAllShapesWithImage) requests.
         $requests = array();
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'replaceAllShapesWithImage' => array(
                 'imageUrl' => $logoUrl,
                 'replaceMethod' => 'CENTER_INSIDE',
@@ -278,7 +282,7 @@ class SlidesSnippets
                 )
             )
         ));
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'replaceAllShapesWithImage' => array(
                 'imageUrl' => $customerGraphicUrl,
                 'replaceMethod' => 'CENTER_INSIDE',
@@ -290,7 +294,7 @@ class SlidesSnippets
         ));
 
         // Execute the requests.
-        $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
+        $batchUpdateRequest = new Slides\BatchUpdatePresentationRequest(array(
             'requests' => $requests
         ));
         $response =
@@ -313,7 +317,7 @@ class SlidesSnippets
         // [START slides_simple_text_replace]
         // Remove existing text in the shape, then insert new text.
         $requests = array();
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'deleteText' => array(
                 'objectId' => $shapeId,
                 'textRange' => array(
@@ -321,7 +325,7 @@ class SlidesSnippets
                 )
             )
         ));
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'insertText' => array(
                 'objectId' => $shapeId,
                 'insertionIndex' => 0,
@@ -330,7 +334,7 @@ class SlidesSnippets
         ));
 
         // Execute the requests.
-        $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
+        $batchUpdateRequest = new Slides\BatchUpdatePresentationRequest(array(
             'requests' => $requests
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
@@ -347,7 +351,7 @@ class SlidesSnippets
         // and italicized, the next 5 are displayed in blue 14 pt Times
         // New Roman font, and the next 5 are hyperlinked.
         $requests = array();
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'updateTextStyle' => array(
                 'objectId' => $shapeId,
                 'textRange' => array(
@@ -362,7 +366,7 @@ class SlidesSnippets
                 'fields' => 'bold,italic'
             )
         ));
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'updateTextStyle' => array(
                 'objectId' => $shapeId,
                 'textRange' => array(
@@ -389,7 +393,7 @@ class SlidesSnippets
                 'fields' => 'foregroundColor,fontFamily,fontSize'
             )
         ));
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'updateTextStyle' => array(
                 'objectId' => $shapeId,
                 'textRange' => array(
@@ -407,7 +411,7 @@ class SlidesSnippets
         ));
 
         // Execute the requests.
-        $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
+        $batchUpdateRequest = new Slides\BatchUpdatePresentationRequest(array(
             'requests' => $requests
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
@@ -422,7 +426,7 @@ class SlidesSnippets
         // [START slides_create_bulleted_text]
         // Add arrow-diamond-disc bullets to all text in the shape.
         $requests = array();
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'createParagraphBullets' => array(
                 'objectId' => $shapeId,
                 'textRange' => array(
@@ -433,7 +437,7 @@ class SlidesSnippets
         ));
 
         // Execute the request.
-        $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
+        $batchUpdateRequest = new Slides\BatchUpdatePresentationRequest(array(
             'requests' => $requests
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
@@ -452,7 +456,7 @@ class SlidesSnippets
         $presentationChartId = 'MyEmbeddedChart';
         $emu4M = array('magnitude' => 4000000, 'unit' => 'EMU');
         $requests = array();
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'createSheetsChart' => array(
                 'spreadsheetId' => $spreadsheetId,
                 'chartId' => $sheetChartId,
@@ -475,7 +479,7 @@ class SlidesSnippets
         ));
 
         // Execute the request.
-        $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
+        $batchUpdateRequest = new Slides\BatchUpdatePresentationRequest(array(
             'requests' => $requests
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
@@ -490,14 +494,14 @@ class SlidesSnippets
         // [START slides_refresh_sheets_chart]
         // Refresh an existing linked Sheets chart embedded in a presentation.
         $requests = array();
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'refreshSheetsChart' => array(
                 'objectId' => $presentationChartId
             )
         ));
 
         // Execute the request.
-        $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
+        $batchUpdateRequest = new Slides\BatchUpdatePresentationRequest(array(
             'requests' => $requests
         ));
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
