@@ -29,7 +29,7 @@ function getClient()
 {
     $client = new Google_Client();
     $client->setApplicationName('Google Slides API PHP Quickstart');
-    $client->setScopes(Google_Service_Slides::PRESENTATIONS_READONLY);
+    $client->setScopes("https://www.googleapis.com/auth/presentations");
     $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
@@ -81,14 +81,21 @@ $service = new Google_Service_Slides($client);
 
 // Prints the number of slides and elements in a sample presentation:
 // https://docs.google.com/presentation/d/1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc/edit
-$presentationId = '1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc';
-$presentation = $service->presentations->get($presentationId);
-$slides = $presentation->getSlides();
+try{
 
-printf("The presentation contains %s slides:\n", count($slides));
-foreach ($slides as $i => $slide) {
-    // Print columns A and E, which correspond to indices 0 and 4.
-    printf("- Slide #%s contains %s elements.\n", $i + 1,
-      count($slide->getPageElements()));
+    $presentationId = '1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc';
+    $presentation = $service->presentations->get($presentationId);
+    $slides = $presentation->getSlides();
+
+    printf("The presentation contains %s slides:\n", count($slides));
+    foreach ($slides as $i => $slide) {
+        // Print columns A and E, which correspond to indices 0 and 4.
+        printf("- Slide #%s contains %s elements.\n", $i + 1,
+            count($slide->getPageElements()));
+    }
+}
+catch(Exception $e) {
+    // TODO(developer) - handle error appropriately
+    echo 'Message: ' .$e->getMessage();
 }
 // [END slides_quickstart]

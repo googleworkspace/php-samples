@@ -29,7 +29,7 @@ function getClient()
 {
     $client = new Google_Client();
     $client->setApplicationName('People API PHP Quickstart');
-    $client->setScopes(Google_Service_PeopleService::CONTACTS_READONLY);
+    $client->setScopes('https://www.googleapis.com/auth/contacts.other.readonly');
     $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
@@ -80,24 +80,31 @@ $client = getClient();
 $service = new Google_Service_PeopleService($client);
 
 // Print the names for up to 10 connections.
-$optParams = array(
-  'pageSize' => 10,
-  'personFields' => 'names,emailAddresses',
-);
-$results = $service->people_connections->listPeopleConnections('people/me', $optParams);
+try{
 
-if (count($results->getConnections()) == 0) {
-  print "No connections found.\n";
-} else {
-  print "People:\n";
-  foreach ($results->getConnections() as $person) {
-    if (count($person->getNames()) == 0) {
-      print "No names found for this connection\n";
+    $optParams = array(
+        'pageSize' => 10,
+        'personFields' => 'names,emailAddresses',
+    );
+    $results = $service->people_connections->listPeopleConnections('people/me', $optParams);
+
+    if (count($results->getConnections()) == 0) {
+        print "No connections found.\n";
     } else {
-      $names = $person->getNames();
-      $name = $names[0];
-      printf("%s\n", $name->getDisplayName());
+        print "People:\n";
+        foreach ($results->getConnections() as $person) {
+            if (count($person->getNames()) == 0) {
+                print "No names found for this connection\n";
+            } else {
+                $names = $person->getNames();
+                $name = $names[0];
+                printf("%s\n", $name->getDisplayName());
+            }
+        }
     }
-  }
+}
+catch(Exception $e) {
+    // TODO(developer) - handle error appropriately
+    echo 'Message: ' .$e->getMessage();
 }
 // [END people_quickstart]

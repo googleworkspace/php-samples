@@ -85,37 +85,44 @@ $client = getClient();
 $service = new Google_Service_Script($client);
 
 // Create a management request object.
-$request = new Google_Service_Script_CreateProjectRequest();
-$request->setTitle('My Script');
-$response = $service->projects->create($request);
+try{
 
-$scriptId = $response->getScriptId();
+    $request = new Google_Service_Script_CreateProjectRequest();
+    $request->setTitle('My Script');
+    $response = $service->projects->create($request);
 
-$code = <<<EOT
+    $scriptId = $response->getScriptId();
+
+    $code = <<<EOT
 function helloWorld() {
   console.log('Hello, world!');
 }
 EOT;
-$file1 = new Google_Service_Script_ScriptFile();
-$file1->setName('hello');
-$file1->setType('SERVER_JS');
-$file1->setSource($code);
+    $file1 = new Google_Service_Script_ScriptFile();
+    $file1->setName('hello');
+    $file1->setType('SERVER_JS');
+    $file1->setSource($code);
 
-$manifest = <<<EOT
+    $manifest = <<<EOT
 {
   "timeZone": "America/New_York",
   "exceptionLogging": "CLOUD"
 }
 EOT;
-$file2 = new Google_Service_Script_ScriptFile();
-$file2->setName('appsscript');
-$file2->setType('JSON');
-$file2->setSource($manifest);
+    $file2 = new Google_Service_Script_ScriptFile();
+    $file2->setName('appsscript');
+    $file2->setType('JSON');
+    $file2->setSource($manifest);
 
-$request = new Google_Service_Script_Content();
-$request->setScriptId($scriptId);
-$request->setFiles([$file1, $file2]);
+    $request = new Google_Service_Script_Content();
+    $request->setScriptId($scriptId);
+    $request->setFiles([$file1, $file2]);
 
-$response = $service->projects->updateContent($scriptId, $request);
-echo "https://script.google.com/d/" . $response->getScriptId() . "/edit\n";
+    $response = $service->projects->updateContent($scriptId, $request);
+    echo "https://script.google.com/d/" . $response->getScriptId() . "/edit\n";
+}
+catch(Exception $e) {
+    // TODO(developer) - handle error appropriately
+    echo 'Message: ' .$e->getMessage();
+}
 // [END apps_script_api_quickstart]

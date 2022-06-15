@@ -29,7 +29,7 @@ function getClient()
 {
     $client = new Google_Client();
     $client->setApplicationName('Google Drive Activity API Quickstart');
-    $client->setScopes(Google_Service_DriveActivity::DRIVE_ACTIVITY_READONLY);
+    $client->setScopes('https://www.googleapis.com/auth/drive.activity.readonly');
     $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
