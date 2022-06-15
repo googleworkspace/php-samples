@@ -1,6 +1,6 @@
 {
     "require": {
-        "google/apiclient": "^2.2",
+        "google/apiclient": "^2.10",
         "duncan3dc/cache": "~0.4"
     },
     "require-dev": {

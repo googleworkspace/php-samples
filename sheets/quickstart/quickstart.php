@@ -21,13 +21,15 @@ if (php_sapi_name() != 'cli') {
     throw new Exception('This application must be run on the command line.');
 }
 
+use Google\Client;
+
 /**
  * Returns an authorized API client.
- * @return Google_Client the authorized client object
+ * @return Client the authorized client object
  */
 function getClient()
 {
-    $client = new Google_Client();
+    $client = new Google\Client();
     $client->setApplicationName('Google Sheets API PHP Quickstart');
     $client->setScopes('https://www.googleapis.com/auth/spreadsheets');
     $client->setAuthConfig('credentials.json');
@@ -77,7 +79,7 @@ function getClient()
 
 // Get the API client and construct the service object.
 $client = getClient();
-$service = new Google_Service_Sheets($client);
+$service = new Google\Service\Sheets($client);
 
 // Prints the names and majors of students in a sample spreadsheet:
 // https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit

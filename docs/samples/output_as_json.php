@@ -29,6 +29,9 @@ if (count($argv) != 2) {
 }
 list($_, $documentId) = $argv;
 
+use Google\Client;
+use Google\Service\Docs;
+
 # [START docs_output_as_json]
 // $documentId = 'YOUR_DOCUMENT_ID';
 
@@ -37,8 +40,8 @@ list($_, $documentId) = $argv;
  * Be sure you've set up your OAuth2 consent screen at
  * https://console.cloud.google.com/apis/credentials/consent
  */
-$client = new Google_Client();
-$client->setScopes(Google_Service_Docs::DOCUMENTS_READONLY);
+$client = new Client();
+$client->setScopes(Docs::DOCUMENTS_READONLY);
 $client->setAuthConfig('credentials.json');
 $client->setAccessType('offline');
 
@@ -73,7 +76,7 @@ if ($client->isAccessTokenExpired()) {
 }
 
 // Fetch the document and print the results as formatted JSON
-$service = new Google_Service_Docs($client);
+$service = new Docs($client);
 $doc = $service->documents->get($documentId);
 print(json_encode((array) $doc, JSON_PRETTY_PRINT));
 # [END docs_output_as_json]

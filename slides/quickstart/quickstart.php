@@ -21,13 +21,16 @@ if (php_sapi_name() != 'cli') {
     throw new Exception('This application must be run on the command line.');
 }
 
+use Google\Client;
+use Google\Service\Slides;
+
 /**
  * Returns an authorized API client.
- * @return Google_Client the authorized client object
+ * @return Client the authorized client object
  */
 function getClient()
 {
-    $client = new Google_Client();
+    $client = new Client();
     $client->setApplicationName('Google Slides API PHP Quickstart');
     $client->setScopes("https://www.googleapis.com/auth/presentations");
     $client->setAuthConfig('credentials.json');
@@ -77,7 +80,7 @@ function getClient()
 
 // Get the API client and construct the service object.
 $client = getClient();
-$service = new Google_Service_Slides($client);
+$service = new Slides($client);
 
 // Prints the number of slides and elements in a sample presentation:
 // https://docs.google.com/presentation/d/1EAYk18WDjIG-zp_0vLm3CsfQh_i8eXc67Jo2O9C6Vuc/edit
