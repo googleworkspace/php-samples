@@ -29,7 +29,7 @@ function getClient()
 {
     $client = new Google_Client();
     $client->setApplicationName('G Suite Reseller API PHP Quickstart');
-    $client->setScopes(Google_Service_Reseller::APPS_ORDER);
+    $client->setScopes("https://www.googleapis.com/auth/apps.order");
     $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
@@ -81,17 +81,17 @@ $service = new Google_Service_Reseller($client);
 
 // Print the first 10 subscriptions you manage.
 $optParams = array(
-  'maxResults' => 10,
+    'maxResults' => 10,
 );
 $results = $service->subscriptions->listSubscriptions($optParams);
 
 if (count($results->getSubscriptions()) == 0) {
-  print "No subscriptions found.\n";
+    print "No subscriptions found.\n";
 } else {
-  print "Subscriptions:\n";
-  foreach ($results->getSubscriptions() as $subscription) {
-    printf("%s (%s, %s)\n", $subscription->getCustomerId(),
-        $subscription->getSkuId(), $subscription->getPlan()->getPlanName());
-  }
+    print "Subscriptions:\n";
+    foreach ($results->getSubscriptions() as $subscription) {
+        printf("%s (%s, %s)\n", $subscription->getCustomerId(),
+            $subscription->getSkuId(), $subscription->getPlan()->getPlanName());
+    }
 }
 // [END admin_sdk_reseller_quickstart]

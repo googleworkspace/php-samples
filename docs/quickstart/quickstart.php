@@ -25,7 +25,7 @@ function getClient()
 {
     $client = new Google_Client();
     $client->setApplicationName('Google Docs API PHP Quickstart');
-    $client->setScopes(Google_Service_Docs::DOCUMENTS_READONLY);
+    $client->setScopes('https://www.googleapis.com/auth/documents.readonly	');
     $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
 

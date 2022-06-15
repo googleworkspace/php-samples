@@ -29,7 +29,7 @@ function getClient()
 {
     $client = new Google_Client();
     $client->setApplicationName('Google Classroom API PHP Quickstart');
-    $client->setScopes(Google_Service_Classroom::CLASSROOM_COURSES_READONLY);
+    $client->setScopes('https://www.googleapis.com/auth/classroom.courses.readonly');
     $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
@@ -80,17 +80,25 @@ $client = getClient();
 $service = new Google_Service_Classroom($client);
 
 // Print the first 10 courses the user has access to.
-$optParams = array(
-  'pageSize' => 10
-);
-$results = $service->courses->listCourses($optParams);
+try{
 
-if (count($results->getCourses()) == 0) {
-  print "No courses found.\n";
-} else {
-  print "Courses:\n";
-  foreach ($results->getCourses() as $course) {
-    printf("%s (%s)\n", $course->getName(), $course->getId());
-  }
+    $optParams = array(
+        'pageSize' => 10
+    );
+    $results = $service->courses->listCourses($optParams);
+
+    if (count($results->getCourses()) == 0) {
+        print "No courses found.\n";
+    } else {
+        print "Courses:\n";
+        foreach ($results->getCourses() as $course) {
+            printf("%s (%s)\n", $course->getName(), $course->getId());
+        }
+    }
 }
+catch(Exception $e) {
+    // TODO(developer) - handle error appropriately
+    echo 'Message: ' .$e->getMessage();
+}
+
 // [END classroom_quickstart]

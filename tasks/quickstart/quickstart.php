@@ -29,7 +29,7 @@ function getClient()
 {
     $client = new Google_Client();
     $client->setApplicationName('Google Tasks API PHP Quickstart');
-    $client->setScopes(Google_Service_Tasks::TASKS_READONLY);
+    $client->setScopes('https://www.googleapis.com/auth/tasks.readonly');
     $client->setAuthConfig('credentials.json');
     $client->setAccessType('offline');
     $client->setPrompt('select_account consent');
@@ -80,17 +80,24 @@ $client = getClient();
 $service = new Google_Service_Tasks($client);
 
 // Print the first 10 task lists.
-$optParams = array(
-  'maxResults' => 10,
-);
-$results = $service->tasklists->listTasklists($optParams);
+try{
 
-if (count($results->getItems()) == 0) {
-  print "No task lists found.\n";
-} else {
-  print "Task lists:\n";
-  foreach ($results->getItems() as $tasklist) {
-    printf("%s (%s)\n", $tasklist->getTitle(), $tasklist->getId());
-  }
+    $optParams = array(
+        'maxResults' => 10,
+    );
+    $results = $service->tasklists->listTasklists($optParams);
+
+    if (count($results->getItems()) == 0) {
+        print "No task lists found.\n";
+    } else {
+        print "Task lists:\n";
+        foreach ($results->getItems() as $tasklist) {
+            printf("%s (%s)\n", $tasklist->getTitle(), $tasklist->getId());
+        }
+    }
+}
+catch(Exception $e) {
+    // TODO(developer) - handle error appropriately
+    echo 'Message: ' .$e->getMessage();
 }
 // [END tasks_quickstart]
