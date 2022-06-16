@@ -25,7 +25,7 @@ function createFolder() {
     $client->addScope(Google\Service\Drive::DRIVE);
     $driveService = new Google_Service_Drive($client);
    
-    $fileMetadata = new Google_Service_Drive_DriveFile(array(
+    $fileMetadata = new Google\Service\Drive\DriveFile(array(
         'name' => 'A',
         'mimeType' => 'application/vnd.google-apps.folder'));
     $file = $driveService->files->create($fileMetadata, array(
