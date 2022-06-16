@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 use Monolog\Logger;
+use Google\Service\Drive;
+use Google\Service\Sheets;
+use Google\Client;
 
 class BaseTestCase extends PHPUnit_Framework_TestCase
 {
@@ -27,8 +30,8 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
     public static function setUpBeforeClass()
     {
         $client = self::createClient();
-        BaseTestCase::$service = new Google_Service_Sheets($client);
-        BaseTestCase::$driveService = new Google_Service_Drive($client);
+        BaseTestCase::$service = new Sheets($client);
+        BaseTestCase::$driveService = new Drive($client);
     }
 
     protected function setUp()
@@ -51,7 +54,7 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
     {
         // create a log channel
         $log = new Logger('debug');
-        $client = new Google_Client();
+        $client = new Client();
         $client->setApplicationName(self::APPLICATION_NAME);
         $client->useApplicationDefaultCredentials();
         $client->addScope('https://www.googleapis.com/auth/drive');
@@ -66,7 +69,7 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
 
     protected function createTestSpreadsheet()
     {
-        $spreadsheet = new Google_Service_Sheets_Spreadsheet([
+        $spreadsheet = new Sheets\Spreadsheet([
             'properties' => [
                 'title' => 'Test Spreadsheet'
             ]
@@ -95,7 +98,7 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
                 'fields' => 'userEnteredValue'
             ]
         ];
-        $body = new Google_Service_Sheets_BatchUpdateSpreadsheetRequest([
+        $body = new Sheets\BatchUpdateSpreadsheetRequest([
             'requests' => $requests
         ]);
         self::$service->spreadsheets->batchUpdate($spreadsheetId, $body);

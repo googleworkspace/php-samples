@@ -17,13 +17,16 @@
 // [START docs_quickstart]
 require __DIR__ . '/vendor/autoload.php';
 
+use Google\Client;
+use Google\Service\Docs;
+
 /**
  * Returns an authorized API client.
- * @return Google_Client the authorized client object
+ * @return Client the authorized client object
  */
 function getClient()
 {
-    $client = new Google_Client();
+    $client = new Client();
     $client->setApplicationName('Google Docs API PHP Quickstart');
     $client->setScopes('https://www.googleapis.com/auth/documents.readonly	');
     $client->setAuthConfig('credentials.json');
@@ -76,7 +79,7 @@ function expandHomeDirectory($path)
 
 // Get the API client and construct the service object.
 $client = getClient();
-$service = new Google_Service_Docs($client);
+$service = new Docs($client);
 
 // Prints the title of the requested doc:
 // https://docs.google.com/document/d/195j9eDD3ccgjQRttHhJPymLJUCOUjs-jmwTrekvdjFE/edit

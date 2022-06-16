@@ -21,13 +21,16 @@ if (php_sapi_name() != 'cli') {
     throw new Exception('This application must be run on the command line.');
 }
 
+use Google\Client;
+use Google\Service\Directory;
+
 /**
  * Returns an authorized API client.
- * @return Google_Client the authorized client object
+ * @return Client the authorized client object
  */
 function getClient()
 {
-    $client = new Google_Client();
+    $client = new Client();
     $client->setApplicationName('G Suite Directory API PHP Quickstart');
     $client->setScopes('https://www.googleapis.com/auth/admin.directory.user.readonly');
     $client->setAuthConfig('credentials.json');
@@ -77,7 +80,7 @@ function getClient()
 
 // Get the API client and construct the service object.
 $client = getClient();
-$service = new Google_Service_Directory($client);
+$service = new Directory($client);
 
 // Print the first 10 users in the domain.
 try{

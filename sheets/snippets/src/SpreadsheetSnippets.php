@@ -14,6 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+use Google\Service\Sheets;
+
 class SpreadsheetSnippets
 {
     public function __construct($service)
@@ -25,7 +28,7 @@ class SpreadsheetSnippets
     {
         $service = $this->service;
         // [START sheets_create]
-        $spreadsheet = new Google_Service_Sheets_Spreadsheet([
+        $spreadsheet = new Sheets\Spreadsheet([
             'properties' => [
                 'title' => $title
             ]
@@ -44,7 +47,7 @@ class SpreadsheetSnippets
         // [START sheets_batch_update]
         $requests = [
           // Change the spreadsheet's title.
-          new Google_Service_Sheets_Request([
+          new Sheets\Request([
               'updateSpreadsheetProperties' => [
                   'properties' => [
                       'title' => $title
@@ -53,7 +56,7 @@ class SpreadsheetSnippets
               ]
           ]),
           // Find and replace text.
-          new Google_Service_Sheets_Request([
+          new Sheets\Request([
               'findReplace' => [
                   'find' => $find,
                   'replacement' => $replacement,
@@ -63,7 +66,7 @@ class SpreadsheetSnippets
         ];
 
         // Add additional requests (operations) ...
-        $batchUpdateRequest = new Google_Service_Sheets_BatchUpdateSpreadsheetRequest([
+        $batchUpdateRequest = new Sheets\BatchUpdateSpreadsheetRequest([
             'requests' => $requests
         ]);
 
@@ -120,7 +123,7 @@ class SpreadsheetSnippets
         // [START_EXCLUDE silent]
         $values = $_values;
         // [END_EXCLUDE]
-        $body = new Google_Service_Sheets_ValueRange([
+        $body = new Sheets\ValueRange([
             'values' => $values
         ]);
         $params = [
@@ -148,12 +151,12 @@ class SpreadsheetSnippets
         $values = $_values;
         // [END_EXCLUDE]
         $data = [];
-        $data[] = new Google_Service_Sheets_ValueRange([
+        $data[] = new Sheets\ValueRange([
             'range' => $range,
             'values' => $values
         ]);
         // Additional ranges to update ...
-        $body = new Google_Service_Sheets_BatchUpdateValuesRequest([
+        $body = new Sheets\BatchUpdateValuesRequest([
             'valueInputOption' => $valueInputOption,
             'data' => $data
         ]);
@@ -177,7 +180,7 @@ class SpreadsheetSnippets
         // [START_EXCLUDE silent]
         $values = $_values;
         // [END_EXCLUDE]
-        $body = new Google_Service_Sheets_ValueRange([
+        $body = new Sheets\ValueRange([
             'values' => $values
         ]);
         $params = [
@@ -193,14 +196,14 @@ class SpreadsheetSnippets
     {
         $service = $this->service;
         $requests = [
-            new Google_Service_Sheets_Request([
+            new Sheets\Request([
                 'addSheet' => [
                     'properties' => [
                         'title' => 'Sheet 1'
                     ]
                 ]
             ]),
-            new Google_Service_Sheets_Request([
+            new Sheets\Request([
                 'addSheet' => [
                     'properties' => [
                         'title' => 'Sheet 2'
@@ -209,7 +212,7 @@ class SpreadsheetSnippets
             ])
         ];
         // Create two sheets for our pivot table
-        $batchUpdateRequest = new Google_Service_Sheets_BatchUpdateSpreadsheetRequest([
+        $batchUpdateRequest = new Sheets\BatchUpdateSpreadsheetRequest([
             'requests' => $requests
         ]);
         $batchUpdateResponse = $service->spreadsheets->batchUpdate($spreadsheetId, $batchUpdateRequest);
@@ -279,7 +282,7 @@ class SpreadsheetSnippets
         ];
 
         $requests = [
-            new Google_Service_Sheets_Request([
+            new Sheets\Request([
                 'addConditionalFormatRule' => [
                     'rule' => [
                         'ranges' => [ $myRange ],
@@ -296,7 +299,7 @@ class SpreadsheetSnippets
                     'index' => 0
                 ]
             ]),
-            new Google_Service_Sheets_Request([
+            new Sheets\Request([
                 'addConditionalFormatRule' => [
                     'rule' => [
                         'ranges' => [ $myRange ],
@@ -315,7 +318,7 @@ class SpreadsheetSnippets
             ])
         ];
 
-        $batchUpdateRequest = new Google_Service_Sheets_BatchUpdateSpreadsheetRequest([
+        $batchUpdateRequest = new Sheets\BatchUpdateSpreadsheetRequest([
             'requests' => $requests
         ]);
         $response = $service->spreadsheets->batchUpdate($spreadsheetId, $batchUpdateRequest);

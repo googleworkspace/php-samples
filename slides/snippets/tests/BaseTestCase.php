@@ -15,6 +15,10 @@
  * limitations under the License.
  */
 use Monolog\Logger;
+use Google\Client;
+use Google\Service\Drive;
+use Google\Service\Sheets;
+use Google\Service\Slides;
 
 class BaseTestCase extends PHPUnit_Framework_TestCase
 {
@@ -27,9 +31,9 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
     public static function setUpBeforeClass()
     {
         $client = self::createClient();
-        BaseTestCase::$service = new Google_Service_Slides($client);
-        BaseTestCase::$driveService = new Google_Service_Drive($client);
-        BaseTestCase::$sheetsService = new Google_Service_Sheets($client);
+        BaseTestCase::$service = new Slides($client);
+        BaseTestCase::$driveService = new Drive($client);
+        BaseTestCase::$sheetsService = new Sheets($client);
     }
 
     protected function setUp()
@@ -52,7 +56,7 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
     {
         // create a log channel
         $log = new Logger('debug');
-        $client = new Google_Client();
+        $client = new Client();
         $client->setApplicationName(self::APPLICATION_NAME);
         $client->useApplicationDefaultCredentials();
         $client->addScope('https://www.googleapis.com/auth/drive');
@@ -67,7 +71,7 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
 
     protected function createTestPresentation()
     {
-        $presentation = new Google_Service_Slides_Presentation(array(
+        $presentation = new Slides\Presentation(array(
             'title' => 'Test Presentation'
         ));
         $presentation = self::$service->presentations->create($presentation);
@@ -78,13 +82,13 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
     protected function createTestSlide($presentationId)
     {
         $requests = array();
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'createSlide' => array(
                 'objectId' => 'TestSlide',
                 'slideLayoutReference' => array('predefinedLayout' => 'BLANK')
             )
         ));
-        $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
+        $batchUpdateRequest = new Slides\BatchUpdatePresentationRequest(array(
             'requests' => $requests
         ));
         $response = self::$service->presentations->batchUpdate($presentationId, $batchUpdateRequest);
@@ -96,7 +100,7 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
         $boxId = 'MyTextBox_01';
         $pt350 = array('magnitude' => 350, 'unit' => 'PT');
         $requests = array();
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'createShape' => array(
                 'objectId' => $boxId,
                 'shapeType' => 'TEXT_BOX',
@@ -116,7 +120,7 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
                 )
             )
         ));
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'insertText' => array(
                 'objectId' => $boxId,
                 'insertionIndex' => 0,
@@ -124,7 +128,7 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
             )
         ));
 
-        $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
+        $batchUpdateRequest = new Slides\BatchUpdatePresentationRequest(array(
             'requests' => $requests
         ));
         $response = self::$service->presentations->batchUpdate($presentationId, $batchUpdateRequest);
@@ -136,7 +140,7 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
         $chartId = 'MyChart_01';
         $emu4M = array('magnitude' => 4000000, 'unit' => 'EMU');
         $requests = array();
-        $requests[] = new Google_Service_Slides_Request(array(
+        $requests[] = new Slides\Request(array(
             'createSheetsChart' => array(
                 'objectId' => $chartId,
                 'spreadsheetId' => $spreadsheetId,
@@ -159,7 +163,7 @@ class BaseTestCase extends PHPUnit_Framework_TestCase
             )
         ));
 
-        $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
+        $batchUpdateRequest = new Slides\BatchUpdatePresentationRequest(array(
             'requests' => $requests
         ));
         $response = self::$service->presentations->batchUpdate($presentationId, $batchUpdateRequest);

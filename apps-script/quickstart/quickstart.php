@@ -21,13 +21,16 @@ if (php_sapi_name() != 'cli') {
     throw new Exception('This application must be run on the command line.');
 }
 
+use Google\Client;
+use Google\Service\Script;
+
 /**
  * Returns an authorized API client.
- * @return Google_Client the authorized client object
+ * @return Client the authorized client object
  */
 function getClient()
 {
-    $client = new Google_Client();
+    $client = new Client();
     $client->setApplicationName('Google Apps Script API PHP Quickstart');
     $client->setScopes("https://www.googleapis.com/auth/script.projects");
     $client->setAuthConfig('credentials.json');
@@ -82,12 +85,12 @@ function getClient()
  * project, and log the script's URL to the user.
  */
 $client = getClient();
-$service = new Google_Service_Script($client);
+$service = new Script($client);
 
 // Create a management request object.
 try{
 
-    $request = new Google_Service_Script_CreateProjectRequest();
+    $request = new Script\CreateProjectRequest();
     $request->setTitle('My Script');
     $response = $service->projects->create($request);
 
@@ -98,7 +101,7 @@ function helloWorld() {
   console.log('Hello, world!');
 }
 EOT;
-    $file1 = new Google_Service_Script_ScriptFile();
+    $file1 = new Script\ScriptFile();
     $file1->setName('hello');
     $file1->setType('SERVER_JS');
     $file1->setSource($code);
@@ -109,12 +112,12 @@ EOT;
   "exceptionLogging": "CLOUD"
 }
 EOT;
-    $file2 = new Google_Service_Script_ScriptFile();
+    $file2 = new Script\ScriptFile();
     $file2->setName('appsscript');
     $file2->setType('JSON');
     $file2->setSource($manifest);
 
-    $request = new Google_Service_Script_Content();
+    $request = new Script\Content();
     $request->setScriptId($scriptId);
     $request->setFiles([$file1, $file2]);
 

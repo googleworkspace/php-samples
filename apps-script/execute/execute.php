@@ -18,14 +18,16 @@
 // [START apps_script_api_execute]
 require __DIR__ . '/vendor/autoload.php';
 
+use Google\Service\Script;
+
 // Get the API client and construct the service object.
 $client = getClient();
-$service = new Google_Service_Script($client);
+$service = new Script($client);
 
 $scriptId = 'ENTER_YOUR_SCRIPT_ID_HERE';
 
 // Create an execution request object.
-$request = new Google_Service_Script_ExecutionRequest();
+$request = new Script\ExecutionRequest();
 $request->setFunction('getFoldersUnderRoot');
 
 try {

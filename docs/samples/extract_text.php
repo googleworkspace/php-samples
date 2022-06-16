@@ -32,13 +32,16 @@ list($_, $documentId) = $argv;
 # [START docs_extract_text]
 // $documentId = 'YOUR_DOCUMENT_ID';
 
+use Google\Client;
+use Google\Service\Docs;
+
 /**
  * Create an authorized API client.
  * Be sure you've set up your OAuth2 consent screen at
  * https://console.cloud.google.com/apis/credentials/consent
  */
-$client = new Google_Client();
-$client->setScopes(Google_Service_Docs::DOCUMENTS_READONLY);
+$client = new Client();
+$client->setScopes(Docs::DOCUMENTS_READONLY);
 $client->setAuthConfig('credentials.json');
 $client->setAccessType('offline');
 
@@ -116,7 +119,7 @@ function read_structural_elements($elements)
 }
 
 // Fetch the document and print all text elements
-$service = new Google_Service_Docs($client);
+$service = new Docs($client);
 $doc = $service->documents->get($documentId);
 echo read_structural_elements($doc->getBody()->getContent());
 # [END docs_extract_text]
