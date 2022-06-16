@@ -15,38 +15,43 @@
  * limitations under the License.
  */
 
-require __DIR__ . '/vendor/autoload.php';
+//[START sheets_create]
+use Google\Client;
+use Google\Service\Drive;
+use Google\Service\Sheets\SpreadSheet;
 
+/**
+* create an empty spreadsheet
+* 
+*/
 
-
-        //[START sheets_create]
-        /**
-         * create an empty spread sheet
-         * 
-         */
  function create($title)
- {
+    {   
+        /* Load pre-authorized user credentials from the environment.
+           TODO(developer) - See https://developers.google.com/identity for
+            guides on implementing OAuth2 for your application. */
+        $client = new Google\Client();
+        $client->useApplicationDefaultCredentials();
+        $client->addScope(Google\Service\Drive::DRIVE);
+        $service = new Google_Service_Sheets($client);
+        try{
 
-     $client = new Google\Client();
-     $client->useApplicationDefaultCredentials();
-     $client->addScope(Google\Service\Drive::DRIVE);
-     $service = new Google_Service_Sheets($client);
-     try {
-
-         $spreadsheet = new Google_Service_Sheets_Spreadsheet([
-             'properties' => [
-                 'title' => $title
-             ]
-         ]);
-         $spreadsheet = $service->spreadsheets->create($spreadsheet, [
-             'fields' => 'spreadsheetId'
-         ]);
-         printf("Spreadsheet ID: %s\n", $spreadsheet->spreadsheetId);
-         return $spreadsheet->spreadsheetId;
-     } catch (Exception $e) {
-         echo 'Message: ' . $e->getMessage();
-     }
- }
- // [END sheets_create]
-    create('title');
-?>
+            $spreadsheet = new Google_Service_Sheets_Spreadsheet([
+                'properties' => [
+                    'title' => $title
+                    ]
+                ]);
+                $spreadsheet = $service->spreadsheets->create($spreadsheet, [
+                    'fields' => 'spreadsheetId'
+                ]);
+                printf("Spreadsheet ID: %s\n", $spreadsheet->spreadsheetId);
+                return $spreadsheet->spreadsheetId;
+        }
+        catch(Exception $e) {
+            // TODO(developer) - handle error appropriately
+            echo 'Message: ' .$e->getMessage();
+          }
+    }
+    // [END sheets_create]
+require_once 'vendor/autoload.php';
+create('title');
