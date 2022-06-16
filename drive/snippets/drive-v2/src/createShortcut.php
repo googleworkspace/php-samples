@@ -29,8 +29,9 @@ function createShortcut()
         $fileMetadata = new Google\Service\Drive\DriveFile(array(
             'name' => 'Project plan',
             'mimeType' => 'application/vnd.google-apps.drive-sdk'));
-        $file = $driveService->files->create($fileMetadata, array(
-            'fields' => 'id'));
+        $file = $driveService->files->create($fileMetadata, [
+            'fields' => 'id'
+        ]);
         printf("File ID: %s\n", $file->id);
         // [END drive_create_shortcut]
       
