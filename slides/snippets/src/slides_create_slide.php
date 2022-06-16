@@ -15,12 +15,17 @@
  * limitations under the License.
  */
 
-require __DIR__ . '/vendor/autoload.php';
-
-
 // [START slides_create_slide]
+use Google\Client;
+use Google\Service\Drive;
+use Google\Service\Slides\Request;
+use Google\Service\Slides\BatchUpdatePresentationRequest;
+
 function createSlide($presentationId, $pageId)
 {
+    /* Load pre-authorized user credentials from the environment.
+   TODO(developer) - See https://developers.google.com/identity for
+    guides on implementing OAuth2 for your application. */
     $client = new Google\Client();
     $client->useApplicationDefaultCredentials();
     $client->addScope(Google\Service\Drive::DRIVE);
@@ -36,10 +41,11 @@ function createSlide($presentationId, $pageId)
                 )
             )
         ));
-
         $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
             'requests' => $requests
         ));
+
+        //execute the request 
         $response = $slidesService->presentations->batchUpdate($presentationId, $batchUpdateRequest);
         $createSlideResponse = $response->getReplies()[0]->getCreateSlide();
         printf("Created slide with ID: %s\n", $createSlideResponse->getObjectId());
@@ -48,6 +54,7 @@ function createSlide($presentationId, $pageId)
         echo 'Message: ' . $e->getMessage();
     }
 }
+
 // [END slides_create_slide]
-createSlide('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'abcd1234');
-?>
+require 'vendor/autoload.php';
+createSlide('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'ss1234');

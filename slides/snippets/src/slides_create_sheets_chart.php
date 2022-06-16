@@ -15,11 +15,18 @@
  * limitations under the License.
  */
 
-require __DIR__ . '/vendor/autoload.php';
-
 // [START slides_create_sheets_chart]
+use Google\Client;
+use Google\Service\Drive;
+use Google\Service\Slides;
+use Google\Service\Slides\Request;
+
+
 function createSheetsChart($presentationId, $pageId, $spreadsheetId, $sheetChartId)
 {
+    /* Load pre-authorized user credentials from the environment.
+       TODO(developer) - See https://developers.google.com/identity for
+        guides on implementing OAuth2 for your application. */
     $client = new Google\Client();
     $client->useApplicationDefaultCredentials();
     $client->addScope(Google\Service\Drive::DRIVE);
@@ -28,31 +35,32 @@ function createSheetsChart($presentationId, $pageId, $spreadsheetId, $sheetChart
     // a page in the presentation. Setting the linking mode as "LINKED" allows the
     // chart to be refreshed if the Sheets version is updated.
     try {
-
+        //creating new presentaion chart
         $presentationChartId = 'MyEmbeddedChart';
         $emu4M = array('magnitude' => 4000000, 'unit' => 'EMU');
         $requests = array();
-        $requests[] = new Google_Service_Slides_Request(array(
-            'createSheetsChart' => array(
-                'spreadsheetId' => $spreadsheetId,
-                'chartId' => $sheetChartId,
-                'linkingMode' => 'LINKED',
-                'elementProperties' => array(
-                    'pageObjectId' => $pageId,
-                    'size' => array(
-                        'height' => $emu4M,
-                        'width' => $emu4M
-                    ),
-                    'transform' => array(
-                        'scaleX' => 1,
-                        'scaleY' => 1,
-                        'translateX' => 100000,
-                        'translateY' => 100000,
-                        'unit' => 'EMU'
+        $requests[] = new Google_Service_Slides_Request(
+            array(
+                'createSheetsChart' => array(
+                    'spreadsheetId' => $spreadsheetId,
+                    'chartId' => $sheetChartId,
+                    'linkingMode' => 'LINKED',
+                    'elementProperties' => array(
+                        'pageObjectId' => $pageId,
+                        'size' => array(
+                            'height' => $emu4M,
+                            'width' => $emu4M
+                        ),
+                        'transform' => array(
+                            'scaleX' => 1,
+                            'scaleY' => 1,
+                            'translateX' => 100000,
+                            'translateY' => 100000,
+                            'unit' => 'EMU'
+                        )
                     )
                 )
-            )
-        ));
+            ));
 
         // Execute the request.
         $batchUpdateRequest = new Google_Service_Slides_BatchUpdatePresentationRequest(array(
@@ -65,6 +73,8 @@ function createSheetsChart($presentationId, $pageId, $spreadsheetId, $sheetChart
         echo 'Message: ' . $e->getMessage();
     }
 }
+
 // [END slides_create_sheets_chart]
-createSheetsChart('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms','abcd1234', '1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8', 122);
+require 'vendor/autoload.php';
+createSheetsChart('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'abcd1234', '1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8', 122);
 ?>

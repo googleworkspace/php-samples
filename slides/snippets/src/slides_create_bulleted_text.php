@@ -15,11 +15,18 @@
  * limitations under the License.
  */
 
-require __DIR__ . '/vendor/autoload.php';
-
 // [START slides_create_bulleted_text]
+use Google\Client;
+use Google\Service\Drive;
+use Google\Service\Slides;
+use Google\Service\Slides\Request;
+
+
 function createBulletedText($presentationId, $shapeId)
 {
+    /* Load pre-authorized user credentials from the environment.
+       TODO(developer) - See https://developers.google.com/identity for
+        guides on implementing OAuth2 for your application. */
     $client = new Google\Client();
     $client->useApplicationDefaultCredentials();
     $client->addScope(Google\Service\Drive::DRIVE);
@@ -44,6 +51,7 @@ function createBulletedText($presentationId, $shapeId)
     printf("Added bullets to text in shape with ID: %s", $shapeId);
     return $response;
 }
+
 // [END slides_create_bulleted_text]
+require 'vendor/autoload.php';
 createBulletedText('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'MyTextBox_01');
-?>

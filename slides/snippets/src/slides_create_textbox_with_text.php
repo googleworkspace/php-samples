@@ -15,19 +15,27 @@
  * limitations under the License.
  */
 
-require __DIR__ . '/vendor/autoload.php';
-
 // [START slides_create_textbox_with_text]
+use Google\Client;
+use Google\Service\Slides\BatchUpdatePresentationRequest;
+use Google\Service\Slides;
+use Google\Service\DriveFile;
+use Google\Service\Slides\Request;
+
 function createTextboxWithText($presentationId, $pageId)
 {
-    // Create a new square textbox, using the supplied element ID.
+
+    /* Load pre-authorized user credentials from the environment.
+       TODO(developer) - See https://developers.google.com/identity for
+        guides on implementing OAuth2 for your application. */
     $client = new Google\Client();
     $client->useApplicationDefaultCredentials();
     $client->addScope(Google\Service\Drive::DRIVE);
     $slidesService = new Google_Service_Slides($client);
     try {
 
-        $elementId = 'MyTextBox_01';
+        // Create a new square textbox, using the supplied element ID.
+        $elementId = "MyTextBoxxxx_01";
         $pt350 = array('magnitude' => 350, 'unit' => 'PT');
         $requests = array();
         $requests[] = new Google_Service_Slides_Request(array(
@@ -72,6 +80,7 @@ function createTextboxWithText($presentationId, $pageId)
         echo 'Message: ' . $e->getMessage();
     }
 }
+
 // [END slides_create_textbox_with_text]
+require 'vendor/autoload.php';
 createTextboxWithText('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'abcd1234');
-?>

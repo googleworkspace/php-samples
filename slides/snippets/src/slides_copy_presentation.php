@@ -15,11 +15,19 @@
  * limitations under the License.
  */
 
-require __DIR__ . '/vendor/autoload.php';
-
 // [START slides_copy_presentation]
+
+use Google\Service\Drive;
+use Google\Client;
+use Google\Service\Drive\DriveFile;
+
+
+
 function copyPresentation($presentationId, $copyTitle)
 {
+    /* Load pre-authorized user credentials from the environment.
+   TODO(developer) - See https://developers.google.com/identity for
+    guides on implementing OAuth2 for your application. */
     $client = new Google\Client();
     $client->useApplicationDefaultCredentials();
     $client->addScope(Google\Service\Drive::DRIVE);
@@ -37,6 +45,8 @@ function copyPresentation($presentationId, $copyTitle)
         echo 'Message: ' . $e->getMessage();
     }
 }
+
 // [END slides_copy_presentation]
+
+require_once 'vendor/autoload.php';
 copyPresentation('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'New File');
-?>
