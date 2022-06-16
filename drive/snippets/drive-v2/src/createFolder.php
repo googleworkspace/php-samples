@@ -17,7 +17,6 @@
 
  // [START drive_create_folder]
 require_once 'vendor/autoload.php';
-putenv('GOOGLE_APPLICATION_CREDENTIALS=/opt/lampp/htdocs/google-webspace/workspace-348506-241f41f76ce5.json');
 
 function createFolder() {
     $client = new Google\Client();
