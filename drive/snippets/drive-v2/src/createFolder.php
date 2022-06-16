@@ -23,7 +23,7 @@ function createFolder() {
     $client = new Google\Client();
     $client->useApplicationDefaultCredentials();
     $client->addScope(Google\Service\Drive::DRIVE);
-    $driveService = new Google_Service_Drive($client);
+    $driveService = new Google\Service\Drive($client);
    
     $fileMetadata = new Google\Service\Drive\DriveFile(array(
         'name' => 'A',
