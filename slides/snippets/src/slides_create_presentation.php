@@ -15,21 +15,24 @@
  * limitations under the License.
  */
 
-require __DIR__ . '/vendor/autoload.php';
-
 // [START slides_create_presentation]
+use Google\Client;
+use Google\Service\Drive;
+use Google\Service\Slides;
+use Google\Service\Slides\Request;
+
 function createPresentation($title)
 {
+    /* Load pre-authorized user credentials from the environment.
+       TODO(developer) - See https://developers.google.com/identity for
+        guides on implementing OAuth2 for your application. */
     $client = new Google\Client();
     $client->useApplicationDefaultCredentials();
     $client->addScope(Google\Service\Drive::DRIVE);
     $service = new Google_Service_Slides($client);
     try {
-
-        $presentation = new Google_Service_Slides_Presentation(array(
-            'title' => $title
-        ));
-
+        $presentation = new Google_Service_Slides_Presentation($title);
+        //creating a presentation
         $presentation = $service->presentations->create($presentation);
         printf("Created presentation with ID: %s\n", $presentation->presentationId);
         return $presentation;
@@ -37,6 +40,7 @@ function createPresentation($title)
         echo 'Message: ' . $e->getMessage();
     }
 }
+
 // [END slides_create_presentation]
+require 'vendor/autoload.php';
 createPresentation("sample presentation");
-?>

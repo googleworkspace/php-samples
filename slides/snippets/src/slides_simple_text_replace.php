@@ -15,11 +15,17 @@
  * limitations under the License.
  */
 
-require __DIR__ . '/vendor/autoload.php';
-
 // [START slides_simple_text_replace]
+use Google\Client;
+use Google\Service\Drive;
+use Google\Service\Slides;
+use Google\Service\Slides\Request;
+
 function simpleTextReplace($presentationId, $shapeId, $replacementText)
 {
+    /* Load pre-authorized user credentials from the environment.
+       TODO(developer) - See https://developers.google.com/identity for
+        guides on implementing OAuth2 for your application. */
     $client = new Google\Client();
     $client->useApplicationDefaultCredentials();
     $client->addScope(Google\Service\Drive::DRIVE);
@@ -50,6 +56,7 @@ function simpleTextReplace($presentationId, $shapeId, $replacementText)
     printf("Replaced text in shape with ID: %s", $shapeId);
     return $response;
 }
+
 // [END slides_simple_text_replace]
-simpleTextReplace('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', '', '');
-?>
+require 'vendor/autoload.php';
+simpleTextReplace('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'My_TextBOx01', 'aa');
