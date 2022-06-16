@@ -27,8 +27,9 @@ function downloadFile() {
 
     $fileId = '0BwwA4oUTeiV1UVNwOHItT0xfa2M';
     // [END_EXCLUDE]
-    $response = $driveService->files->get($fileId, array(
-        'alt' => 'media'));
+    $response = $driveService->files->get($fileId, [
+        'alt' => 'media'
+    ]);
     $content = $response->getBody()->getContents();
    
     return $content;
