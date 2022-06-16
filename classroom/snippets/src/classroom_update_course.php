@@ -16,25 +16,25 @@
  */
 
 // [START classroom_update_course]
-require __DIR__ . '/vendor/autoload.php';
+use Google\Service\Classroom;
 
-function updateCourse($service, $courseId) {
-  $course = $service->courses->get($courseId);
-  $course->section = 'Period 3';
-  $course->room = '302';
-  $course = $service->courses->update($courseId, $course);
-  printf("Course '%s' updated.\n", $course->name);
-  return $course;
+function updateCourse($service, $courseId){
+    $course = $service->courses->get($courseId);
+    $course->section = 'Period 3';
+    $course->room = '302';
+    $course = $service->courses->update($courseId, $course);
+    printf("Course '%s' updated.\n", $course->name);
+    return $course;
 }
 
 /* Load pre-authorized user credentials from the environment.
  TODO(developer) - See https://developers.google.com/identity for
   guides on implementing OAuth2 for your application. */
+require 'vendor/autoload.php';
 $client = new Google\Client();
 $client->useApplicationDefaultCredentials();
 $client->addScope("https://www.googleapis.com/auth/classroom.courses");
 $service = new Google_Service_Classroom($client);
 // [END classroom_update_course]
-
-updateCourse($service,531365794650);
+updateCourse($service,'531365794650');
 ?>

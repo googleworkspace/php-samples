@@ -16,35 +16,39 @@
  */
 
 // [START classroom_list_courses]
-require __DIR__ . '/vendor/autoload.php';
-function listCourses($service) {
-  $pageToken = NULL;
-  $courses = array();
+use Google\Service\Classroom;
 
-  do {
-    $params = array(
-      'pageSize' => 100,
-      'pageToken' => $pageToken
-    );
-    $response = $service->courses->listCourses($params);
-    $courses = array_merge($courses, $response->courses);
-    $pageToken = $response->nextPageToken;
-  } while (!empty($pageToken));
 
-  if (count($courses) == 0) {
-    print "No courses found.\n";
-  } else {
-    print "Courses:\n";
-    foreach ($courses as $course) {
-      printf("%s (%s)\n", $course->name, $course->id);
+function listCourses($service): array
+{
+    $courses = array();
+    $pageToken = '';
+
+    do {
+        $params = array(
+            'pageSize' => 100,
+            'pageToken' => $pageToken
+        );
+        $response = $service->courses->listCourses($params);
+        $courses = array_merge($courses, $response->courses);
+        $pageToken = $response->nextPageToken;
+    } while (!empty($pageToken));
+
+    if (count($courses) == 0) {
+        print "No courses found.\n";
+    } else {
+        print "Courses:\n";
+        foreach ($courses as $course) {
+            printf("%s (%s)\n", $course->name, $course->id);
+        }
     }
-  }
-  return $courses;
+    return $courses;
 }
 
 /* Load pre-authorized user credentials from the environment.
  TODO(developer) - See https://developers.google.com/identity for
   guides on implementing OAuth2 for your application. */
+require 'vendor/autoload.php';
 $client = new Google\Client();
 $client->useApplicationDefaultCredentials();
 $client->addScope("https://www.googleapis.com/auth/classroom.courses");

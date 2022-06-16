@@ -16,10 +16,10 @@
  */
 
 // [START classroom_patch_course]
-require __DIR__ . '/vendor/autoload.php';
+use Google\Service\Classroom\Course;
 
-function patchCourse($service, $courseId)
-{
+
+function patchCourse($service, $courseId){
     try {
 
         $course = new Google_Service_Classroom_Course(array(
@@ -39,6 +39,7 @@ function patchCourse($service, $courseId)
 /* Load pre-authorized user credentials from the environment.
  TODO(developer) - See https://developers.google.com/identity for
   guides on implementing OAuth2 for your application. */
+require 'vendor/autoload.php';
 $client = new Google\Client();
 $client->useApplicationDefaultCredentials();
 $client->addScope("https://www.googleapis.com/auth/classroom.courses");

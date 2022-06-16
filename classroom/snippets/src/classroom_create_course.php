@@ -16,7 +16,7 @@
  */
 
 // [START classroom_create_course]
-require __DIR__ . '/vendor/autoload.php';
+use Google\Service\Classroom\Course;
 
 function createCourse($service)
 {
@@ -44,11 +44,11 @@ function createCourse($service)
 /* Load pre-authorized user credentials from the environment.
  TODO(developer) - See https://developers.google.com/identity for
   guides on implementing OAuth2 for your application. */
+require 'vendor/autoload.php';
 $client = new Google\Client();
 $client->useApplicationDefaultCredentials();
 $client->addScope("https://www.googleapis.com/auth/classroom.courses");
 $service = new Google_Service_Classroom($client);
 // [END classroom_create_course]
-
 createCourse($service);
 ?>
