@@ -14,42 +14,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// [START sheets_pivot_tables]
+use Google\Client;
+use Google\Service\Drive;
+use Google\Service\Sheets\BatchUpdateSpreadsheetRequest;
 
-require __DIR__ . '/vendor/autoload.php';
 
 function pivotTables($spreadsheetId)
-{
-
-    $client = new Google\Client();
-    $client->useApplicationDefaultCredentials();
-    $client->addScope(Google\Service\Drive::DRIVE);
-    $service = new Google_Service_Sheets($client);
-    try {
-
-        $requests = [
-            new Google_Service_Sheets_Request([
-                'addSheet' => [
-                    'properties' => [
-                        'title' => 'Sheet 1'
-                    ]
+    {
+        /* Load pre-authorized user credentials from the environment.
+           TODO(developer) - See https://developers.google.com/identity for
+            guides on implementing OAuth2 for your application. */
+        $client = new Google\Client();
+        $client->useApplicationDefaultCredentials();
+        $client->addScope(Google\Service\Drive::DRIVE);
+        $service = new Google_Service_Sheets($client);
+        try{
+            $requests = [
+                new Google_Service_Sheets_Request([
+                    'addSheet' => [
+                        'properties' => [
+                            'title' => 'Sheet 1'
+                            ]
                 ]
             ]),
             new Google_Service_Sheets_Request([
                 'addSheet' => [
                     'properties' => [
                         'title' => 'Sheet 2'
-                    ]
-                ]
-            ])
-        ];
-        // Create two sheets for our pivot table
-        $batchUpdateRequest = new Google_Service_Sheets_BatchUpdateSpreadsheetRequest([
-            'requests' => $requests
-        ]);
+                        ]
+                        ]
+                        ])
+                    ];
+                    // Create two sheets for our pivot table
+                    $batchUpdateRequest = new Google_Service_Sheets_BatchUpdateSpreadsheetRequest([
+                        'requests' => $requests
+                    ]);
         $batchUpdateResponse = $service->spreadsheets->batchUpdate($spreadsheetId, $batchUpdateRequest);
         $sourceSheetId = $batchUpdateResponse->replies[0]->addSheet->properties->sheetId;
         $targetSheetId = $batchUpdateResponse->replies[1]->addSheet->properties->sheetId;
-        // [START sheets_pivot_tables]
         $requests = [
             'updateCells' => [
                 'rows' => [
@@ -81,12 +84,12 @@ function pivotTables($spreadsheetId)
                                     [
                                         'summarizeFunction' => 'COUNTA',
                                         'sourceColumnOffset' => 4
-                                    ]
-                                ],
+                                        ]
+                                    ],
                                 'valueLayout' => 'HORIZONTAL'
                             ]
                         ]
-                    ]
+                        ]
                 ],
                 'start' => [
                     'sheetId' => $targetSheetId,
@@ -97,10 +100,13 @@ function pivotTables($spreadsheetId)
             ]
         ];
         return $batchUpdateResponse;
-    } catch (Exception $e) {
-        echo 'Message: ' . $e->getMessage();
     }
-}
-// [END sheets_pivot_tables]
+        catch(Exception $e) {
+            // TODO(developer) - handle error appropriately
+            echo 'Message: ' .$e->getMessage();
+        }
+    }
+    // [END sheets_pivot_tables]
+    require 'vendor/autoload.php';
     pivotTables('1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8');
-    ?>
+    

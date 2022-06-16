@@ -16,72 +16,81 @@
  * limitations under the License.
  */
 
-require __DIR__ . '/vendor/autoload.php';
-
 // [START sheets_conditional_formatting]
+use Google\Client;
+use Google\Service\Drive;
+use Google\Service\Sheets\BatchUpdateSpreadsheetRequest;
+use Google\Service\Sheets\Request;
+
 function conditionalFormatting($spreadsheetId)
-{
-    $client = new Google\Client();
-    $client->useApplicationDefaultCredentials();
-    $client->addScope(Google\Service\Drive::DRIVE);
-    $service = new Google_Service_Sheets($client);
+    {
+        /* Load pre-authorized user credentials from the environment.
+           TODO(developer) - See https://developers.google.com/identity for
+            guides on implementing OAuth2 for your application. */
+        $client = new Google\Client();
+        $client->useApplicationDefaultCredentials();
+        $client->addScope(Google\Service\Drive::DRIVE);
+        $service = new Google_Service_Sheets($client);
 
-    try {
-        $myRange = [
-            'sheetId' => 0,
-            'startRowIndex' => 1,
-            'endRowIndex' => 11,
-            'startColumnIndex' => 0,
-            'endColumnIndex' => 4,
-        ];
-
-        $requests = [
-            new Google_Service_Sheets_Request([
+        try{
+            $myRange = [
+                'sheetId' => 0,
+                'startRowIndex' => 1,
+                'endRowIndex' => 11,
+                'startColumnIndex' => 0,
+                'endColumnIndex' => 4,
+            ];
+            //execute the request
+            $requests = [
+                new Google_Service_Sheets_Request([
                 'addConditionalFormatRule' => [
                     'rule' => [
-                        'ranges' => [$myRange],
+                        'ranges' => [ $myRange ],
                         'booleanRule' => [
                             'condition' => [
                                 'type' => 'CUSTOM_FORMULA',
-                                'values' => [['userEnteredValue' => '=GT($D2,median($D$2:$D$11))']]
+                                'values' => [ [ 'userEnteredValue' => '=GT($D2,median($D$2:$D$11))' ] ]
                             ],
                             'format' => [
-                                'textFormat' => ['foregroundColor' => ['red' => 0.8]]
+                                'textFormat' => [ 'foregroundColor' => [ 'red' => 0.8 ] ]
+                                ]
+                                ]
+                            ],
+                            'index' => 0
                             ]
-                        ]
-                    ],
-                    'index' => 0
-                ]
-            ]),
-            new Google_Service_Sheets_Request([
+                        ]),
+                        new Google_Service_Sheets_Request([
                 'addConditionalFormatRule' => [
                     'rule' => [
-                        'ranges' => [$myRange],
+                        'ranges' => [ $myRange ],
                         'booleanRule' => [
                             'condition' => [
                                 'type' => 'CUSTOM_FORMULA',
-                                'values' => [['userEnteredValue' => '=LT($D2,median($D$2:$D$11))']]
+                                'values' => [ [ 'userEnteredValue' => '=LT($D2,median($D$2:$D$11))' ] ]
                             ],
                             'format' => [
-                                'backgroundColor' => ['red' => 1, 'green' => 0.4, 'blue' => 0.4]
+                                'backgroundColor' => [ 'red' => 1, 'green' => 0.4, 'blue' => 0.4 ]
                             ]
-                        ]
-                    ],
+                            ]
+                        ],
                     'index' => 0
                 ]
-            ])
+                ])
         ];
-
+        
         $batchUpdateRequest = new Google_Service_Sheets_BatchUpdateSpreadsheetRequest([
             'requests' => $requests
         ]);
         $response = $service->spreadsheets->batchUpdate($spreadsheetId, $batchUpdateRequest);
         printf("%d cells updated.", count($response->getReplies()));
         return $response;
-    } catch (Exception $e) {
-        echo 'Message: ' . $e->getMessage();
+    }
+    catch(Exception $e) {
+        // TODO(developer) - handle error appropriately
+        echo 'Message: ' .$e->getMessage();
     }
 }
-// [END sheets_conditional_formatting]
+    // [END sheets_conditional_formatting]
+    require 'vendor/autoload.php';
     conditionalFormatting('1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8');
     ?>

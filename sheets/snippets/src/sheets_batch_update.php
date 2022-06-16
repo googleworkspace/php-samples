@@ -15,46 +15,56 @@
  * limitations under the License.
  */
 
-require __DIR__ . '/vendor/autoload.php';
 // [START sheets_batch_update]
-function batchUpdate($spreadsheetId, $title, $find, $replacement)
-{
-    $client = new Google\Client();
-    $client->useApplicationDefaultCredentials();
-    $client->addScope(Google\Service\Drive::DRIVE);
-    $service = new Google_Service_Sheets($client);
-    try {
+use Google\Client;
+use Google\Service\Drive;
+use Google\Service\Sheets\BatchUpdateSpreadsheetRequest;
 
-        $requests = [
-            new Google_Service_Sheets_Request([
-                'updateSpreadsheetProperties' => [
-                    'properties' => [
-                        'title' => $title
+/**
+ * to batch update a spreadsheet
+ */
+function batchUpdate($spreadsheetId, $title, $find, $replacement)
+    {   
+        /* Load pre-authorized user credentials from the environment.
+           TODO(developer) - See https://developers.google.com/identity for
+            guides on implementing OAuth2 for your application. */
+        $client = new Google\Client();
+        $client->useApplicationDefaultCredentials();
+        $client->addScope(Google\Service\Drive::DRIVE);
+        $service = new Google_Service_Sheets($client);
+        try{
+            //execute the request
+            $requests = [
+                new Google_Service_Sheets_Request([
+              'updateSpreadsheetProperties' => [
+                  'properties' => [
+                      'title' => $title
                     ],
                     'fields' => 'title'
-                ]
-            ]),
-            new Google_Service_Sheets_Request([
-                'findReplace' => [
-                    'find' => $find,
-                    'replacement' => $replacement,
-                    'allSheets' => true
-                ]
-            ])
-        ];
-        $batchUpdateRequest = new Google_Service_Sheets_BatchUpdateSpreadsheetRequest([
-            'requests' => $requests
-        ]);
+              ]
+          ]),
+          new Google_Service_Sheets_Request([
+              'findReplace' => [
+                  'find' => $find,
+                  'replacement' => $replacement,
+                  'allSheets' => true
+                  ]
+                  ])
+                ];
+                $batchUpdateRequest = new Google_Service_Sheets_BatchUpdateSpreadsheetRequest([
+                    'requests' => $requests
+                ]);
         $response = $service->spreadsheets->batchUpdate($spreadsheetId, $batchUpdateRequest);
         $findReplaceResponse = $response->getReplies()[1]->getFindReplace();
         printf("%s replacements made.\n",
-            $findReplaceResponse->getOccurrencesChanged());
+        $findReplaceResponse->getOccurrencesChanged());
         return $response;
-    } catch (Exception $e) {
-        echo 'Message: ' . $e->getMessage();
     }
-}
-// [END sheets_batch_update]
+    catch(Exception $e) {
+        // TODO(developer) - handle error appropriately
+        echo 'Message: ' .$e->getMessage();
+      }
+    }
+    // [END sheets_batch_update]
+    require 'vendor/autoload.php';
     batchUpdate('1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8','title', 'abc', 'def');
-
-    ?>
