@@ -34,4 +34,3 @@ function createFolder() {
 }
  // [END drive_create_folder]
 createFolder();
-?>
