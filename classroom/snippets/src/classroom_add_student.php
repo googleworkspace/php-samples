@@ -16,32 +16,33 @@
  */
 
 // [START classroom_add_student]
-require __DIR__ . '/vendor/autoload.php';
+use Google\Service\Classroom\Student;
 
 function enrollAsStudent($service, $courseId, $enrollmentCode) {
-  $student = new Google_Service_Classroom_Student(array(
-    'userId' => 'me'
-  ));
-  $params = array(
-    'enrollmentCode' => $enrollmentCode
-  );
-  try {
-    $student = $service->courses_students->create($courseId, $student, $params);
-    printf("User '%s' was enrolled  as a student in the course with ID '%s'.\n",
-        $student->profile->name->fullName, $courseId);
-  } catch (Google_Service_Exception $e) {
-    if ($e->getCode() == 409) {
-      print "You are already a member of this course.\n";
-    } else {
-      throw $e;
+    $student = new Google_Service_Classroom_Student(array(
+        'userId' => 'me'
+    ));
+    $params = array(
+        'enrollmentCode' => $enrollmentCode
+    );
+    try {
+        $student = $service->courses_students->create($courseId, $student, $params);
+        printf("User '%s' was enrolled  as a student in the course with ID '%s'.\n",
+            $student->profile->name->fullName, $courseId);
+    } catch (Google_Service_Exception $e) {
+        if ($e->getCode() == 409) {
+            print "You are already a member of this course.\n";
+        } else {
+            throw $e;
+        }
     }
-  }
-  return $student;
+    return $student;
 }
 
 /* Load pre-authorized user credentials from the environment.
  TODO(developer) - See https://developers.google.com/identity for
   guides on implementing OAuth2 for your application. */
+require 'vendor/autoload.php';
 $client = new Google\Client();
 $client->useApplicationDefaultCredentials();
 $client->addScope("https://www.googleapis.com/auth/classroom.profile.emails");

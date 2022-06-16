@@ -15,30 +15,31 @@
  * limitations under the License.
  */
 // [START classroom_add_teacher]
-require __DIR__ . '/vendor/autoload.php';
+use Google\Service\Classroom\Teacher;
 
 function addTeacher($service, $courseId, $teacherEmail) {
-  $teacher = new Google_Service_Classroom_Teacher(array(
-    'userId' => $teacherEmail
-  ));
-  try {
-    //  calling create teacher 
-    $teacher = $service->courses_teachers->create($courseId, $teacher);
-    printf("User '%s' was added as a teacher to the course with ID '%s'.\n",
-        $teacher->profile->name->fullName, $courseId);
-  } catch (Google_Service_Exception $e) {
-    if ($e->getCode() == 409) {
-      printf("User '%s' is already a member of this course.\n", $teacherEmail);
-    } else {
-      throw $e;
+    $teacher = new Google_Service_Classroom_Teacher(array(
+        'userId' => $teacherEmail
+    ));
+    try {
+        //  calling create teacher
+        $teacher = $service->courses_teachers->create($courseId, $teacher);
+        printf("User '%s' was added as a teacher to the course with ID '%s'.\n",
+            $teacher->profile->name->fullName, $courseId);
+    } catch (Google_Service_Exception $e) {
+        if ($e->getCode() == 409) {
+            printf("User '%s' is already a member of this course.\n", $teacherEmail);
+        } else {
+            throw $e;
+        }
     }
-  }
-  return $teacher;
-}   
+    return $teacher;
+}
 
 /* Load pre-authorized user credentials from the environment.
  TODO(developer) - See https://developers.google.com/identity for
   guides on implementing OAuth2 for your application. */
+require 'vendor/autoload.php';
 $client = new Google\Client();
 $client->useApplicationDefaultCredentials();
 $client->addScope("https://www.googleapis.com/auth/classroom.profile.photos");
@@ -46,6 +47,5 @@ $service = new Google_Service_Classroom($client);
 // [END classroom_add_teacher]
 
 //method call
-addTeacher($service, '531365794650' ,'gduser2@workspacesamples.dev');
-
+addTeacher($service,'531365794650','gduser2@workspacesamples.dev');
 ?>
