@@ -24,7 +24,7 @@ function exportPdf($realFileId)
          $client = new Google\Client();
          $client->useApplicationDefaultCredentials();
          $client->addScope(Google\Service\Drive::DRIVE);
-         $driveService = new Google_Service_Drive($client);
+         $driveService = new Google\Service\Drive($client);
          $realFileId = readline('Enter a File ID: ');
          
          $fileId = '1ZdR3L3qP4Bkq8noWLJHSr_iBau0DNT4Kli4SxNc2YEo';
