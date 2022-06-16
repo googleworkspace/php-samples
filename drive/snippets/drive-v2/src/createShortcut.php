@@ -24,9 +24,9 @@ function createShortcut()
         $client = new Google\Client();
         $client->useApplicationDefaultCredentials();
         $client->addScope(Google\Service\Drive::DRIVE);
-        $driveService = new Google_Service_Drive($client);
+        $driveService = new Google\Service\Drive($client);
         
-        $fileMetadata = new Google_Service_Drive_DriveFile(array(
+        $fileMetadata = new Google\Service\Drive\DriveFile(array(
             'name' => 'Project plan',
             'mimeType' => 'application/vnd.google-apps.drive-sdk'));
         $file = $driveService->files->create($fileMetadata, array(
