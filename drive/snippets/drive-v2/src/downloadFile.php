@@ -23,7 +23,7 @@ function downloadFile() {
     $client = new Google\Client();
     $client->useApplicationDefaultCredentials();
     $client->addScope(Google\Service\Drive::DRIVE);
-    $driveService = new Google_Service_Drive($client);
+    $driveService = new Google\Service\Drive($client);
 
     $fileId = '0BwwA4oUTeiV1UVNwOHItT0xfa2M';
     // [END_EXCLUDE]
