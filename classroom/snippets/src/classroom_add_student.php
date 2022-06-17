@@ -16,20 +16,31 @@
  */
 
 // [START classroom_add_student]
+use Google\Client;
+use Google\Service\Classroom;
 use Google\Service\Classroom\Student;
+use Google\Service\Exception;
 
-function enrollAsStudent($service, $courseId, $enrollmentCode) {
-    $student = new Google_Service_Classroom_Student(array(
+function enrollAsStudent($courseId,$enrollmentCode)
+{
+    /* Load pre-authorized user credentials from the environment.
+    TODO (developer) - See https://developers.google.com/identity for
+     guides on implementing OAuth2 for your application. */
+    $client = new Client();
+    $client->useApplicationDefaultCredentials();
+    $client->addScope("https://www.googleapis.com/auth/classroom.profile.emails");
+    $service = new Classroom($client);
+    $student = new Student([
         'userId' => 'me'
-    ));
-    $params = array(
+    ]);
+    $params = [
         'enrollmentCode' => $enrollmentCode
-    );
+    ];
     try {
         $student = $service->courses_students->create($courseId, $student, $params);
         printf("User '%s' was enrolled  as a student in the course with ID '%s'.\n",
             $student->profile->name->fullName, $courseId);
-    } catch (Google_Service_Exception $e) {
+    } catch (Exception $e) {
         if ($e->getCode() == 409) {
             print "You are already a member of this course.\n";
         } else {
@@ -39,15 +50,7 @@ function enrollAsStudent($service, $courseId, $enrollmentCode) {
     return $student;
 }
 
-/* Load pre-authorized user credentials from the environment.
- TODO(developer) - See https://developers.google.com/identity for
-  guides on implementing OAuth2 for your application. */
-require 'vendor/autoload.php';
-$client = new Google\Client();
-$client->useApplicationDefaultCredentials();
-$client->addScope("https://www.googleapis.com/auth/classroom.profile.emails");
-$service = new Google_Service_Classroom($client);
 // [END classroom_add_student]
 
-enrollAsStudent($service, '531365794650' ,'gduser1@workspacesamples.dev');
-?>
+require 'vendor/autoload.php';
+enrollAsStudent( '123456','abcdef');

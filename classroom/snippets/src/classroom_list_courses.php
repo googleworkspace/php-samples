@@ -17,18 +17,25 @@
 
 // [START classroom_list_courses]
 use Google\Service\Classroom;
+use Google\Client;
 
-
-function listCourses($service): array
+function listCourses(): array
 {
-    $courses = array();
+    /* Load pre-authorized user credentials from the environment.
+    TODO (developer) - See https://developers.google.com/identity for
+     guides on implementing OAuth2 for your application. */
+    $client = new Client();
+    $client->useApplicationDefaultCredentials();
+    $client->addScope("https://www.googleapis.com/auth/classroom.courses");
+    $service = new Classroom($client);
+    $courses = [];
     $pageToken = '';
 
     do {
-        $params = array(
+        $params = [
             'pageSize' => 100,
             'pageToken' => $pageToken
-        );
+        ];
         $response = $service->courses->listCourses($params);
         $courses = array_merge($courses, $response->courses);
         $pageToken = $response->nextPageToken;
@@ -45,15 +52,7 @@ function listCourses($service): array
     return $courses;
 }
 
-/* Load pre-authorized user credentials from the environment.
- TODO(developer) - See https://developers.google.com/identity for
-  guides on implementing OAuth2 for your application. */
-require 'vendor/autoload.php';
-$client = new Google\Client();
-$client->useApplicationDefaultCredentials();
-$client->addScope("https://www.googleapis.com/auth/classroom.courses");
-$service = new Google_Service_Classroom($client);
 // [END classroom_list_courses]
+require 'vendor/autoload.php';
+listCourses();
 
-listCourses($service);
-?>
