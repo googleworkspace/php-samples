@@ -14,19 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// [START classroom_add_teacher]
-use Google\Service\Classroom\Teacher;
 
-function addTeacher($service, $courseId, $teacherEmail) {
-    $teacher = new Google_Service_Classroom_Teacher(array(
+// [START classroom_add_teacher]
+use Google\Client;
+use Google\Service\Classroom;
+use Google\Service\Classroom\Teacher;
+use Google\service\Exception;
+
+function addTeacher($courseId, $teacherEmail)
+{
+    /* Load pre-authorized user credentials from the environment.
+    TODO (developer) - See https://developers.google.com/identity for
+     guides on implementing OAuth2 for your application. */
+    $client = new Client();
+    $client->useApplicationDefaultCredentials();
+    $client->addScope("https://www.googleapis.com/auth/classroom.profile.photos");
+    $service = new Classroom($client);
+    $teacher = new Teacher([
         'userId' => $teacherEmail
-    ));
+    ]);
     try {
         //  calling create teacher
         $teacher = $service->courses_teachers->create($courseId, $teacher);
         printf("User '%s' was added as a teacher to the course with ID '%s'.\n",
             $teacher->profile->name->fullName, $courseId);
-    } catch (Google_Service_Exception $e) {
+    } catch (Exception $e) {
         if ($e->getCode() == 409) {
             printf("User '%s' is already a member of this course.\n", $teacherEmail);
         } else {
@@ -36,16 +48,7 @@ function addTeacher($service, $courseId, $teacherEmail) {
     return $teacher;
 }
 
-/* Load pre-authorized user credentials from the environment.
- TODO(developer) - See https://developers.google.com/identity for
-  guides on implementing OAuth2 for your application. */
-require 'vendor/autoload.php';
-$client = new Google\Client();
-$client->useApplicationDefaultCredentials();
-$client->addScope("https://www.googleapis.com/auth/classroom.profile.photos");
-$service = new Google_Service_Classroom($client);
 // [END classroom_add_teacher]
 
-//method call
-addTeacher($service,'531365794650','gduser2@workspacesamples.dev');
-?>
+require 'vendor/autoload.php';
+addTeacher('531365794650','gduser2@workspacesamples.dev');

@@ -16,15 +16,24 @@
  */
 
 // [START classroom_get_course]
-use Google\Service\Exception;
+use Google\Client;
 use Google\Service\Classroom;
+use Google\Service\Exception;
 
-function getCourse($service, $courseId) {
+function getCourse($courseId)
+{
+    /* Load pre-authorized user credentials from the environment.
+    TODO (developer) - See https://developers.google.com/identity for
+     guides on implementing OAuth2 for your application. */
+    $client = new Client();
+    $client->useApplicationDefaultCredentials();
+    $client->addScope("https://www.googleapis.com/auth/classroom.courses");
+    $service = new Classroom($client);
     try {
         $course = $service->courses->get($courseId);
         printf("Course '%s' found.\n", $course->name);
         return $course;
-    } catch (Google_Service_Exception $e) {
+    } catch (Exception $e) {
         if ($e->getCode() == 404) {
             printf("Course with ID '%s' not found.\n", $courseId);
         } else {
@@ -33,15 +42,8 @@ function getCourse($service, $courseId) {
     }
 }
 
-/* Load pre-authorized user credentials from the environment.
- TODO(developer) - See https://developers.google.com/identity for
-  guides on implementing OAuth2 for your application. */
-require 'vendor/autoload.php';
-$client = new Google\Client();
-$client->useApplicationDefaultCredentials();
-$client->addScope("https://www.googleapis.com/auth/classroom.courses");
-$service = new Google_Service_Classroom($client);
 // [END classroom_get_course]
 
-getCourse($service, '531365794650');
-?>
+require 'vendor/autoload.php';
+getCourse('123456');
+

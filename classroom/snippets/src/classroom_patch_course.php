@@ -16,18 +16,26 @@
  */
 
 // [START classroom_patch_course]
+use Google\Service\Classroom;
 use Google\Service\Classroom\Course;
+use Google\Client;
 
+function patchCourse($courseId)
+{
+    /* Load pre-authorized user credentials from the environment.
+    TODO (developer) - See https://developers.google.com/identity for
+     guides on implementing OAuth2 for your application. */
+    $client = new Client();
+    $client->useApplicationDefaultCredentials();
+    $client->addScope("https://www.googleapis.com/auth/classroom.courses");
+    $service = new Classroom($client);
 
-function patchCourse($service, $courseId){
     try {
-
-        $course = new Google_Service_Classroom_Course(array(
+        $course = new Course([
             'section' => 'Period 3',
             'room' => '302'
-        ));
-        $params = array(
-            'updateMask' => 'section,room');
+        ]);
+        $params = ['updateMask' => 'section,room'];
         $course = $service->courses->patch($courseId, $course, $params);
         printf("Course '%s' updated.\n", $course->name);
         return $course;
@@ -36,15 +44,6 @@ function patchCourse($service, $courseId){
     }
 }
 
-/* Load pre-authorized user credentials from the environment.
- TODO(developer) - See https://developers.google.com/identity for
-  guides on implementing OAuth2 for your application. */
-require 'vendor/autoload.php';
-$client = new Google\Client();
-$client->useApplicationDefaultCredentials();
-$client->addScope("https://www.googleapis.com/auth/classroom.courses");
-$service = new Google_Service_Classroom($client);
 // [END classroom_patch_course]
-
-patchCourse($service,'531365683519');
-?>
+require 'vendor/autoload.php';
+patchCourse('531365683519');

@@ -16,13 +16,22 @@
  */
 
 // [START classroom_create_course]
+use Google\Client;
+use Google\Service\Classroom;
 use Google\Service\Classroom\Course;
+use Google\Service\Exception;
 
-function createCourse($service)
+function createCourse()
 {
+    /* Load pre-authorized user credentials from the environment.
+    TODO(developer) - See https://developers.google.com/identity for
+     guides on implementing OAuth2 for your application. */
+    $client = new Client();
+    $client->useApplicationDefaultCredentials();
+    $client->addScope("https://www.googleapis.com/auth/classroom.courses");
+    $service = new Classroom($client);
     try {
-
-        $course = new Google_Service_Classroom_Course(array(
+        $course = new Course([
             'name' => '10th Grade Biology',
             'section' => 'Period 2',
             'descriptionHeading' => 'Welcome to 10th Grade Biology',
@@ -32,7 +41,7 @@ function createCourse($service)
             'room' => '301',
             'ownerId' => 'me',
             'courseState' => 'PROVISIONED'
-        ));
+        ]);
         $course = $service->courses->create($course);
         printf("Course created: %s (%s)\n", $course->name, $course->id);
         return $course;
@@ -40,15 +49,6 @@ function createCourse($service)
         echo 'Message: ' . $e->getMessage();
     }
 }
-
-/* Load pre-authorized user credentials from the environment.
- TODO(developer) - See https://developers.google.com/identity for
-  guides on implementing OAuth2 for your application. */
-require 'vendor/autoload.php';
-$client = new Google\Client();
-$client->useApplicationDefaultCredentials();
-$client->addScope("https://www.googleapis.com/auth/classroom.courses");
-$service = new Google_Service_Classroom($client);
 // [END classroom_create_course]
-createCourse($service);
-?>
+require 'vendor/autoload.php';
+createCourse();
