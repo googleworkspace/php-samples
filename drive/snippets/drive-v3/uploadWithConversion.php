@@ -15,24 +15,25 @@
 * limitations under the License.
 */
 // [START uploadWithConversion]
-require_once 'vendor/autoload.php';
+use Google\Client;
+use Google\Service\Drive;
 function uploadWithConversion()
 {
     try {
-        $client = new Google\Client();
+        $client = new Client();
         $client->useApplicationDefaultCredentials();
-        $client->addScope(Google\Service\Drive::DRIVE);
-        $driveService = new Google_Service_Drive($client);
+        $client->addScope(Drive::DRIVE);
+        $driveService = new Drive($client);
         // [START uploadWithConversion]
-        $fileMetadata = new Google_Service_Drive_DriveFile(array(
+        $fileMetadata = new Drive\DriveFile(array([
             'name' => 'My Report',
-            'mimeType' => 'application/vnd.google-apps.spreadsheet'));
+            'mimeType' => 'application/vnd.google-apps.spreadsheet']));
         $content = file_get_contents('../files/report.csv');
-        $file = $driveService->files->create($fileMetadata, array(
+        $file = $driveService->files->create($fileMetadata, array([
             'data' => $content,
             'mimeType' => 'text/csv',
             'uploadType' => 'multipart',
-            'fields' => 'id'));
+            'fields' => 'id']));
         printf("File ID: %s\n", $file->id);
         // [END uploadWithConversion]
         return $file->id;
@@ -40,7 +41,8 @@ function uploadWithConversion()
         echo "Error Message: ".$e;
     }
     
- }
+}
+require_once 'vendor/autoload.php';
 // [END uploadWithConversion]
 uploadWithConversion();
 ?>

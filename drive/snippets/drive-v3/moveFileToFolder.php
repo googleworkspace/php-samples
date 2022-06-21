@@ -15,32 +15,34 @@
 * limitations under the License.
 */
 // [START moveFileToFolder]
-require_once 'vendor/autoload.php';
+use Google\Client;
+use Google\Service\Drive;
+use Google\Service\Drive\DriveFile;
 function moveFileToFolder()
 {
     try {
-        $client = new Google\Client();
+        $client = new Client();
         $client->useApplicationDefaultCredentials();
-        $client->addScope(Google\Service\Drive::DRIVE);
-        $driveService = new Google_Service_Drive($client);
+        $client->addScope(Drive::DRIVE);
+        $driveService = new Drive($client);
         $realFileId = readline("Enter File Id: ");
         $realFolderId = readline("Enter Folder Id: ");
         // [START moveFileToFolder]
         $fileId = '1sTWaJ_j7PkjzaBWtNc3IzovK5hQf21FbOw9yLeeLPNQ';
         $folderId = '0BwwA4oUTeiV1TGRPeTVjaWRDY1E';
-        $emptyFileMetadata = new Google_Service_Drive_DriveFile();
+        $emptyFileMetadata = new DriveFile();
         // [START_EXCLUDE silent]
         $fileId = $realFileId;
         $folderId = $realFolderId;
         // [END_EXCLUDE]
         // Retrieve the existing parents to remove
-        $file = $driveService->files->get($fileId, array('fields' => 'parents'));
+        $file = $driveService->files->get($fileId, array(['fields' => 'parents']));
         $previousParents = join(',', $file->parents);
         // Move the file to the new folder
-        $file = $driveService->files->update($fileId, $emptyFileMetadata, array(
+        $file = $driveService->files->update($fileId, $emptyFileMetadata, array([
             'addParents' => $folderId,
             'removeParents' => $previousParents,
-            'fields' => 'id, parents'));
+            'fields' => 'id, parents']));
         // [END moveFileToFolder]
         return $file->parents;
     } catch(Exception $e) {
@@ -49,6 +51,7 @@ function moveFileToFolder()
      
     
 }
+require_once 'vendor/autoload.php';
  // [END moveFileToFolder]
- moveFileToFolder();
+moveFileToFolder();
 ?>

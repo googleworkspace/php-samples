@@ -15,24 +15,25 @@
 * limitations under the License.
 */
 # [START uploadBasic]
-require_once 'vendor/autoload.php';
+use Google\Client;
+use Google\Service\Drive;
 # TODO - PHP client currently chokes on fetching start page token
 function uploadBasic()
 {
     try {
-        $client = new Google\Client();
+        $client = new Client();
         $client->useApplicationDefaultCredentials();
-        $client->addScope(Google\Service\Drive::DRIVE);
-        $driveService = new Google_Service_Drive($client);
-       // [START uploadBasic]
-       $fileMetadata = new Google_Service_Drive_DriveFile(array(
+        $client->addScope(Drive::DRIVE);
+        $driveService = new Drive($client);
+        // [START uploadBasic]
+        $fileMetadata = new Drive\DriveFile(array(
         'name' => 'photo.jpg'));
-        $content = file_get_contents('files/photo.jpg');
-        $file = $driveService->files->create($fileMetadata, array(
+        $content = file_get_contents('../files/photo.jpg');
+        $file = $driveService->files->create($fileMetadata, array([
             'data' => $content,
             'mimeType' => 'image/jpeg',
             'uploadType' => 'multipart',
-            'fields' => 'id'));
+            'fields' => 'id']));
         printf("File ID: %s\n", $file->id);
         // [END uploadBasic]
         return $file->id;
@@ -41,7 +42,8 @@ function uploadBasic()
     } 
     
 }
+require_once 'vendor/autoload.php';
  # [END uploadBasic]
- uploadBasic();
+uploadBasic();
 
 ?>

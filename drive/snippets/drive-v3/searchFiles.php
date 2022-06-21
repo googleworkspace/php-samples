@@ -15,24 +15,25 @@
 * limitations under the License.
 */
 // [START searchFiles]
-require_once 'vendor/autoload.php';
+use Google\Client;
+use Google\Service\Drive;
 function searchFiles()
 {
     try {
-        $client = new Google\Client();
+        $client = new Client();
         $client->useApplicationDefaultCredentials();
-        $client->addScope(Google\Service\Drive::DRIVE);
-        $driveService = new Google_Service_Drive($client);
+        $client->addScope(Drive::DRIVE);
+        $driveService = new Drive($client);
         $files = array();
         // [START searchFiles]
         $pageToken = null;
         do {
-            $response = $driveService->files->listFiles(array(
+            $response = $driveService->files->listFiles(array([
                 'q' => "mimeType='image/jpeg'",
                 'spaces' => 'drive',
                 'pageToken' => $pageToken,
                 'fields' => 'nextPageToken, files(id, name)',
-            ));
+            ]));
             foreach ($response->files as $file) {
                 printf("Found file: %s (%s)\n", $file->name, $file->id);
             }
@@ -49,6 +50,7 @@ function searchFiles()
     }
    
 }
+require_once 'vendor/autoload.php';
  // [END searchFiles]
  searchFiles();
 ?>

@@ -15,30 +15,33 @@
 * limitations under the License.
 */
 // [START exportPdf]
-require_once 'vendor/autoload.php';
+use Google\Client;
+use Google\Service\Drive;
 function exportPdf()
 {
     try {
-        $client = new Google\Client();
+        $client = new Client();
         $client->useApplicationDefaultCredentials();
-        $client->addScope(Google\Service\Drive::DRIVE);
-        $driveService = new Google_Service_Drive($client);
+        $client->addScope(Drive::DRIVE);
+        $driveService = new Drive($client);
         $realFileId = readline("Enter File Id: ");
         // [START exportPdf]
         $fileId = '1ZdR3L3qP4Bkq8noWLJHSr_iBau0DNT4Kli4SxNc2YEo';
         // [START_EXCLUDE silent]
         $fileId = $realFileId;
         // [END_EXCLUDE]
-        $response = $driveService->files->export($fileId, 'application/pdf', array(
-            'alt' => 'media'));
+        $response = $driveService->files->export($fileId, 'application/pdf', array([
+            'alt' => 'media']));
         $content = $response->getBody()->getContents();
         // [END exportPdf]
         return $content;
+        
     }  catch(Exception $e) {
          echo "Error Message: ".$e;
     }
    
 }
+require_once 'vendor/autoload.php';
 // [END exportPdf]
 exportPdf();
 ?>
