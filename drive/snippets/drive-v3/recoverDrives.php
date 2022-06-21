@@ -15,14 +15,16 @@
 * limitations under the License.
 */
 // [START recoverDrives]
-require_once 'vendor/autoload.php';
+use Google\Client;
+use Google\Service\Drive;
 use Ramsey\Uuid\Uuid;
 function recoverDrives()
 {
-    $client = new Google\Client();
+   try {
+    $client = new Client();
     $client->useApplicationDefaultCredentials();
-    $client->addScope(Google\Service\Drive::DRIVE);
-    $driveService = new Google_Service_Drive($client);
+    $client->addScope(Drive::DRIVE);
+    $driveService = new Drive($client);
 
     $realUser = readline("Enter user email address: ");
 
@@ -36,22 +38,22 @@ function recoverDrives()
     // and the associated permissions and groups to ensure an active
     // organizer is assigned.
     $pageToken = null;
-    $newOrganizerPermission = new Google_Service_Drive_Permission(array(
+    $newOrganizerPermission = new Drive\Permission(array([
         'type' => 'user',
         'role' => 'organizer',
         'emailAddress' => 'user@example.com'
-    ));
+    ]));
     // [START_EXCLUDE silent]
     $newOrganizerPermission['emailAddress'] = $realUser;
     // [END_EXCLUDE]
 
     do {
-        $response = $driveService->drives->listDrives(array(
+        $response = $driveService->drives->listDrives(array([
             'q' => 'organizerCount = 0',
             'fields' => 'nextPageToken, drives(id, name)',
             'useDomainAdminAccess' => true,
             'pageToken' => $pageToken
-        ));
+        ]));
         foreach ($response->drives as $drive) {
             printf("Found shared drive without organizer: %s (%s)\n",
                 $drive->name, $drive->id);
@@ -71,7 +73,11 @@ function recoverDrives()
     } while ($pageToken != null);
     // [END recoverDrives]
     return $drives;
-}     
+   } catch(Exception $e) {
+      echo "Error Message: ".$e;
+   }
+}
+require_once 'vendor/autoload.php';     
 // [END recoverDrives]
 recoverDrives();   
 ?>

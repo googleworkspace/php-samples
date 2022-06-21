@@ -15,20 +15,21 @@
 * limitations under the License.
 */
 // [START listAppData]
-require_once 'vendor/autoload.php';
+use Google\Client;
+use Google\Service\Drive;
 function listAppData()
 {
     try {
-        $client = new Google\Client();
+        $client = new Client();
         $client->useApplicationDefaultCredentials();
-        $client->addScope(Google\Service\Drive::DRIVE);
-        $driveService = new Google_Service_Drive($client);
+        $client->addScope(Drive::DRIVE);
+        $driveService = new Drive($client);
         // [START listAppData]
-        $response = $driveService->files->listFiles(array(
+        $response = $driveService->files->listFiles(array([
             'spaces' => 'appDataFolder',
             'fields' => 'nextPageToken, files(id, name)',
             'pageSize' => 10
-        ));
+        ]));
         foreach ($response->files as $file) {
             printf("Found file: %s (%s)", $file->name, $file->id);
         }
@@ -40,6 +41,7 @@ function listAppData()
     }
    
 }
+require_once 'vendor/autoload.php';
 // [END listAppData]
 listAppData();
 ?>

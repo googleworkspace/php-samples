@@ -15,30 +15,31 @@
 * limitations under the License.
 */
 // [START uploadToFolder]
-require_once 'vendor/autoload.php';
+use Google\Client;
+use Google\Service\Drive;
 function uploadToFolder()
 {
     try {
-        $client = new Google\Client();
+        $client = new Client();
         $client->useApplicationDefaultCredentials();
-        $client->addScope(Google\Service\Drive::DRIVE);
-        $driveService = new Google_Service_Drive($client);
+        $client->addScope(Drive::DRIVE);
+        $driveService = new Drive($client);
          // [START uploadToFolder]
          $folderId = '0BwwA4oUTeiV1TGRPeTVjaWRDY1E';
          $realFolderId = readline("Enter Folder Id: ");
          // [START_EXCLUDE silent]
          $folderId = $realFolderId;
          // [END_EXCLUDE]
-         $fileMetadata = new Google_Service_Drive_DriveFile(array(
+         $fileMetadata = new Drive\DriveFile(array([
              'name' => 'photo.jpg',
              'parents' => array($folderId)
-         ));
+         ]));
          $content = file_get_contents('../files/photo.jpg');
-         $file = $driveService->files->create($fileMetadata, array(
+         $file = $driveService->files->create($fileMetadata, array([
              'data' => $content,
              'mimeType' => 'image/jpeg',
              'uploadType' => 'multipart',
-             'fields' => 'id'));
+             'fields' => 'id']));
          printf("File ID: %s\n", $file->id);
          // [END uploadToFolder]
          return $file->id;
@@ -47,6 +48,7 @@ function uploadToFolder()
     } 
   
  }
+ require_once 'vendor/autoload.php';
   // [END uploadToFolder]
  uploadToFolder();
 ?>

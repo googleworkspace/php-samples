@@ -15,28 +15,28 @@
 * limitations under the License.
 */
 // [START fetchAppDataFolder]
-require_once 'vendor/autoload.php';
+use Google\Client;
+use Google\Service\Drive;
 function fetchAppDataFolder()
 {
     try {
-        $client = new Google\Client();
+        $client = new Client();
         $client->useApplicationDefaultCredentials();
-        $client->addScope(Google\Service\Drive::DRIVE);
-        $client->addScope(Google\Service\Drive::DRIVE_APPDATA);
-        $driveService = new Google_Service_Drive($client);
+        $client->addScope(Drive::DRIVE);
+        $client->addScope(Drive::DRIVE_APPDATA);
+        $driveService = new Drive($client);
         // [START fetchAppDataFolder]
-        $file = $driveService->files->get('appDataFolder', array(
+        $file = $driveService->files->get('appDataFolder', array([
                 'fields' => 'id'
-        ));
+        ]));
         printf("Folder ID: %s\n", $file->id);
         // [END fetchAppDataFolder]
         return $file->id;
     } catch (Exception $e) {
         echo "Error Message: ".$e;
     }
-   
-    
 }
+require_once 'vendor/autoload.php';
 // [END fetchAppDataFolder]
 fetchAppDataFolder();
 ?>

@@ -15,32 +15,33 @@
 * limitations under the License.
 */
 // [START createShortcut]
-require_once 'vendor/autoload.php';
+use Google\Client;
+use Google\Service\Drive;
+use Google\Service\Drive\DriveFile;
 function createShortcut()
 {
     try {
 
-        $client = new Google\Client();
+        $client = new Client();
         $client->useApplicationDefaultCredentials();
-        $client->addScope(Google\Service\Drive::DRIVE);
-        $driveService = new Google_Service_Drive($client);
+        $client->addScope(Drive::DRIVE);
+        $driveService = new Drive($client);
         // [START createShortcut]
-        $fileMetadata = new Google_Service_Drive_DriveFile(array(
+        $fileMetadata = new DriveFile(array([
             'name' => 'Project plan',
-            'mimeType' => 'application/vnd.google-apps.drive-sdk'));
-        $file = $driveService->files->create($fileMetadata, array(
-            'fields' => 'id'));
+            'mimeType' => 'application/vnd.google-apps.drive-sdk']));
+        $file = $driveService->files->create($fileMetadata, array([
+            'fields' => 'id']));
         printf("File ID: %s\n", $file->id);
         // [END createShortcut]
         return $file->id;
 
     } catch(Exception $e) {
-
         echo "Error Message: ".$e;
-
     }
    
 }
+require_once 'vendor/autoload.php';
 // [END createShortcut]
 createShortcut();
 ?>

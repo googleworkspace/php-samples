@@ -15,28 +15,30 @@
 * limitations under the License.
 */
 // [START createDrive]
-require_once 'vendor/autoload.php';
+use Google\Client;
+use Google\Service\Drive;
 use Ramsey\Uuid\Uuid;
 function createDrive()
 {
     try {
-        $client = new Google\Client();
+        $client = new Client();
         $client->useApplicationDefaultCredentials();
-        $client->addScope(Google\Service\Drive::DRIVE);
-        $driveService = new Google_Service_Drive($client);
+        $client->addScope(Drive::DRIVE);
+        $driveService = new Drive($client);
         
-        $driveMetadata = new Google_Service_Drive_Drive(array(
+        $driveMetadata = new Drive\Drive(array(
                 'name' => 'Project Resources'));
         $requestId = Uuid::uuid4()->toString();
-        $drive = $driveService->drives->create($requestId, $driveMetadata, array(
-                'fields' => 'id'));
+        $drive = $driveService->drives->create($requestId, $driveMetadata, array([
+                'fields' => 'id']));
         printf("Drive ID: %s\n", $drive->id);
         return $drive->id;
     } catch(Exception $e)  {
         echo "Error Message: ".$e;
     }  
    
-}     
+}
+require_once 'vendor/autoload.php';     
 // [END createDrive]
 createDrive();   
 ?>

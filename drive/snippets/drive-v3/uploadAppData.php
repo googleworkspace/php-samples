@@ -15,19 +15,21 @@
 * limitations under the License.
 */
 // [START uploadAppData]
-require_once 'vendor/autoload.php';
+use Google\Client;
+use Google\Service\Drive;
 function uploadAppData()
 {
    try {
-    $client = new Google\Client();
+    $client = new Client();
     $client->useApplicationDefaultCredentials();
-    $client->addScope(Google\Service\Drive::DRIVE);
-    $driveService = new Google_Service_Drive($client);
+    $client->addScope(Drive::DRIVE);
+    $client->addScope(Drive::DRIVE_APPDATA);
+    $driveService = new Drive($client);
     // [START uploadAppData]
-    $fileMetadata = new Google_Service_Drive_DriveFile(array(
+    $fileMetadata = new Drive\DriveFile(array([
         'name' => 'config.json',
         'parents' => array('appDataFolder')
-    ));
+    ]));
     $content = file_get_contents('../files/config.json');
     $file = $driveService->files->create($fileMetadata, array(
         'data' => $content,
@@ -39,9 +41,10 @@ function uploadAppData()
     return $file->id;     
 
    } catch(Exception $e) {
-    echo "Error Message: ".$e;
+     echo "Error Message: ".$e;
    }  
 }
+require_once 'vendor/autoload.php';
 // [END uploadAppData]
 uploadAppData();
 ?>

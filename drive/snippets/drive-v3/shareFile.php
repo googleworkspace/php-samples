@@ -15,17 +15,18 @@
 * limitations under the License.
 */
 // [START shareFile]
-require_once 'vendor/autoload.php';
+use Google\Client;
+use Google\Service\Drive;
 function shareFile()
 {
     try {
-        $client = new Google\Client();
+        $client = new Client();
         $client->useApplicationDefaultCredentials();
-        $client->addScope(Google\Service\Drive::DRIVE);
-        $driveService = new Google_Service_Drive($client);
+        $client->addScope(Drive::DRIVE);
+        $driveService = new Drive($client);
         $realFileId = readline("Enter File Id: ");
         $realUser = readline("Enter user email address: ");
-        $realDomain = reeadline("Enter domain name: ");
+        $realDomain = readline("Enter domain name: ");
         $ids = array();
             // [START shareFile]
             $fileId = '1sTWaJ_j7PkjzaBWtNc3IzovK5hQf21FbOw9yLeeLPNQ';
@@ -36,27 +37,27 @@ function shareFile()
             try {
                 $batch = $driveService->createBatch();
     
-                $userPermission = new Google_Service_Drive_Permission(array(
+                $userPermission = new Drive\Permission(array([
                     'type' => 'user',
                     'role' => 'writer',
                     'emailAddress' => 'user@example.com'
-                ));
+                ]));
                 // [START_EXCLUDE silent]
                 $userPermission['emailAddress'] = $realUser;
                 // [END_EXCLUDE]
                 $request = $driveService->permissions->create(
-                    $fileId, $userPermission, array('fields' => 'id'));
+                    $fileId, $userPermission, array(['fields' => 'id']));
                 $batch->add($request, 'user');
-                $domainPermission = new Google_Service_Drive_Permission(array(
+                $domainPermission = new Drive\Permission(array([
                     'type' => 'domain',
                     'role' => 'reader',
                     'domain' => 'example.com'
-                ));
+                ]));
                 // [START_EXCLUDE silent]
                 $userPermission['domain'] = $realDomain;
                 // [END_EXCLUDE]
                 $request = $driveService->permissions->create(
-                    $fileId, $domainPermission, array('fields' => 'id'));
+                    $fileId, $domainPermission, array(['fields' => 'id']));
                 $batch->add($request, 'domain');
                 $results = $batch->execute();
     
@@ -81,6 +82,7 @@ function shareFile()
     }
    
 }
- // [END shareFile]
- shareFile();
+require_once 'vendor/autoload.php';
+// [END shareFile]
+shareFile();
 ?>

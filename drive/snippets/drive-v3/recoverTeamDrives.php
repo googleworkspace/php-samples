@@ -15,15 +15,17 @@
 * limitations under the License.
 */
 // [START recoverTeamDrives]
-require_once 'vendor/autoload.php';
+
+use Google\Client;
+use Google\Service\Drive;
 use Ramsey\Uuid\Uuid;
 function recoverTeamDrives()
 {
     try {
-        $client = new Google\Client();
+        $client = new Client();
         $client->useApplicationDefaultCredentials();
-        $client->addScope(Google\Service\Drive::DRIVE);
-        $driveService = new Google_Service_Drive($client);
+        $client->addScope(Drive::DRIVE);
+        $driveService = new Drive($client);
         $teamDrives = array();
         // [START recoverTeamDrives]
         // Find all Team Drives without an organizer and add one.
@@ -34,32 +36,32 @@ function recoverTeamDrives()
         // and the associated permissions and groups to ensure an active
         // organizer is assigned.
         $pageToken = null;
-        $newOrganizerPermission = new Google_Service_Drive_Permission(array(
+        $newOrganizerPermission = new Drive\Permission(array([
             'type' => 'user',
             'role' => 'organizer',
             'emailAddress' => 'user@example.com'
-        ));
+        ]));
         // [START_EXCLUDE silent]
         $newOrganizerPermission['emailAddress'] = $realUser;
         // [END_EXCLUDE]
     
         do {
-            $response = $driveService->teamdrives->listTeamdrives(array(
+            $response = $driveService->teamdrives->listTeamdrives(array([
                 'q' => 'organizerCount = 0',
                 'fields' => 'nextPageToken, teamDrives(id, name)',
                 'useDomainAdminAccess' => true,
                 'pageToken' => $pageToken
-            ));
+            ]));
             foreach ($response->teamDrives as $teamDrive) {
                 printf("Found Team Drive without organizer: %s (%s)\n",
                     $teamDrive->name, $teamDrive->id);
                 $permission = $driveService->permissions->create($teamDrive->id,
                     $newOrganizerPermission,
-                    array(
+                    array([
                         'fields' => 'id',
                         'useDomainAdminAccess' => true,
                         'supportsTeamDrives' => true
-                    ));
+                    ]));
                 printf("Added organizer permission: %s\n", $permission->id);
             }
             // [START_EXCLUDE silent]
@@ -72,7 +74,8 @@ function recoverTeamDrives()
     } catch(Exception $e) {
         echo "Error Message: ".$e;
     }
-}     
+} 
+require_once 'vendor/autoload.php';    
 // [END recoverTeamDrives]
 recoverTeamDrives();   
 ?>

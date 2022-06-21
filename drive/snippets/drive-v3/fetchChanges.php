@@ -14,24 +14,44 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-# [START fetchStartPageToken]
-require_once 'vendor/autoload.php';
+# [START fetchChanges]
+use Google\Client;
+use Google\Service\Drive;
 # TODO - PHP client currently chokes on fetching start page token
-function fetchStartPageToken()
+function fetchChanges()
 {
     try {
-        $driveService = $this->service;
-        # [START fetchStartPageToken]
-        $response = $driveService->changes->getStartPageToken();
-        printf("Start token: %s\n", $response->startPageToken);
-        # [END fetchStartPageToken]
-        return $response->startPageToken;
+        $client = new Client();
+        $client->useApplicationDefaultCredentials();
+        $client->addScope(Drive::DRIVE);
+        $driveService = new Drive($client);
+       # Begin with our last saved start token for this user or the
+        # current token from getStartPageToken()
+        $savedStartPageToken = readLine("Enter Start Page Token: ");
+        $pageToken = $savedStartPageToken;
+        while ($pageToken != null) {
+            $response = $driveService->changes->listChanges($pageToken, array([
+                'spaces' => 'drive'
+            ]));
+            foreach ($response->changes as $change) {
+                // Process change
+                printf("Change found for file: %s", $change->fileId);
+            }
+            if ($response->newStartPageToken != null) {
+                // Last page, save this token for the next polling interval
+                $savedStartPageToken = $response->newStartPageToken;
+            }
+            $pageToken = $response->nextPageToken;
+        }
+        // [END fetchChanges]
+        echo $savedStartPageToken;
     } catch(Exception $e) {
         echo "Error Message: ".$e;
     }
     
 }
- # [END fetchStartPageToken]
-fetchStartPageToken();
+require_once 'vendor/autoload.php';
+ # [END fetchChanges]
+fetchChanges();
 
 ?>

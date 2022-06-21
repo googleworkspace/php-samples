@@ -15,23 +15,24 @@
 * limitations under the License.
 */
 // [START downloadFile]
-require_once 'vendor/autoload.php';
+use Google\Client;
+use Google\Service\Drive;
 function downloadFile()
  {
     try {
 
-      $client = new Google_Client();
+      $client = new Client();
       $client->useApplicationDefaultCredentials();
-      $client->addScope(Google\Service\Drive::DRIVE);
-      $driveService = new Google_Service_Drive($client);
+      $client->addScope(Drive::DRIVE);
+      $driveService = new Drive($client);
       $realFileId = readline("Enter File Id: ");
       // [START downloadFile]
       $fileId = '0BwwA4oUTeiV1UVNwOHItT0xfa2M';
       // [START_EXCLUDE silent]
       $fileId = $realFileId;
       // [END_EXCLUDE]
-      $response = $driveService->files->get($fileId, array(
-          'alt' => 'media'));
+      $response = $driveService->files->get($fileId, array([
+          'alt' => 'media']));
       $content = $response->getBody()->getContents();
       // [END downloadFile]
       return $content;
@@ -40,7 +41,8 @@ function downloadFile()
       echo "Error Message: ".$e;
     }
    
- }
+}
+require_once 'vendor/autoload.php';
   // [END downloadFile]
-  downloadFile();
+downloadFile();
 ?>

@@ -15,20 +15,21 @@
 * limitations under the License.
 */
 // [START createFolder]
-require_once 'vendor/autoload.php';
+use Google\Client;
+use Google\Service\Drive;
 function createFolder()
 {
     try {
-        $client = new Google_Client();
+        $client = new Client();
         $client->useApplicationDefaultCredentials();
-        $client->addScope(Google\Service\Drive::DRIVE);
-        $driveService = new Google_Service_Drive($client);
+        $client->addScope(Drive::DRIVE);
+        $driveService = new Drive($client);
          // [START createFolder]
-        $fileMetadata = new Google_Service_Drive_DriveFile(array(
+        $fileMetadata = new Drive\DriveFile(array([
             'name' => 'Invoices',
-            'mimeType' => 'application/vnd.google-apps.folder'));
-        $file = $driveService->files->create($fileMetadata, array(
-            'fields' => 'id'));
+            'mimeType' => 'application/vnd.google-apps.folder']));
+        $file = $driveService->files->create($fileMetadata, array([
+            'fields' => 'id']));
         printf("Folder ID: %s\n", $file->id);
         // [END createFolder]
         return $file->id;
@@ -38,6 +39,7 @@ function createFolder()
     }
     
 }
+require_once 'vendor/autoload.php';
 // [END createFolder]
 createFolder();
 ?>
