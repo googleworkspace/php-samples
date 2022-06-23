@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START uploadToFolder]
+// [START drive_upload_to_folder]
 use Google\Client;
 use Google\Service\Drive;
 function uploadToFolder()
@@ -24,12 +24,9 @@ function uploadToFolder()
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-         // [START uploadToFolder]
          $folderId = '0BwwA4oUTeiV1TGRPeTVjaWRDY1E';
          $realFolderId = readline("Enter Folder Id: ");
-         // [START_EXCLUDE silent]
          $folderId = $realFolderId;
-         // [END_EXCLUDE]
          $fileMetadata = new Drive\DriveFile(array([
              'name' => 'photo.jpg',
              'parents' => array($folderId)
@@ -41,7 +38,6 @@ function uploadToFolder()
              'uploadType' => 'multipart',
              'fields' => 'id']));
          printf("File ID: %s\n", $file->id);
-         // [END uploadToFolder]
          return $file->id;
     } catch(Exception $e) {
         echo "Error Message: ".$e;
@@ -49,6 +45,6 @@ function uploadToFolder()
   
  }
  require_once 'vendor/autoload.php';
-  // [END uploadToFolder]
+  // [END drive_upload_basic]
  uploadToFolder();
 ?>

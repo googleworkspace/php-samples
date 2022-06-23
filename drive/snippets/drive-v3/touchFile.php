@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START touchFile]
+// [START drive_touch_file]
 use Google\Client;
 use Google\Service\Drive;
 function touchFile()
@@ -26,18 +26,14 @@ function touchFile()
         $driveService = new Drive($client);
         $realFileId = readline("Enter File Id: ");
         $realModifiedTime = readline("Enter Modified Time: ");
-        // [START touchFile]
         $fileId = '1sTWaJ_j7PkjzaBWtNc3IzovK5hQf21FbOw9yLeeLPNQ';
         $fileMetadata = new Drive\DriveFile(array([
             'modifiedTime' => date('Y-m-d\TH:i:s.uP')]));
-        // [START_EXCLUDE silent]
         $fileId = $realFileId;
         $fileMetadata->modifiedTime = $realModifiedTime;
-        // [END_EXCLUDE]
         $file = $driveService->files->update($fileId, $fileMetadata, array([
             'fields' => 'id, modifiedTime']));
         printf("Modified time: %s\n", $file->modifiedTime);
-        // [END touchFile]
         return $file->modifiedTime;
     } catch(Exception $e) {
         echo "Error Message: ".$e;
@@ -45,6 +41,6 @@ function touchFile()
    
 }
 require_once 'vendor/autoload.php';
-// [END touchFile]
+// [END drive_touch_file]
 touchFile();
 ?>

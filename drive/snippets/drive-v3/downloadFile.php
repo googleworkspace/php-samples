@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START downloadFile]
+// [START drive_download_file]
 use Google\Client;
 use Google\Service\Drive;
 function downloadFile()
@@ -26,15 +26,11 @@ function downloadFile()
       $client->addScope(Drive::DRIVE);
       $driveService = new Drive($client);
       $realFileId = readline("Enter File Id: ");
-      // [START downloadFile]
       $fileId = '0BwwA4oUTeiV1UVNwOHItT0xfa2M';
-      // [START_EXCLUDE silent]
       $fileId = $realFileId;
-      // [END_EXCLUDE]
       $response = $driveService->files->get($fileId, array([
           'alt' => 'media']));
       $content = $response->getBody()->getContents();
-      // [END downloadFile]
       return $content;
 
     } catch(Exception $e) {
@@ -43,6 +39,6 @@ function downloadFile()
    
 }
 require_once 'vendor/autoload.php';
-  // [END downloadFile]
+  // [END drive_download_file]
 downloadFile();
 ?>

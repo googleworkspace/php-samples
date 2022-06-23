@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START createDrive]
+// [START drive_create_drive]
 use Google\Client;
 use Google\Service\Drive;
 use Ramsey\Uuid\Uuid;
@@ -39,6 +39,6 @@ function createDrive()
    
 }
 require_once 'vendor/autoload.php';     
-// [END createDrive]
+// [END drive_create_drive]
 createDrive();   
 ?>

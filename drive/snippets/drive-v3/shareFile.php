@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START shareFile]
+// [START drive_share_file]
 use Google\Client;
 use Google\Service\Drive;
 function shareFile()
@@ -28,11 +28,8 @@ function shareFile()
         $realUser = readline("Enter user email address: ");
         $realDomain = readline("Enter domain name: ");
         $ids = array();
-            // [START shareFile]
             $fileId = '1sTWaJ_j7PkjzaBWtNc3IzovK5hQf21FbOw9yLeeLPNQ';
-            // [START_EXCLUDE silent]
             $fileId = $realFileId;
-            // [END_EXCLUDE]
             $driveService->getClient()->setUseBatch(true);
             try {
                 $batch = $driveService->createBatch();
@@ -42,9 +39,7 @@ function shareFile()
                     'role' => 'writer',
                     'emailAddress' => 'user@example.com'
                 ]));
-                // [START_EXCLUDE silent]
                 $userPermission['emailAddress'] = $realUser;
-                // [END_EXCLUDE]
                 $request = $driveService->permissions->create(
                     $fileId, $userPermission, array(['fields' => 'id']));
                 $batch->add($request, 'user');
@@ -53,9 +48,7 @@ function shareFile()
                     'role' => 'reader',
                     'domain' => 'example.com'
                 ]));
-                // [START_EXCLUDE silent]
                 $userPermission['domain'] = $realDomain;
-                // [END_EXCLUDE]
                 $request = $driveService->permissions->create(
                     $fileId, $domainPermission, array(['fields' => 'id']));
                 $batch->add($request, 'domain');
@@ -67,15 +60,12 @@ function shareFile()
                         printf($result);
                     } else {
                         printf("Permission ID: %s\n", $result->id);
-                        // [START_EXCLUDE silent]
                         array_push($ids, $result->id);
-                        // [END_EXCLUDE]
                     }
                 }
             } finally {
                 $driveService->getClient()->setUseBatch(false);
             }
-            // [END shareFile]
             return $ids;
     } catch(Exception $e) {
         echo "Error Message: ".$e;
@@ -83,6 +73,6 @@ function shareFile()
    
 }
 require_once 'vendor/autoload.php';
-// [END shareFile]
+// [END drive_share_file]
 shareFile();
 ?>

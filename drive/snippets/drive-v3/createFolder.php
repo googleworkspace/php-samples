@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START createFolder]
+// [START drive_create_folder]
 use Google\Client;
 use Google\Service\Drive;
 function createFolder()
@@ -24,14 +24,12 @@ function createFolder()
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-         // [START createFolder]
         $fileMetadata = new Drive\DriveFile(array([
             'name' => 'Invoices',
             'mimeType' => 'application/vnd.google-apps.folder']));
         $file = $driveService->files->create($fileMetadata, array([
             'fields' => 'id']));
         printf("Folder ID: %s\n", $file->id);
-        // [END createFolder]
         return $file->id;
 
     }catch(Exception $e) {
@@ -40,6 +38,6 @@ function createFolder()
     
 }
 require_once 'vendor/autoload.php';
-// [END createFolder]
+// [END drive_create_folder]
 createFolder();
 ?>

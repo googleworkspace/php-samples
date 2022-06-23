@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START listAppData]
+// [START drive_list_appdata]
 use Google\Client;
 use Google\Service\Drive;
 function listAppData()
@@ -24,7 +24,6 @@ function listAppData()
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        // [START listAppData]
         $response = $driveService->files->listFiles(array([
             'spaces' => 'appDataFolder',
             'fields' => 'nextPageToken, files(id, name)',
@@ -33,7 +32,6 @@ function listAppData()
         foreach ($response->files as $file) {
             printf("Found file: %s (%s)", $file->name, $file->id);
         }
-        // [END listAppData]
         return $response->files;
         
     }catch(Exception $e) {
@@ -42,6 +40,6 @@ function listAppData()
    
 }
 require_once 'vendor/autoload.php';
-// [END listAppData]
+// [END drive_list_appdata]
 listAppData();
 ?>
