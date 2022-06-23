@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START fetchAppDataFolder]
+// [START drive_fetch_appdata_folder]
 use Google\Client;
 use Google\Service\Drive;
 function fetchAppDataFolder()
@@ -25,18 +25,16 @@ function fetchAppDataFolder()
         $client->addScope(Drive::DRIVE);
         $client->addScope(Drive::DRIVE_APPDATA);
         $driveService = new Drive($client);
-        // [START fetchAppDataFolder]
         $file = $driveService->files->get('appDataFolder', array([
                 'fields' => 'id'
         ]));
         printf("Folder ID: %s\n", $file->id);
-        // [END fetchAppDataFolder]
         return $file->id;
     } catch (Exception $e) {
         echo "Error Message: ".$e;
     }
 }
 require_once 'vendor/autoload.php';
-// [END fetchAppDataFolder]
+// [END drive_fetch_appdata_folder]
 fetchAppDataFolder();
 ?>

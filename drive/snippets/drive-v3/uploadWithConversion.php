@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START uploadWithConversion]
+// [START drive_upload_with_conversion]
 use Google\Client;
 use Google\Service\Drive;
 function uploadWithConversion()
@@ -24,7 +24,6 @@ function uploadWithConversion()
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        // [START uploadWithConversion]
         $fileMetadata = new Drive\DriveFile(array([
             'name' => 'My Report',
             'mimeType' => 'application/vnd.google-apps.spreadsheet']));
@@ -35,7 +34,6 @@ function uploadWithConversion()
             'uploadType' => 'multipart',
             'fields' => 'id']));
         printf("File ID: %s\n", $file->id);
-        // [END uploadWithConversion]
         return $file->id;
     } catch(Exception $e) {
         echo "Error Message: ".$e;
@@ -43,6 +41,6 @@ function uploadWithConversion()
     
 }
 require_once 'vendor/autoload.php';
-// [END uploadWithConversion]
+// [END drive_upload_with_conversion]
 uploadWithConversion();
 ?>

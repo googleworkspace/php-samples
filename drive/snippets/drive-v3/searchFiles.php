@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START searchFiles]
+// [START drive_search_files]
 use Google\Client;
 use Google\Service\Drive;
 function searchFiles()
@@ -25,7 +25,6 @@ function searchFiles()
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
         $files = array();
-        // [START searchFiles]
         $pageToken = null;
         do {
             $response = $driveService->files->listFiles(array([
@@ -37,13 +36,10 @@ function searchFiles()
             foreach ($response->files as $file) {
                 printf("Found file: %s (%s)\n", $file->name, $file->id);
             }
-            // [START_EXCLUDE silent]
             array_push($files, $response->files);
-            // [END_EXCLUDE]
-    
-            $pageToken = $repsonse->pageToken;
+
+            $pageToken = $response->pageToken;
         } while ($pageToken != null);
-        // [END searchFiles]
         return $files;
     } catch(Exception $e) {
        echo "Error Message: ".$e;
@@ -51,6 +47,6 @@ function searchFiles()
    
 }
 require_once 'vendor/autoload.php';
- // [END searchFiles]
+ // [END drive_search_files]
  searchFiles();
 ?>

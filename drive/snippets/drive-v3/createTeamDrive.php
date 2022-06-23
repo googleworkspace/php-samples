@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START recoverDrives]
+// [START drive_recover_drives]
 use Google\Client;
 use Google\Service\Drive;
 use Google\Service\Drive\TeamDrive;
@@ -26,14 +26,12 @@ function createTeamDrive()
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        // [START createTeamDrive]
         $teamDriveMetadata = new TeamDrive(array(
             'name' => 'Project Resources'));
         $requestId = Uuid::uuid4()->toString();
         $teamDrive = $driveService->teamdrives->create($requestId, $teamDriveMetadata, array([
             'fields' => 'id']));
         printf("Team Drive ID: %s\n", $teamDrive->id);
-        // [END createTeamDrive]
         return $teamDrive->id;
 
     } catch(Exception $e) {
@@ -43,6 +41,6 @@ function createTeamDrive()
    
 }     
 require_once 'vendor/autoload.php';
-// [END createTeamDrive]
+// [END drive_recover_drives]
 createTeamDrive();   
 ?>

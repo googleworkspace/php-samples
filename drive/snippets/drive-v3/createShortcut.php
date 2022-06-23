@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START createShortcut]
+// [START drive_create_shortcut]
 use Google\Client;
 use Google\Service\Drive;
 use Google\Service\Drive\DriveFile;
@@ -26,14 +26,12 @@ function createShortcut()
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        // [START createShortcut]
         $fileMetadata = new DriveFile(array([
             'name' => 'Project plan',
             'mimeType' => 'application/vnd.google-apps.drive-sdk']));
         $file = $driveService->files->create($fileMetadata, array([
             'fields' => 'id']));
         printf("File ID: %s\n", $file->id);
-        // [END createShortcut]
         return $file->id;
 
     } catch(Exception $e) {
@@ -42,6 +40,6 @@ function createShortcut()
    
 }
 require_once 'vendor/autoload.php';
-// [END createShortcut]
+// [END drive_create_shortcut]
 createShortcut();
 ?>

@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START recoverDrives]
+// [START drive_recover_drives]
 use Google\Client;
 use Google\Service\Drive;
 use Ramsey\Uuid\Uuid;
@@ -29,7 +29,6 @@ function recoverDrives()
     $realUser = readline("Enter user email address: ");
 
     $drives = array();
-    // [START recoverDrives]
     // Find all shared drives without an organizer and add one.
     // Note: This example does not capture all cases. Shared drives
     // that have an empty group as the sole organizer, or an
@@ -43,10 +42,7 @@ function recoverDrives()
         'role' => 'organizer',
         'emailAddress' => 'user@example.com'
     ]));
-    // [START_EXCLUDE silent]
     $newOrganizerPermission['emailAddress'] = $realUser;
-    // [END_EXCLUDE]
-
     do {
         $response = $driveService->drives->listDrives(array([
             'q' => 'organizerCount = 0',
@@ -66,18 +62,15 @@ function recoverDrives()
                 ));
             printf("Added organizer permission: %s\n", $permission->id);
         }
-        // [START_EXCLUDE silent]
         array_push($drives, $response->drives);
-        // [END_EXCLUDE]
-        $pageToken = $repsonse->pageToken;
+        $pageToken = $response->pageToken;
     } while ($pageToken != null);
-    // [END recoverDrives]
     return $drives;
    } catch(Exception $e) {
       echo "Error Message: ".$e;
    }
 }
 require_once 'vendor/autoload.php';     
-// [END recoverDrives]
+// [END drive_recover_drives]
 recoverDrives();   
 ?>

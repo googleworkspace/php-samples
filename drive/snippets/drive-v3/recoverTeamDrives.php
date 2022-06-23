@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START recoverTeamDrives]
+// [START drive_recover_teamdrives]
 
 use Google\Client;
 use Google\Service\Drive;
@@ -27,7 +27,6 @@ function recoverTeamDrives()
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
         $teamDrives = array();
-        // [START recoverTeamDrives]
         // Find all Team Drives without an organizer and add one.
         // Note: This example does not capture all cases. Team Drives
         // that have an empty group as the sole organizer, or an
@@ -41,10 +40,8 @@ function recoverTeamDrives()
             'role' => 'organizer',
             'emailAddress' => 'user@example.com'
         ]));
-        // [START_EXCLUDE silent]
-        $newOrganizerPermission['emailAddress'] = $realUser;
-        // [END_EXCLUDE]
-    
+        $newOrganizerPermission['emailAddress'] = 'xyz@workspace.com';
+
         do {
             $response = $driveService->teamdrives->listTeamdrives(array([
                 'q' => 'organizerCount = 0',
@@ -64,18 +61,15 @@ function recoverTeamDrives()
                     ]));
                 printf("Added organizer permission: %s\n", $permission->id);
             }
-            // [START_EXCLUDE silent]
             array_push($teamDrives, $response->teamDrives);
-            // [END_EXCLUDE]
-            $pageToken = $repsonse->pageToken;
+            $pageToken = $response->pageToken;
         } while ($pageToken != null);
-        // [END recoverTeamDrives]
         return $teamDrives;
     } catch(Exception $e) {
         echo "Error Message: ".$e;
     }
 } 
 require_once 'vendor/autoload.php';    
-// [END recoverTeamDrives]
+// [END drive_recover_teamdrives]
 recoverTeamDrives();   
 ?>

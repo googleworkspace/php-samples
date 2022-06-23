@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START uploadAppData]
+// [START drive_upload_appdata]
 use Google\Client;
 use Google\Service\Drive;
 function uploadAppData()
@@ -25,7 +25,6 @@ function uploadAppData()
     $client->addScope(Drive::DRIVE);
     $client->addScope(Drive::DRIVE_APPDATA);
     $driveService = new Drive($client);
-    // [START uploadAppData]
     $fileMetadata = new Drive\DriveFile(array([
         'name' => 'config.json',
         'parents' => array('appDataFolder')
@@ -37,14 +36,13 @@ function uploadAppData()
         'uploadType' => 'multipart',
         'fields' => 'id'));
     printf("File ID: %s\n", $file->id);
-    // [END uploadAppData]
-    return $file->id;     
+    return $file->id;
 
    } catch(Exception $e) {
      echo "Error Message: ".$e;
    }  
 }
 require_once 'vendor/autoload.php';
-// [END uploadAppData]
+// [END drive_upload_appdata]
 uploadAppData();
 ?>

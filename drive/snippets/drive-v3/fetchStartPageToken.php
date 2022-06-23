@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-# [START fetchStartPageToken]
+# [START drive_fetch_start_page_token]
 use Google\Client;
 use Google\Service\Drive;
 # TODO - PHP client currently chokes on fetching start page token
@@ -25,10 +25,8 @@ function fetchStartPageToken()
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        # [START fetchStartPageToken]
         $response = $driveService->changes->getStartPageToken();
         printf("Start token: %s\n", $response->startPageToken);
-        # [END fetchStartPageToken]
         return $response->startPageToken;
     } catch(Exception $e) {
         echo "Error Message: ".$e;
@@ -36,7 +34,7 @@ function fetchStartPageToken()
    
 }
 require_once 'vendor/autoload.php';
- # [END fetchStartPageToken]
+ # [END drive_fetch_start_page_token]
 fetchStartPageToken();
 
 ?>

@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START exportPdf]
+// [START drive_export_pdf]
 use Google\Client;
 use Google\Service\Drive;
 function exportPdf()
@@ -25,15 +25,11 @@ function exportPdf()
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
         $realFileId = readline("Enter File Id: ");
-        // [START exportPdf]
         $fileId = '1ZdR3L3qP4Bkq8noWLJHSr_iBau0DNT4Kli4SxNc2YEo';
-        // [START_EXCLUDE silent]
         $fileId = $realFileId;
-        // [END_EXCLUDE]
         $response = $driveService->files->export($fileId, 'application/pdf', array([
             'alt' => 'media']));
         $content = $response->getBody()->getContents();
-        // [END exportPdf]
         return $content;
         
     }  catch(Exception $e) {
@@ -42,6 +38,6 @@ function exportPdf()
    
 }
 require_once 'vendor/autoload.php';
-// [END exportPdf]
+// [END drive_export_pdf]
 exportPdf();
 ?>

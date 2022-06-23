@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START moveFileToFolder]
+// [START drive_move_file_to_folder]
 use Google\Client;
 use Google\Service\Drive;
 use Google\Service\Drive\DriveFile;
@@ -27,14 +27,11 @@ function moveFileToFolder()
         $driveService = new Drive($client);
         $realFileId = readline("Enter File Id: ");
         $realFolderId = readline("Enter Folder Id: ");
-        // [START moveFileToFolder]
         $fileId = '1sTWaJ_j7PkjzaBWtNc3IzovK5hQf21FbOw9yLeeLPNQ';
         $folderId = '0BwwA4oUTeiV1TGRPeTVjaWRDY1E';
         $emptyFileMetadata = new DriveFile();
-        // [START_EXCLUDE silent]
         $fileId = $realFileId;
         $folderId = $realFolderId;
-        // [END_EXCLUDE]
         // Retrieve the existing parents to remove
         $file = $driveService->files->get($fileId, array(['fields' => 'parents']));
         $previousParents = join(',', $file->parents);
@@ -43,7 +40,6 @@ function moveFileToFolder()
             'addParents' => $folderId,
             'removeParents' => $previousParents,
             'fields' => 'id, parents']));
-        // [END moveFileToFolder]
         return $file->parents;
     } catch(Exception $e) {
         echo "Error Message: ".$e;
@@ -52,6 +48,6 @@ function moveFileToFolder()
     
 }
 require_once 'vendor/autoload.php';
- // [END moveFileToFolder]
+ // [END drive_move_file_to_folder]
 moveFileToFolder();
 ?>

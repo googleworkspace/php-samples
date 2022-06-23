@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-# [START fetchChanges]
+# [START drive_fetch_changes]
 use Google\Client;
 use Google\Service\Drive;
 # TODO - PHP client currently chokes on fetching start page token
@@ -43,7 +43,6 @@ function fetchChanges()
             }
             $pageToken = $response->nextPageToken;
         }
-        // [END fetchChanges]
         echo $savedStartPageToken;
     } catch(Exception $e) {
         echo "Error Message: ".$e;
@@ -51,7 +50,7 @@ function fetchChanges()
     
 }
 require_once 'vendor/autoload.php';
- # [END fetchChanges]
+ # [END drive_fetch_changes]
 fetchChanges();
 
 ?>
