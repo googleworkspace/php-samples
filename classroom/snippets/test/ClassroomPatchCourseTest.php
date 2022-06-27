@@ -20,10 +20,25 @@
 
  class ClassroomPatchCourseTest extends \PHPUnit\Framework\TestCase
  {
-    public function testlistAllCourses()  
+    protected function getService()
     {
-        $classroomResponse = patchCourse('531365683519'); 
-        $this->assertNotNull($classroomResponse, "Not get any value from service");
+        $client = new Google\Client();
+        $client->useApplicationDefaultCredentials();
+        $client->addScope("https://www.googleapis.com/auth/classroom.courses");
+        $service = new Google_Service_Classroom($client);
+        return $service;
     }
+
+    public function testlistAllCourses()
+    
+    {
+        
+        $service = $this->getService();
+        $classroomResponse = patchCourse($service);
+        $this->assertNotNull($classroomResponse, "Not get any value from service");
+    
+    }
+
+
  }
 
