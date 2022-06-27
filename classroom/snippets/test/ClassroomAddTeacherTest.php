@@ -20,12 +20,25 @@
 
  class ClassroomAddTeacherTest extends \PHPUnit\Framework\TestCase
  {
-   
-    public function testcreateCourseAlias()
+    protected function getService()
     {
-        $classroomResponse = addTeacher('531365794650','gduser2@workspacesamples.dev');
+        $client = new Google\Client();
+        $client->useApplicationDefaultCredentials();
+        $client->addScope("https://www.googleapis.com/auth/classroom.courses");
+        $service = new Google_Service_Classroom($client);
+        return $service;
+    }
+
+    public function testcreateCourseAlias()
+    
+    {
+        
+        $service = $this->getService();
+        $classroomResponse = addTeacher($service, '531365794650' ,'gduser2@workspacesamples.dev');
         $this->assertNotNull($classroomResponse, "Not get any value from service");
     
     }
+
+
  }
 

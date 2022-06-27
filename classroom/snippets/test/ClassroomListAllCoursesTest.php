@@ -20,11 +20,23 @@
 
  class ClassroomListAllCoursesTest extends \PHPUnit\Framework\TestCase
  {
-
-    public function testlistAllCourses()    
+    protected function getService()
     {
-        $classroomResponse = listCourses();
+        $client = new Google\Client();
+        $client->useApplicationDefaultCredentials();
+        $client->addScope("https://www.googleapis.com/auth/classroom.courses");
+        $service = new Google_Service_Classroom($client);
+        return $service;
+    }
+
+    public function testlistAllCourses()
+    
+    {
+        
+        $service = $this->getService();
+        $classroomResponse = listCourses($service);
         $this->assertNotNull($classroomResponse, "Not get any value from service");
+    
     }
 
 
