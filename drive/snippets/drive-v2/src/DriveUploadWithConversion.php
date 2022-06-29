@@ -14,11 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
- // [START drive_touch_file]
+// [START drive_upload_with_conversion]
 use Google\Client;
 use Google\Service\Drive;
-function touchFile($realFileId, $realModifiedTime)
+function uploadWithConversion()
 {
     try {
         /* Load pre-authorized user credentials from the environment.
@@ -29,17 +28,23 @@ function touchFile($realFileId, $realModifiedTime)
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
         $fileMetadata = new Drive\DriveFile(array([
-            'modifiedTime' => date('Y-m-d\TH:i:s.uP')]));
-        $fileId = $realFileId;
-        $fileMetadata->modifiedTime = $realModifiedTime;
-        $file = $driveService->files->update($fileId, $fileMetadata, array([
-            'fields' => 'id, modifiedTime']));
-        printf("Modified time: %s\n", $file->modifiedTime);
-        return $file->modifiedTime;
-    } catch(Exception $e) {
+            'name' => 'My Report',
+            'mimeType' => 'application/vnd.google-apps.spreadsheet']));
+        $content = file_get_contents('../files/report.csv');
+        $file = $driveService->files->create($fileMetadata, array([
+            'data' => $content,
+            'mimeType' => 'text/csv',
+            'uploadType' => 'multipart',
+            'fields' => 'id']));
+
+        printf("File ID: %s\n", $file->id);
+        
+        return $file->id;
+
+    }  catch(Exception $e) {
         echo "Error Message: ". $e;
-    }  
+    }
 }
-// [END drive_touch_file]
+// [END drive_upload_with_conversion]
 require_once 'vendor/autoload.php';
-touchFile("1sTWaJ_j7PkjzaBWtNc3IzovK5hQf21FbOw9yLeeLPNQ", date('Y-m-d\TH:i:s.uP'));
+uploadWithConversion();
