@@ -14,10 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 // [START drive_share_file]
 use Google\Client;
 use Google\Service\Drive;
-function shareFile($realFileId, $realUser, $realDomain) {
+function shareFile($fileId, $user, $domain) {
   try {
       /* Load pre-authorized user credentials from the environment.
        TODO (developer) - See https://developers.google.com/identity for
@@ -27,30 +28,25 @@ function shareFile($realFileId, $realUser, $realDomain) {
        $client->addScope(Drive::DRIVE);
        $driveService = new Drive($client);
        $ids = array();
-       $fileId = $realFileId;
        $driveService->getClient()->setUseBatch(true);
        try {
            $batch = $driveService->createBatch();
 
-           $userPermission = new Drive\Permission(array([
+           $userPermission = new Drive\Permission([
                'type' => 'user',
                'role' => 'writer',
-               'emailAddress' => 'user@example.com'
-           ]));
-           // [START_EXCLUDE silent]
-           $userPermission['emailAddress'] = $realUser;
-           // [END_EXCLUDE]
+               'emailAddress' => $user
+           ]);
+
            $request = $driveService->permissions->create(
                    $fileId, $userPermission, array(['fields' => 'id']));
            $batch->add($request, 'user');
-           $domainPermission = new Drive\Permission(array([
+           $domainPermission = new Drive\Permission([
                    'type' => 'domain',
                    'role' => 'reader',
-                   'domain' => 'example.com'
-           ]));
-           // [START_EXCLUDE silent]
-           $userPermission['domain'] = $realDomain;
-           // [END_EXCLUDE]
+                   'domain' => $domain
+           ]);
+
            $request = $driveService->permissions->create(
            $fileId, $domainPermission, array(['fields' => 'id']));
            $batch->add($request, 'domain');
