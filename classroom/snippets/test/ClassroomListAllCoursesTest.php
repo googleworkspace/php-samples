@@ -16,7 +16,7 @@
  * 
  */
 
- require 'src/classroom_list_courses.php';
+ require 'src/ClassroomListCourses.php';
 
  class ClassroomListAllCoursesTest extends \PHPUnit\Framework\TestCase
  {
