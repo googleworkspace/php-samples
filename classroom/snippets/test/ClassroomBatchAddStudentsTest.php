@@ -16,7 +16,7 @@
  * 
  */
 
- require 'src/classroom_batch_add_students.php';
+ require 'src/ClassroomBatchAddStudents.php';
 
  class ClassroomBatchAddStudentsTest extends \PHPUnit\Framework\TestCase
  {

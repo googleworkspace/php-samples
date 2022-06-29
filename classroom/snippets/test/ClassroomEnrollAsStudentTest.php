@@ -16,7 +16,7 @@
  * 
  */
 
- require 'src/classroom_add_student.php';
+ require 'src/ClassroomAddStudent.php';
 
  class ClassroomEnrollAsStudentTest extends \PHPUnit\Framework\TestCase
  {

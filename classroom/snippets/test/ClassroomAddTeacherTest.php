@@ -16,7 +16,7 @@
  * 
  */
 
- require 'src/classroom_add_teacher.php';
+ require 'src/ClassroomAddTeacher.php';
 
  class ClassroomAddTeacherTest extends \PHPUnit\Framework\TestCase
  {

@@ -16,7 +16,7 @@
  * 
  */
 
- require 'src/classroom_update_course.php';
+ require 'src/ClassroomUpdateCourse.php';
 
  class ClassroomUpdateCourseTest extends \PHPUnit\Framework\TestCase
  {
