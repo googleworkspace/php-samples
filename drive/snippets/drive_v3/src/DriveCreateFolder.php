@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
 * Copyright 2022 Google Inc.
 *
@@ -14,27 +14,28 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-# [START drive_fetch_start_page_token]
+// [START drive_create_folder]
 use Google\Client;
 use Google\Service\Drive;
-# TODO - PHP client currently chokes on fetching start page token
-function fetchStartPageToken()
+function createFolder()
 {
     try {
         $client = new Client();
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        $response = $driveService->changes->getStartPageToken();
-        printf("Start token: %s\n", $response->startPageToken);
-        return $response->startPageToken;
-    } catch(Exception $e) {
-        echo "Error Message: ".$e;
-    }
-   
-}
-require_once 'vendor/autoload.php';
- # [END drive_fetch_start_page_token]
-fetchStartPageToken();
+        $fileMetadata = new Drive\DriveFile(array([
+            'name' => 'Invoices',
+            'mimeType' => 'application/vnd.google-apps.folder']));
+        $file = $driveService->files->create($fileMetadata, array([
+            'fields' => 'id']));
+        printf("Folder ID: %s\n", $file->id);
+        return $file->id;
 
-?>
+    }catch(Exception $e) {
+       echo "Error Message: ".$e;
+    }
+}
+// [END drive_create_folder]
+require_once 'vendor/autoload.php';
+createFolder();

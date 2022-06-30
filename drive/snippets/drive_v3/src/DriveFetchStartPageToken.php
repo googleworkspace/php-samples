@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
 * Copyright 2022 Google Inc.
 *
@@ -14,33 +14,25 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START drive_upload_with_conversion]
+// [START drive_fetch_start_page_token]
 use Google\Client;
 use Google\Service\Drive;
-function uploadWithConversion()
+# TODO - PHP client currently chokes on fetching start page token
+function fetchStartPageToken()
 {
     try {
         $client = new Client();
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        $fileMetadata = new Drive\DriveFile(array([
-            'name' => 'My Report',
-            'mimeType' => 'application/vnd.google-apps.spreadsheet']));
-        $content = file_get_contents('../files/report.csv');
-        $file = $driveService->files->create($fileMetadata, array([
-            'data' => $content,
-            'mimeType' => 'text/csv',
-            'uploadType' => 'multipart',
-            'fields' => 'id']));
-        printf("File ID: %s\n", $file->id);
-        return $file->id;
+        $response = $driveService->changes->getStartPageToken();
+        printf("Start token: %s\n", $response->startPageToken);
+        return $response->startPageToken;
     } catch(Exception $e) {
         echo "Error Message: ".$e;
     }
-    
+   
 }
+// [END drive_fetch_start_page_token]
 require_once 'vendor/autoload.php';
-// [END drive_upload_with_conversion]
-uploadWithConversion();
-?>
+fetchStartPageToken();

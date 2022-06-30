@@ -38,7 +38,6 @@ function downloadFile()
     }
    
 }
+// [END drive_download_file]
 require_once 'vendor/autoload.php';
-  // [END drive_download_file]
 downloadFile();
-?>

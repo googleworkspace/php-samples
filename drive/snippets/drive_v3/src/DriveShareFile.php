@@ -72,7 +72,6 @@ function shareFile()
     }
    
 }
-require_once 'vendor/autoload.php';
 // [END drive_share_file]
+require_once 'vendor/autoload.php';
 shareFile();
-?>

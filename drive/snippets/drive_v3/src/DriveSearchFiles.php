@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
 * Copyright 2022 Google Inc.
 *
@@ -14,32 +14,37 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START drive_list_appdata]
+// [START drive_search_files]
 use Google\Client;
 use Google\Service\Drive;
-function listAppData()
+function searchFiles()
 {
     try {
         $client = new Client();
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        $response = $driveService->files->listFiles(array([
-            'spaces' => 'appDataFolder',
-            'fields' => 'nextPageToken, files(id, name)',
-            'pageSize' => 10
-        ]));
-        foreach ($response->files as $file) {
-            printf("Found file: %s (%s)", $file->name, $file->id);
-        }
-        return $response->files;
-        
-    }catch(Exception $e) {
-        echo "Error Message: ".$e;
+        $files = array();
+        $pageToken = null;
+        do {
+            $response = $driveService->files->listFiles(array([
+                'q' => "mimeType='image/jpeg'",
+                'spaces' => 'drive',
+                'pageToken' => $pageToken,
+                'fields' => 'nextPageToken, files(id, name)',
+            ]));
+            foreach ($response->files as $file) {
+                printf("Found file: %s (%s)\n", $file->name, $file->id);
+            }
+            array_push($files, $response->files);
+
+            $pageToken = $response->pageToken;
+        } while ($pageToken != null);
+        return $files;
+    } catch(Exception $e) {
+       echo "Error Message: ".$e;
     }
-   
 }
+// [END drive_search_files]
 require_once 'vendor/autoload.php';
-// [END drive_list_appdata]
-listAppData();
-?>
+searchFiles();

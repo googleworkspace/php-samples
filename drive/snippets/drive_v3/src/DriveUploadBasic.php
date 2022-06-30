@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
 * Copyright 2022 Google Inc.
 *
@@ -14,30 +14,32 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START drive_create_folder]
+// [START drive_upload_basic]
 use Google\Client;
 use Google\Service\Drive;
-function createFolder()
+# TODO - PHP client currently chokes on fetching start page token
+function uploadBasic()
 {
     try {
         $client = new Client();
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        $fileMetadata = new Drive\DriveFile(array([
-            'name' => 'Invoices',
-            'mimeType' => 'application/vnd.google-apps.folder']));
+        $fileMetadata = new Drive\DriveFile(array(
+        'name' => 'photo.jpg'));
+        $content = file_get_contents('../files/photo.jpg');
         $file = $driveService->files->create($fileMetadata, array([
+            'data' => $content,
+            'mimeType' => 'image/jpeg',
+            'uploadType' => 'multipart',
             'fields' => 'id']));
-        printf("Folder ID: %s\n", $file->id);
+        printf("File ID: %s\n", $file->id);
         return $file->id;
-
-    }catch(Exception $e) {
-       echo "Error Message: ".$e;
-    }
+    } catch(Exception $e) {
+        echo "Error Message: ".$e;
+    } 
     
 }
+//[END drive_upload_basic]
 require_once 'vendor/autoload.php';
-// [END drive_create_folder]
-createFolder();
-?>
+uploadBasic();

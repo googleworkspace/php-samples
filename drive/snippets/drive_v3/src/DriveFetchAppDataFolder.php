@@ -14,31 +14,26 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START drive_create_drive]
+// [START drive_fetch_appdata_folder]
 use Google\Client;
 use Google\Service\Drive;
-use Ramsey\Uuid\Uuid;
-function createDrive()
+function fetchAppDataFolder()
 {
     try {
         $client = new Client();
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
+        $client->addScope(Drive::DRIVE_APPDATA);
         $driveService = new Drive($client);
-        
-        $driveMetadata = new Drive\Drive(array(
-                'name' => 'Project Resources'));
-        $requestId = Uuid::uuid4()->toString();
-        $drive = $driveService->drives->create($requestId, $driveMetadata, array([
-                'fields' => 'id']));
-        printf("Drive ID: %s\n", $drive->id);
-        return $drive->id;
-    } catch(Exception $e)  {
+        $file = $driveService->files->get('appDataFolder', array([
+                'fields' => 'id'
+        ]));
+        printf("Folder ID: %s\n", $file->id);
+        return $file->id;
+    } catch (Exception $e) {
         echo "Error Message: ".$e;
-    }  
-   
+    }
 }
-require_once 'vendor/autoload.php';     
-// [END drive_create_drive]
-createDrive();   
-?>
+// [END drive_fetch_appdata_folder]
+require_once 'vendor/autoload.php';
+fetchAppDataFolder();

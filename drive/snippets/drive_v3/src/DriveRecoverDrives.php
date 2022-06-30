@@ -70,7 +70,6 @@ function recoverDrives()
       echo "Error Message: ".$e;
    }
 }
-require_once 'vendor/autoload.php';     
 // [END drive_recover_drives]
-recoverDrives();   
-?>
+require_once 'vendor/autoload.php';
+recoverDrives();

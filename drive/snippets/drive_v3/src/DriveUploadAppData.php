@@ -42,7 +42,6 @@ function uploadAppData()
      echo "Error Message: ".$e;
    }  
 }
-require_once 'vendor/autoload.php';
 // [END drive_upload_appdata]
+require_once 'vendor/autoload.php';
 uploadAppData();
-?>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
 * Copyright 2022 Google Inc.
 *
@@ -14,30 +14,30 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START drive_export_pdf]
+// [START drive_create_drive]
 use Google\Client;
 use Google\Service\Drive;
-function exportPdf()
+use Ramsey\Uuid\Uuid;
+function createDrive()
 {
     try {
         $client = new Client();
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        $realFileId = readline("Enter File Id: ");
-        $fileId = '1ZdR3L3qP4Bkq8noWLJHSr_iBau0DNT4Kli4SxNc2YEo';
-        $fileId = $realFileId;
-        $response = $driveService->files->export($fileId, 'application/pdf', array([
-            'alt' => 'media']));
-        $content = $response->getBody()->getContents();
-        return $content;
         
-    }  catch(Exception $e) {
-         echo "Error Message: ".$e;
-    }
+        $driveMetadata = new Drive\Drive(array(
+                'name' => 'Project Resources'));
+        $requestId = Uuid::uuid4()->toString();
+        $drive = $driveService->drives->create($requestId, $driveMetadata, array([
+                'fields' => 'id']));
+        printf("Drive ID: %s\n", $drive->id);
+        return $drive->id;
+    } catch(Exception $e)  {
+        echo "Error Message: ".$e;
+    }  
    
 }
+// [END drive_create_drive]
 require_once 'vendor/autoload.php';
-// [END drive_export_pdf]
-exportPdf();
-?>
+createDrive();

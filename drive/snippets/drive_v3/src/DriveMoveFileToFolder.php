@@ -18,20 +18,14 @@
 use Google\Client;
 use Google\Service\Drive;
 use Google\Service\Drive\DriveFile;
-function moveFileToFolder()
+function moveFileToFolder($fileId,$folderId)
 {
     try {
         $client = new Client();
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        $realFileId = readline("Enter File Id: ");
-        $realFolderId = readline("Enter Folder Id: ");
-        $fileId = '1sTWaJ_j7PkjzaBWtNc3IzovK5hQf21FbOw9yLeeLPNQ';
-        $folderId = '0BwwA4oUTeiV1TGRPeTVjaWRDY1E';
         $emptyFileMetadata = new DriveFile();
-        $fileId = $realFileId;
-        $folderId = $realFolderId;
         // Retrieve the existing parents to remove
         $file = $driveService->files->get($fileId, array(['fields' => 'parents']));
         $previousParents = join(',', $file->parents);
@@ -44,10 +38,7 @@ function moveFileToFolder()
     } catch(Exception $e) {
         echo "Error Message: ".$e;
     }
-     
-    
 }
+// [END drive_move_file_to_folder]
 require_once 'vendor/autoload.php';
- // [END drive_move_file_to_folder]
 moveFileToFolder();
-?>

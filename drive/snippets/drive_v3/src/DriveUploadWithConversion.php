@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
 * Copyright 2022 Google Inc.
 *
@@ -14,27 +14,32 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START drive_fetch_appdata_folder]
+// [START drive_upload_with_conversion]
 use Google\Client;
 use Google\Service\Drive;
-function fetchAppDataFolder()
+function uploadWithConversion()
 {
     try {
         $client = new Client();
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
-        $client->addScope(Drive::DRIVE_APPDATA);
         $driveService = new Drive($client);
-        $file = $driveService->files->get('appDataFolder', array([
-                'fields' => 'id'
-        ]));
-        printf("Folder ID: %s\n", $file->id);
+        $fileMetadata = new Drive\DriveFile(array([
+            'name' => 'My Report',
+            'mimeType' => 'application/vnd.google-apps.spreadsheet']));
+        $content = file_get_contents('../files/report.csv');
+        $file = $driveService->files->create($fileMetadata, array([
+            'data' => $content,
+            'mimeType' => 'text/csv',
+            'uploadType' => 'multipart',
+            'fields' => 'id']));
+        printf("File ID: %s\n", $file->id);
         return $file->id;
-    } catch (Exception $e) {
+    } catch(Exception $e) {
         echo "Error Message: ".$e;
     }
+    
 }
+// [END drive_upload_with_conversion]
 require_once 'vendor/autoload.php';
-// [END drive_fetch_appdata_folder]
-fetchAppDataFolder();
-?>
+uploadWithConversion();
