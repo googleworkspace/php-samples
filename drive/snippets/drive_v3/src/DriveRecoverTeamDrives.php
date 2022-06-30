@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START drive_recover_teamdrives]
+// [START drive_recover_team_drives]
 
 use Google\Client;
 use Google\Service\Drive;
@@ -68,8 +68,7 @@ function recoverTeamDrives()
     } catch(Exception $e) {
         echo "Error Message: ".$e;
     }
-} 
-require_once 'vendor/autoload.php';    
-// [END drive_recover_teamdrives]
-recoverTeamDrives();   
-?>
+}
+// [END drive_recover_team_drives]
+require_once 'vendor/autoload.php';
+recoverTeamDrives();

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
 * Copyright 2022 Google Inc.
 *
@@ -14,39 +14,32 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START drive_search_files]
+// [START drive_create_team_drives]
 use Google\Client;
 use Google\Service\Drive;
-function searchFiles()
+use Google\Service\Drive\TeamDrive;
+use Ramsey\Uuid\Uuid;
+function createTeamDrive()
 {
     try {
         $client = new Client();
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        $files = array();
-        $pageToken = null;
-        do {
-            $response = $driveService->files->listFiles(array([
-                'q' => "mimeType='image/jpeg'",
-                'spaces' => 'drive',
-                'pageToken' => $pageToken,
-                'fields' => 'nextPageToken, files(id, name)',
-            ]));
-            foreach ($response->files as $file) {
-                printf("Found file: %s (%s)\n", $file->name, $file->id);
-            }
-            array_push($files, $response->files);
+        $teamDriveMetadata = new TeamDrive(array(
+            'name' => 'Project Resources'));
+        $requestId = Uuid::uuid4()->toString();
+        $teamDrive = $driveService->teamdrives->create($requestId, $teamDriveMetadata, array([
+            'fields' => 'id']));
+        printf("Team Drive ID: %s\n", $teamDrive->id);
+        return $teamDrive->id;
 
-            $pageToken = $response->pageToken;
-        } while ($pageToken != null);
-        return $files;
     } catch(Exception $e) {
-       echo "Error Message: ".$e;
+
+        echo "Error Message: ".$e;
     }
    
 }
+// [END drive_create_team_drives]
 require_once 'vendor/autoload.php';
- // [END drive_search_files]
- searchFiles();
-?>
+createTeamDrive();

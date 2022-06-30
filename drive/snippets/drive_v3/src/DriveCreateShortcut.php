@@ -14,33 +14,31 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START drive_touch_file]
+// [START drive_create_shortcut]
 use Google\Client;
 use Google\Service\Drive;
-function touchFile()
+use Google\Service\Drive\DriveFile;
+function createShortcut()
 {
     try {
+
         $client = new Client();
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        $realFileId = readline("Enter File Id: ");
-        $realModifiedTime = readline("Enter Modified Time: ");
-        $fileId = '1sTWaJ_j7PkjzaBWtNc3IzovK5hQf21FbOw9yLeeLPNQ';
-        $fileMetadata = new Drive\DriveFile(array([
-            'modifiedTime' => date('Y-m-d\TH:i:s.uP')]));
-        $fileId = $realFileId;
-        $fileMetadata->modifiedTime = $realModifiedTime;
-        $file = $driveService->files->update($fileId, $fileMetadata, array([
-            'fields' => 'id, modifiedTime']));
-        printf("Modified time: %s\n", $file->modifiedTime);
-        return $file->modifiedTime;
+        $fileMetadata = new DriveFile(array([
+            'name' => 'Project plan',
+            'mimeType' => 'application/vnd.google-apps.drive-sdk']));
+        $file = $driveService->files->create($fileMetadata, array([
+            'fields' => 'id']));
+        printf("File ID: %s\n", $file->id);
+        return $file->id;
+
     } catch(Exception $e) {
         echo "Error Message: ".$e;
     }
    
 }
+// [END drive_create_shortcut]
 require_once 'vendor/autoload.php';
-// [END drive_touch_file]
-touchFile();
-?>
+createShortcut();

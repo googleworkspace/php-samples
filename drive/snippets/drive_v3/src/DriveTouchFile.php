@@ -14,37 +14,28 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START drive_upload_to_folder]
+// [START drive_touch_file]
 use Google\Client;
 use Google\Service\Drive;
-function uploadToFolder()
+function touchFile($fileId,$realModifiedTime)
 {
     try {
         $client = new Client();
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-         $folderId = '0BwwA4oUTeiV1TGRPeTVjaWRDY1E';
-         $realFolderId = readline("Enter Folder Id: ");
-         $folderId = $realFolderId;
-         $fileMetadata = new Drive\DriveFile(array([
-             'name' => 'photo.jpg',
-             'parents' => array($folderId)
-         ]));
-         $content = file_get_contents('../files/photo.jpg');
-         $file = $driveService->files->create($fileMetadata, array([
-             'data' => $content,
-             'mimeType' => 'image/jpeg',
-             'uploadType' => 'multipart',
-             'fields' => 'id']));
-         printf("File ID: %s\n", $file->id);
-         return $file->id;
+        $fileMetadata = new Drive\DriveFile(array([
+            'modifiedTime' => date('Y-m-d\TH:i:s.uP')]));
+        $fileMetadata->modifiedTime = $realModifiedTime;
+        $file = $driveService->files->update($fileId, $fileMetadata, array([
+            'fields' => 'id, modifiedTime']));
+        printf("Modified time: %s\n", $file->modifiedTime);
+        return $file->modifiedTime;
     } catch(Exception $e) {
         echo "Error Message: ".$e;
-    } 
-  
- }
- require_once 'vendor/autoload.php';
-  // [END drive_upload_basic]
- uploadToFolder();
-?>
+    }
+   
+}
+// [END drive_touch_file]
+require_once 'vendor/autoload.php';
+touchFile();

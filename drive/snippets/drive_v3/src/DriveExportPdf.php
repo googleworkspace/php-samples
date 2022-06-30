@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
 * Copyright 2022 Google Inc.
 *
@@ -14,33 +14,29 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START drive_recover_drives]
+// [START drive_export_pdf]
 use Google\Client;
 use Google\Service\Drive;
-use Google\Service\Drive\TeamDrive;
-use Ramsey\Uuid\Uuid;
-function createTeamDrive()
+function exportPdf()
 {
     try {
         $client = new Client();
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        $teamDriveMetadata = new TeamDrive(array(
-            'name' => 'Project Resources'));
-        $requestId = Uuid::uuid4()->toString();
-        $teamDrive = $driveService->teamdrives->create($requestId, $teamDriveMetadata, array([
-            'fields' => 'id']));
-        printf("Team Drive ID: %s\n", $teamDrive->id);
-        return $teamDrive->id;
-
-    } catch(Exception $e) {
-
-        echo "Error Message: ".$e;
+        $realFileId = readline("Enter File Id: ");
+        $fileId = '1ZdR3L3qP4Bkq8noWLJHSr_iBau0DNT4Kli4SxNc2YEo';
+        $fileId = $realFileId;
+        $response = $driveService->files->export($fileId, 'application/pdf', array([
+            'alt' => 'media']));
+        $content = $response->getBody()->getContents();
+        return $content;
+        
+    }  catch(Exception $e) {
+         echo "Error Message: ".$e;
     }
    
-}     
+}
+// [END drive_export_pdf]
 require_once 'vendor/autoload.php';
-// [END drive_recover_drives]
-createTeamDrive();   
-?>
+exportPdf();

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
 * Copyright 2022 Google Inc.
 *
@@ -14,32 +14,31 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-// [START drive_create_shortcut]
+// [START drive_list_appdata]
 use Google\Client;
 use Google\Service\Drive;
-use Google\Service\Drive\DriveFile;
-function createShortcut()
+function listAppData()
 {
     try {
-
         $client = new Client();
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        $fileMetadata = new DriveFile(array([
-            'name' => 'Project plan',
-            'mimeType' => 'application/vnd.google-apps.drive-sdk']));
-        $file = $driveService->files->create($fileMetadata, array([
-            'fields' => 'id']));
-        printf("File ID: %s\n", $file->id);
-        return $file->id;
-
-    } catch(Exception $e) {
+        $response = $driveService->files->listFiles(array([
+            'spaces' => 'appDataFolder',
+            'fields' => 'nextPageToken, files(id, name)',
+            'pageSize' => 10
+        ]));
+        foreach ($response->files as $file) {
+            printf("Found file: %s (%s)", $file->name, $file->id);
+        }
+        return $response->files;
+        
+    }catch(Exception $e) {
         echo "Error Message: ".$e;
     }
    
 }
+// [END drive_list_appdata]
 require_once 'vendor/autoload.php';
-// [END drive_create_shortcut]
-createShortcut();
-?>
+listAppData();
