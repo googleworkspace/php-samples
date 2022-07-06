@@ -16,25 +16,15 @@
  * 
  */
 
- require 'src/classroom_getCourse.php';
+ require 'src/ClassroomGetCourse.php';
 
  class ClassroomGetCourseTest extends \PHPUnit\Framework\TestCase
  {
-    protected function getService()
-    {
-        $client = new Google\Client();
-        $client->useApplicationDefaultCredentials();
-        $client->addScope("https://www.googleapis.com/auth/classroom.courses");
-        $service = new Google_Service_Classroom($client);
-        return $service;
-    }
 
-    public function testgetCourse()
-    
+    public function testgetCourse()  
     {
         
-        $service = $this->getService();
-        $classroomResponse = getCourse($service, '531365794650');
+        $classroomResponse = getCourse('123456');
         $this->assertNotNull($classroomResponse, "Not get any value from service");
     
     }

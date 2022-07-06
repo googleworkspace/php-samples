@@ -16,27 +16,14 @@
  * 
  */
 
- require 'src/classroom_batchAddStudents.php';
+ require 'src/ClassroomBatchAddStudents.php';
 
  class ClassroomBatchAddStudentsTest extends \PHPUnit\Framework\TestCase
  {
-    protected function getService()
-    {
-        $client = new Google\Client();
-        $client->useApplicationDefaultCredentials();
-        $client->addScope("https://www.googleapis.com/auth/classroom.courses");
-        $service = new Google_Service_Classroom($client);
-        return $service;
-    }
-
     public function testcreateCourseAlias()
-    
     {
-        
-        $service = $this->getService();
-        $classroomResponse = batchAddStudents($service, '531365794650', ['a', 'b']);
-        $this->assertNotNull($classroomResponse, "Not get any value from service");
-    
+        $classroomResponse = batchAddStudents('123456',['a', 'b']);
+        $this->assertNotNull($classroomResponse, "Not get any value from service");    
     }
 
 
