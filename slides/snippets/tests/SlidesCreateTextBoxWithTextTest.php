@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-require 'src/slides_create_textbox_with_text.php';
+require 'src/SlidesCreateTextboxWithText.php';
 
 class SlidesCreateTextBoxWithTextTest extends \PHPUnit\Framework\TestCase
 {

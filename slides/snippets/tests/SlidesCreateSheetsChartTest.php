@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-require 'src/slides_create_sheets_chart.php';
+require 'src/SlidesCreateSheetsChart.php';
 
 class SlidesCreateSheetsChartTest extends \PHPUnit\Framework\TestCase
 {

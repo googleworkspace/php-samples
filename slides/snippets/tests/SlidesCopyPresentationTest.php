@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-require 'src/slides_copy_presentation.php';
+require 'src/SlidesCopyPresentation.php';
 
 class SlidesCopyPresentationTest extends \PHPUnit\Framework\TestCase
 {

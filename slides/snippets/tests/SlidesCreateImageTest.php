@@ -14,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-require 'src/slides_create_image.php';
+require 'src/SlidesCreateImage.php';
 
-class SlidesCreateImage extends \PHPUnit\Framework\TestCase
+class SlidesCreateImageTest extends \PHPUnit\Framework\TestCase
 {
     
     public function testCreateImage()

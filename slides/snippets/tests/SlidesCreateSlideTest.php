@@ -16,7 +16,7 @@
  */
 require 'src/slides_create_slide.php';
 
-class SlidesCreateSlide extends \PHPUnit\Framework\TestCase
+class SlidesCreateSlideTest extends \PHPUnit\Framework\TestCase
 {
     
     public function testCreateImage()
