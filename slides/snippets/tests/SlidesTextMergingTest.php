@@ -14,15 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-require 'src/slides_create_presentation.php';
+require 'src/SlidesTextMerging.php';
 
-class SlidesCreatePresentaionTest extends \PHPUnit\Framework\TestCase
+class SlidesTextMergingTest extends \PHPUnit\Framework\TestCase
 {
     
-    public function testCreatePresentation()
+    public function testTextMerging()
     {
-        $presentation = createPresentation("sample presentation ut");
-        $id = $presentation->presentationId;
+        $presentation = textMerging('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', '1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8');
+        $id = $presentation;
         $this->assertNotNull($id, 'Missing presentation ID.');
     }
 }
