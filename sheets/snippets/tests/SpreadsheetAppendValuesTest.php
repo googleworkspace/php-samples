@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2018 Google Inc.
+ * Copyright 2022 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,13 @@
  * limitations under the License.
  */
 
- require 'src/sheets_create.php';
+ require 'src/SpreadsheetAppendValues.php';
 
- class SpreadSheetCreateTest extends \PHPUnit\Framework\TestCase
+ class SpreadsheetAppendValuesTest extends \PHPUnit\Framework\TestCase
  {
-    public function testSpreadsheetCreate()
+    public function testSpreadSheetAppendValues()
     {   
-        $spreadSheet = create("Sample sheet for uts");
-        $id = $spreadSheet;
-        $this->assertNotNull($id, 'ID not returned.');
+        $spreadSheet = appendValues('1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8', 'Sheet1!A1:B2', "RAW", []);
+        $this->assertNotNull($spreadSheet, 'No result returned.');
     }
  }

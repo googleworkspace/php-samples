@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
- require 'src/sheets_batch_update_values.php';
+ require 'src/SpreadsheetConditionalFormatting.php';
 
- class SpreadSheetBatchUpdateValuesTest extends \PHPUnit\Framework\TestCase
+ class SpreadsheetConditionalFormattingTest extends \PHPUnit\Framework\TestCase
  {
-    public function testSpreadSheetBatchUpdateValues()
+    public function testSpreadSheetConditionalFormatting()
     {   
-        $spreadSheet = batchUpdateValues('1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8','Sheet1!A1:B2',"RAW", []);
+        $spreadSheet = conditionalFormatting('1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8');
         $this->assertNotNull($spreadSheet, 'No result returned.');
     }
  }

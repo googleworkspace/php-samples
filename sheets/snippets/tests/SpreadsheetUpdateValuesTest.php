@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2022 Google Inc.
+ * Copyright 2018 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
- require 'src/sheets_pivot_tables.php';
+ require 'src/SpreadsheetUpdateValues.php';
 
- class SpreadSheetPivotTablesTest extends \PHPUnit\Framework\TestCase
+ class SpreadsheetUpdateValuesTest extends \PHPUnit\Framework\TestCase
  {
-    public function testSpreadSheetPivotTables()
+    public function testSpreadSheetUpdateValues()
     {   
-        $spreadSheet = pivotTables('1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8');
+        $spreadSheet = updateValues('1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8','Sheet1!A1:B2',"RAW", []);
         $this->assertNotNull($spreadSheet, 'No result returned.');
     }
  }
