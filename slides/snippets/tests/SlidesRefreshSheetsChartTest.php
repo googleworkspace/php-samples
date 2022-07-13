@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-require 'src/slides_refreh_sheets_chart.php';
+require 'src/SlidesRefreshSheetsChart.php';
 
 class SlidesRefreshSheetsChartTest extends \PHPUnit\Framework\TestCase
 {

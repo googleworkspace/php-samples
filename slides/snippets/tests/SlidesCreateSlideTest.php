@@ -14,16 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-require 'src/SlidesCreateTextboxWithText.php';
+require 'src/slides_create_slide.php';
 
-class SlidesCreateTextBoxWithTextTest extends \PHPUnit\Framework\TestCase
+class SlidesCreateSlideTest extends \PHPUnit\Framework\TestCase
 {
     
-    public function testCreateTextBoxWithTextTest()
+    public function testCreateImage()
     {
-        $presentation = createTextboxWithText('1RUco4Q4LkE2UwcFFusfnVTkSdVpfKZGV9tx997ox7n0', 'abcd1234');
+        $presentation = createSlide('1u_-382trVO_O_gsn-klkYZMXkEXtJ8YbbODH-IPoSoE', 'abcd12aaadsfas34');
         $id = $presentation;
-        // print_r($id);
         $this->assertNotNull($id, 'Missing presentation ID.');
     }
 }

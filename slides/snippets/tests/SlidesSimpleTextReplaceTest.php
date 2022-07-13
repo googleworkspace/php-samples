@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-require 'src/slides_simple_text_replace.php';
+require 'src/SlidesSimpleTextReplace.php';
 
 class SlidesSimpleTextReplaceTest extends \PHPUnit\Framework\TestCase
 {

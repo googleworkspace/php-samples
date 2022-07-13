@@ -14,15 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-require 'src/slides_create_image.php';
+require 'src/slides_create_presentation.php';
 
-class SlidesCreateImage extends \PHPUnit\Framework\TestCase
+class SlidesCreatePresentationTest extends \PHPUnit\Framework\TestCase
 {
     
-    public function testCreateImage()
+    public function testCreatePresentation()
     {
-        $presentation = createImage('1GJJqCP2njMuzMEdPMNH7gftTpX8fmJIbTdCGSiy-h8k', 'newUtSlide1');
-        $id = $presentation;
+        $presentation = createPresentation("sample presentation ut");
+        $id = $presentation->presentationId;
         $this->assertNotNull($id, 'Missing presentation ID.');
     }
 }

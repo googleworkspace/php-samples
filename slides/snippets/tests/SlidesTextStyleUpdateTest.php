@@ -14,14 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-require 'src/slides_create_slide.php';
+require 'src/SlidesTextStyleUpdate.php';
 
-class SlidesCreateSlide extends \PHPUnit\Framework\TestCase
+class SlidesTextStyleUpdateTest extends \PHPUnit\Framework\TestCase
 {
     
-    public function testCreateImage()
+    public function testTextStyleUpdate()
     {
-        $presentation = createSlide('1u_-382trVO_O_gsn-klkYZMXkEXtJ8YbbODH-IPoSoE', 'abcd12aaadsfas34');
+        $presentation = textStyleUpdate('12ZqIbNsOdfGr99FQJi9mQ0zDq-Q9pdf6T3ReVBz0Lms', 'MyTextBox_01');
         $id = $presentation;
         $this->assertNotNull($id, 'Missing presentation ID.');
     }
