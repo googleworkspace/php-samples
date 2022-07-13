@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
- require 'src/sheets_batch_update.php';
+ require 'src/SpreadsheetBatchUpdate.php';
 
- class SpreadSheetBatchUpdateTest extends \PHPUnit\Framework\TestCase
+ class SpreadsheetBatchUpdateTest extends \PHPUnit\Framework\TestCase
  {
     public function testSpreadSheetBatchUpdate()
     {   

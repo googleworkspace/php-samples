@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2018 Google Inc.
+ * Copyright 2022 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
- require 'src/sheets_conditional_formatting.php';
+ require 'src/SpreadsheetPivotTables.php';
 
- class SpreadSheetConditionalFormattingTest extends \PHPUnit\Framework\TestCase
+ class SpreadsheetPivotTablesTest extends \PHPUnit\Framework\TestCase
  {
-    public function testSpreadSheetConditionalFormatting()
+    public function testSpreadSheetPivotTables()
     {   
-        $spreadSheet = conditionalFormatting('1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8');
+        $spreadSheet = pivotTables('1sN_EOj0aYp5hn9DeqSY72G7sKaFRg82CsMGnK_Tooa8');
         $this->assertNotNull($spreadSheet, 'No result returned.');
     }
  }

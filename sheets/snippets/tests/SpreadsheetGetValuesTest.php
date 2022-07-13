@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
- require 'src/sheets_get_values.php';
+ require 'src/SpreadsheetGetValues.php';
 
- class SpreadSheetGetValuesTest extends \PHPUnit\Framework\TestCase
+ class SpreadsheetGetValuesTest extends \PHPUnit\Framework\TestCase
  {
     public function testSpreadsheetGetValues()
     {   
