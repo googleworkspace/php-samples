@@ -30,10 +30,10 @@ function moveFileToFolder($fileId,$folderId)
         $file = $driveService->files->get($fileId, array(['fields' => 'parents']));
         $previousParents = join(',', $file->parents);
         // Move the file to the new folder
-        $file = $driveService->files->update($fileId, $emptyFileMetadata, array([
+        $file = $driveService->files->update($fileId, $emptyFileMetadata, array(
             'addParents' => $folderId,
             'removeParents' => $previousParents,
-            'fields' => 'id, parents']));
+            'fields' => 'id, parents'));
         return $file->parents;
     } catch(Exception $e) {
         echo "Error Message: ".$e;
