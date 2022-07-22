@@ -14,7 +14,7 @@
 
 branches:
   only:
-    - master
+    - main
 
 language: php
 dist: trusty
