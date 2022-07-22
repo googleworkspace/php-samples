@@ -1,5 +1,3 @@
-# Google Workspace PHP Samples [![Build Status](https://travis-ci.org/googleworkspace/php-samples.svg?branch=master)](https://travis-ci.org/googleworkspace/php-samples)
-
 A collection of samples that demonstrate how to call Google Workspace APIs from PHP.
 
 ## Products
