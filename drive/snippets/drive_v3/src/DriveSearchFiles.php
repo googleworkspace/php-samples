@@ -38,7 +38,7 @@ function searchFiles()
             }
             array_push($files, $response->files);
 
-            $pageToken = $response->pageToken;
+            $pageToken = $response->nextPageToken;
         } while ($pageToken != null);
         return $files;
     } catch(Exception $e) {
