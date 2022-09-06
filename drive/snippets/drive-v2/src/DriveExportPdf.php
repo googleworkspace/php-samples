@@ -28,8 +28,8 @@ function exportPdf($fileId)
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        $response = $driveService->files->export($fileId, 'application/pdf', array([
-            'alt' => 'media']));
+        $response = $driveService->files->export($fileId, 'application/pdf', [
+            'alt' => 'media']);
         $content = $response->getBody()->getContents();
        
         echo $content;

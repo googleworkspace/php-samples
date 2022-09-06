@@ -29,16 +29,16 @@ function uploadAppData()
         $client->addScope(Drive::DRIVE_APPDATA);
         $driveService = new Drive($client);
                 
-        $fileMetadata = new Drive\DriveFile(array([
+        $fileMetadata = new Drive\DriveFile([
                 'name' => 'config.json',
-                'parents' => array('appDataFolder')
-        ]));
+                'parents' => ['appDataFolder']
+        ]);
         $content = file_get_contents('../files/config.json');
-        $file = $driveService->files->create($fileMetadata, array([
+        $file = $driveService->files->create($fileMetadata, [
                 'data' => $content,
                 'mimeType' => 'application/json',
                 'uploadType' => 'multipart',
-                'fields' => 'id']));
+                'fields' => 'id']);
         printf("File ID: %s\n", $file->id);
         
         return $file->id;

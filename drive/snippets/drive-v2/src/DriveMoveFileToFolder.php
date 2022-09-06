@@ -29,13 +29,13 @@ function moveFileToFolder($fileId, $folderId)
         $driveService = new Drive($client);
         $emptyFileMetadata = new Drive\DriveFile();
         // Retrieve the existing parents to remove
-        $file = $driveService->files->get($fileId, array(['fields' => 'parents']));
+        $file = $driveService->files->get($fileId, ['fields' => 'parents']);
         $previousParents = join(',', $file->parents);
         // Move the file to the new folder
-        $file = $driveService->files->update($fileId, $emptyFileMetadata, array([
+        $file = $driveService->files->update($fileId, $emptyFileMetadata, [
             'addParents' => $folderId,
             'removeParents' => $previousParents,
-            'fields' => 'id, parents']));
+            'fields' => 'id, parents']);
         
         print_r($file->parents);
     } catch(Exception $e) {

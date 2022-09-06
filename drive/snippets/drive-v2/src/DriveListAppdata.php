@@ -29,11 +29,11 @@ function listAppData()
         $client->addScope(Drive::DRIVE_APPDATA);
         $driveService = new Drive($client);
         
-        $response = $driveService->files->listFiles(array([
+        $response = $driveService->files->listFiles([
                 'spaces' => 'appDataFolder',
                 'fields' => 'nextPageToken, files(id, name)',
                 'pageSize' => 10
-        ]));
+        ]);
         foreach ($response->files as $file) {
             printf("Found file: %s (%s)", $file->name, $file->id);
         }

@@ -27,15 +27,15 @@ function uploadWithConversion()
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        $fileMetadata = new Drive\DriveFile(array([
+        $fileMetadata = new Drive\DriveFile([
             'name' => 'My Report',
-            'mimeType' => 'application/vnd.google-apps.spreadsheet']));
+            'mimeType' => 'application/vnd.google-apps.spreadsheet']);
         $content = file_get_contents('../files/report.csv');
-        $file = $driveService->files->create($fileMetadata, array([
+        $file = $driveService->files->create($fileMetadata, [
             'data' => $content,
             'mimeType' => 'text/csv',
             'uploadType' => 'multipart',
-            'fields' => 'id']));
+            'fields' => 'id']);
 
         printf("File ID: %s\n", $file->id);
         

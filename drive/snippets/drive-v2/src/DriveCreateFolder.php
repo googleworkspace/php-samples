@@ -27,11 +27,11 @@ function createFolder() {
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        $fileMetadata = new Drive\DriveFile(array([
+        $fileMetadata = new Drive\DriveFile([
             'name' => 'A',
-            'mimeType' => 'application/vnd.google-apps.folder']));
-        $file = $driveService->files->create($fileMetadata, array([
-            'fields' => 'id']));
+            'mimeType' => 'application/vnd.google-apps.folder']);
+        $file = $driveService->files->create($fileMetadata, [
+            'fields' => 'id']);
         printf("Folder ID: %s\n", $file->id);
     }catch(Exception $e) {
         echo "Error Message: ".$e;

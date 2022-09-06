@@ -39,7 +39,7 @@ function shareFile($fileId, $user, $domain) {
            ]);
 
            $request = $driveService->permissions->create(
-                   $fileId, $userPermission, array(['fields' => 'id']));
+                   $fileId, $userPermission, ['fields' => 'id']);
            $batch->add($request, 'user');
            $domainPermission = new Drive\Permission([
                    'type' => 'domain',
@@ -48,7 +48,7 @@ function shareFile($fileId, $user, $domain) {
            ]);
 
            $request = $driveService->permissions->create(
-           $fileId, $domainPermission, array(['fields' => 'id']));
+           $fileId, $domainPermission, ['fields' => 'id']);
            $batch->add($request, 'domain');
            $results = $batch->execute();
 

@@ -31,9 +31,9 @@ function fetchChanges($savedStartPageToken)
     # current token from getStartPageToken()
     $pageToken = $savedStartPageToken;
     while ($pageToken != null) {
-        $response = $driveService->changes->listChanges($pageToken, array([
+        $response = $driveService->changes->listChanges($pageToken, [
             'spaces' => 'drive'
-        ]));
+        ]);
         foreach ($response->changes as $change) {
             // Process change
             printf("Change found for file: %s", $change->fileId);
