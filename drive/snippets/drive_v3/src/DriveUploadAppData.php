@@ -25,10 +25,10 @@ function uploadAppData()
     $client->addScope(Drive::DRIVE);
     $client->addScope(Drive::DRIVE_APPDATA);
     $driveService = new Drive($client);
-    $fileMetadata = new Drive\DriveFile(array([
+    $fileMetadata = new Drive\DriveFile(array(
         'name' => 'config.json',
         'parents' => array('appDataFolder')
-    ]));
+    ));
     $content = file_get_contents('../files/config.json');
     $file = $driveService->files->create($fileMetadata, array(
         'data' => $content,

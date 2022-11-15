@@ -37,19 +37,19 @@ function recoverDrives()
     // and the associated permissions and groups to ensure an active
     // organizer is assigned.
     $pageToken = null;
-    $newOrganizerPermission = new Drive\Permission(array([
+    $newOrganizerPermission = new Drive\Permission(array(
         'type' => 'user',
         'role' => 'organizer',
         'emailAddress' => 'user@example.com'
-    ]));
+    ));
     $newOrganizerPermission['emailAddress'] = $realUser;
     do {
-        $response = $driveService->drives->listDrives(array([
+        $response = $driveService->drives->listDrives(array(
             'q' => 'organizerCount = 0',
             'fields' => 'nextPageToken, drives(id, name)',
             'useDomainAdminAccess' => true,
             'pageToken' => $pageToken
-        ]));
+        ));
         foreach ($response->drives as $drive) {
             printf("Found shared drive without organizer: %s (%s)\n",
                 $drive->name, $drive->id);

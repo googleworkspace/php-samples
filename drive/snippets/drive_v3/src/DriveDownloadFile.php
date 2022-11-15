@@ -28,8 +28,8 @@ function downloadFile()
       $realFileId = readline("Enter File Id: ");
       $fileId = '0BwwA4oUTeiV1UVNwOHItT0xfa2M';
       $fileId = $realFileId;
-      $response = $driveService->files->get($fileId, array([
-          'alt' => 'media']));
+      $response = $driveService->files->get($fileId, array(
+          'alt' => 'media'));
       $content = $response->getBody()->getContents();
       return $content;
 

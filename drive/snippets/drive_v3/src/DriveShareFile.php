@@ -34,23 +34,23 @@ function shareFile()
             try {
                 $batch = $driveService->createBatch();
     
-                $userPermission = new Drive\Permission(array([
+                $userPermission = new Drive\Permission(array(
                     'type' => 'user',
                     'role' => 'writer',
                     'emailAddress' => 'user@example.com'
-                ]));
+                ));
                 $userPermission['emailAddress'] = $realUser;
                 $request = $driveService->permissions->create(
-                    $fileId, $userPermission, array(['fields' => 'id']));
+                    $fileId, $userPermission, array('fields' => 'id'));
                 $batch->add($request, 'user');
-                $domainPermission = new Drive\Permission(array([
+                $domainPermission = new Drive\Permission(array(
                     'type' => 'domain',
                     'role' => 'reader',
                     'domain' => 'example.com'
-                ]));
+                ));
                 $userPermission['domain'] = $realDomain;
                 $request = $driveService->permissions->create(
-                    $fileId, $domainPermission, array(['fields' => 'id']));
+                    $fileId, $domainPermission, array('fields' => 'id'));
                 $batch->add($request, 'domain');
                 $results = $batch->execute();
     

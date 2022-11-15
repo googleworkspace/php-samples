@@ -29,8 +29,8 @@ function createTeamDrive()
         $teamDriveMetadata = new TeamDrive(array(
             'name' => 'Project Resources'));
         $requestId = Uuid::uuid4()->toString();
-        $teamDrive = $driveService->teamdrives->create($requestId, $teamDriveMetadata, array([
-            'fields' => 'id']));
+        $teamDrive = $driveService->teamdrives->create($requestId, $teamDriveMetadata, array(
+            'fields' => 'id'));
         printf("Team Drive ID: %s\n", $teamDrive->id);
         return $teamDrive->id;
 

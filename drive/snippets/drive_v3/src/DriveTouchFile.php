@@ -24,11 +24,11 @@ function touchFile($fileId,$realModifiedTime)
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        $fileMetadata = new Drive\DriveFile(array([
-            'modifiedTime' => date('Y-m-d\TH:i:s.uP')]));
+        $fileMetadata = new Drive\DriveFile(array(
+            'modifiedTime' => date('Y-m-d\TH:i:s.uP')));
         $fileMetadata->modifiedTime = $realModifiedTime;
-        $file = $driveService->files->update($fileId, $fileMetadata, array([
-            'fields' => 'id, modifiedTime']));
+        $file = $driveService->files->update($fileId, $fileMetadata, array(
+            'fields' => 'id, modifiedTime'));
         printf("Modified time: %s\n", $file->modifiedTime);
         return $file->modifiedTime;
     } catch(Exception $e) {

@@ -26,11 +26,11 @@ function createShortcut()
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        $fileMetadata = new DriveFile(array([
+        $fileMetadata = new DriveFile(array(
             'name' => 'Project plan',
-            'mimeType' => 'application/vnd.google-apps.drive-sdk']));
-        $file = $driveService->files->create($fileMetadata, array([
-            'fields' => 'id']));
+            'mimeType' => 'application/vnd.google-apps.drive-sdk'));
+        $file = $driveService->files->create($fileMetadata, array(
+            'fields' => 'id'));
         printf("File ID: %s\n", $file->id);
         return $file->id;
 

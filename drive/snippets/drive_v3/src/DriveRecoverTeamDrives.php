@@ -35,30 +35,30 @@ function recoverTeamDrives()
         // and the associated permissions and groups to ensure an active
         // organizer is assigned.
         $pageToken = null;
-        $newOrganizerPermission = new Drive\Permission(array([
+        $newOrganizerPermission = new Drive\Permission(array(
             'type' => 'user',
             'role' => 'organizer',
             'emailAddress' => 'user@example.com'
-        ]));
+        ));
         $newOrganizerPermission['emailAddress'] = 'xyz@workspace.com';
 
         do {
-            $response = $driveService->teamdrives->listTeamdrives(array([
+            $response = $driveService->teamdrives->listTeamdrives(array(
                 'q' => 'organizerCount = 0',
                 'fields' => 'nextPageToken, teamDrives(id, name)',
                 'useDomainAdminAccess' => true,
                 'pageToken' => $pageToken
-            ]));
+            ));
             foreach ($response->teamDrives as $teamDrive) {
                 printf("Found Team Drive without organizer: %s (%s)\n",
                     $teamDrive->name, $teamDrive->id);
                 $permission = $driveService->permissions->create($teamDrive->id,
                     $newOrganizerPermission,
-                    array([
+                    array(
                         'fields' => 'id',
                         'useDomainAdminAccess' => true,
                         'supportsTeamDrives' => true
-                    ]));
+                    ));
                 printf("Added organizer permission: %s\n", $permission->id);
             }
             array_push($teamDrives, $response->teamDrives);

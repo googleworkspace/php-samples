@@ -24,16 +24,16 @@ function uploadToFolder($folderId)
         $client->useApplicationDefaultCredentials();
         $client->addScope(Drive::DRIVE);
         $driveService = new Drive($client);
-        $fileMetadata = new Drive\DriveFile(array([
+        $fileMetadata = new Drive\DriveFile(array(
             'name' => 'photo.jpg',
             'parents' => array($folderId)
-        ]));
+        ));
         $content = file_get_contents('../files/photo.jpg');
-        $file = $driveService->files->create($fileMetadata, array([
+        $file = $driveService->files->create($fileMetadata, array(
             'data' => $content,
             'mimeType' => 'image/jpeg',
             'uploadType' => 'multipart',
-            'fields' => 'id']));
+            'fields' => 'id'));
         printf("File ID: %s\n", $file->id);
         return $file->id;
     } catch (Exception $e) {

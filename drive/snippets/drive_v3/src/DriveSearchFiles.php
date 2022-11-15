@@ -27,12 +27,12 @@ function searchFiles()
         $files = array();
         $pageToken = null;
         do {
-            $response = $driveService->files->listFiles(array([
+            $response = $driveService->files->listFiles(array(
                 'q' => "mimeType='image/jpeg'",
                 'spaces' => 'drive',
                 'pageToken' => $pageToken,
                 'fields' => 'nextPageToken, files(id, name)',
-            ]));
+            ));
             foreach ($response->files as $file) {
                 printf("Found file: %s (%s)\n", $file->name, $file->id);
             }

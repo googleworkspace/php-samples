@@ -25,9 +25,9 @@ function fetchAppDataFolder()
         $client->addScope(Drive::DRIVE);
         $client->addScope(Drive::DRIVE_APPDATA);
         $driveService = new Drive($client);
-        $file = $driveService->files->get('appDataFolder', array([
+        $file = $driveService->files->get('appDataFolder', array(
                 'fields' => 'id'
-        ]));
+        ));
         printf("Folder ID: %s\n", $file->id);
         return $file->id;
     } catch (Exception $e) {

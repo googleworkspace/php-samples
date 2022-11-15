@@ -29,8 +29,8 @@ function createDrive()
         $driveMetadata = new Drive\Drive(array(
                 'name' => 'Project Resources'));
         $requestId = Uuid::uuid4()->toString();
-        $drive = $driveService->drives->create($requestId, $driveMetadata, array([
-                'fields' => 'id']));
+        $drive = $driveService->drives->create($requestId, $driveMetadata, array(
+                'fields' => 'id'));
         printf("Drive ID: %s\n", $drive->id);
         return $drive->id;
     } catch(Exception $e)  {
